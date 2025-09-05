@@ -23,18 +23,15 @@
 html {
 	overflow-x: hidden;
 }
-
 body {
 	background: var(--grey);
 	overflow-x: hidden;
 }
-
 a {
 	text-decoration: none;
 }
 
-
-/* SIDEBAR */
+/* Side Bar */
 #sidebar {
 	position: fixed;
 	max-width: 260px;
@@ -48,13 +45,14 @@ a {
 	transition: all .3s ease;
 	z-index: 200;
 }
+#sidebar .logo{
+	color: var(--blue);
+}
 #sidebar .brand {
-	font-size: 24px;
+	font-size: 30px;
 	display: flex;
 	align-items: center;
 	height: 64px;
-	font-weight: 700;
-	color: var(--blue);
 	position: sticky;
 	top: 0;
 	left: 0;
@@ -62,6 +60,10 @@ a {
 	background: var(--light);
 	transition: all .3s ease;
 	padding: 0 6px;
+	font-style: italic;
+	color: rgba(255, 0, 0, 0.815);
+	font-weight: bolder;
+	margin-left: 30px;
 }
 #sidebar .icon {
 	min-width: 48px;
@@ -154,15 +156,14 @@ a {
 	font-weight: 600;
 	margin-bottom: 12px;
 }
-/* CONTENT */
+/* Content */
 #content {
 	position: relative;
 	width: calc(100% - 260px);
 	left: 260px;
 	transition: all .3s ease;
 }
-
-/* NAVBAR */
+/* Nav Bar */
 nav {
 	background: var(--light);
 	height: 64px;
@@ -193,20 +194,20 @@ nav .profile img {
 	cursor: pointer;
 }
 
-/* MAIN */
+/* Main */
 main {
 	width: 100%;
 	padding: 24px 20px 20px 20px;
 }
 main .title {
-	font-size: 28px;
+	font-size: 22px;
 	font-weight: 600;
 	margin-bottom: 10px;
 }
 main .info-data {
 	margin-top: 36px;
 	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+	grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 	grid-gap: 20px;
 }
 main .info-data .card {
@@ -219,9 +220,10 @@ main .card .head {
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-start;
+	margin-bottom: 20px;
 }
 main .card .head h2 {
-	font-size: 24px;
+	font-size: 20px;
 	font-weight: 600;
 	margin-bottom: 10px;
 }
@@ -256,6 +258,6 @@ main .card .progress::before {
 	width: var(--value);
 }
 main .card .label {
-	font-size: 14px;
+	font-size: 25px;
 	font-weight: 700;
 }

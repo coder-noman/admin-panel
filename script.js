@@ -20,20 +20,3 @@ allDropdown.forEach(item=> {
 		item.classList.toggle('show');
 	})
 })
-
-// Progress Bar
-const allProgress = document.querySelectorAll('main .card .progress');
-
-allProgress.forEach(item=> {
-	item.style.setProperty('--value', item.dataset.value)
-})
-
-var options = {
-  series: [{
-  name: 'series1',
-  data: [31, 40, 28, 51, 42, 109, 100]
-}, {
-  name: 'series2',
-  data: [11, 32, 45, 32, 34, 52, 41]
-}]
-};
