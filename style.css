@@ -177,11 +177,19 @@ nav {
 	left: 0;
 	z-index: 100;
 }
+nav h1{
+	color: var(--blue);
+}
 nav .divider {
 	width: 1px;
-	background: var(--grey);
+	background: var(--dark-grey);
 	height: 12px;
 	display: block;
+}
+nav .profile-box{
+	display: flex;
+	align-items: center;
+	gap: 10px;
 }
 nav .profile {
 	position: relative;
