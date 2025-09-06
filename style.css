@@ -8,6 +8,7 @@
 }
 
 :root {
+	--grey2: #202124;
 	--grey: #F1F0F6;
 	--dark-grey: #8D8D8D;
 	--light: #fff;
@@ -308,7 +309,10 @@ main .card .label {
 	font-weight: 700;
 }
 
-/* pss update */
+/* psu update */
+.psu{
+	margin-bottom: 50px;
+}
 .pss-card-box {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -326,7 +330,6 @@ main .card .label {
 .pss-card-main {
 	display: flex;
 	justify-content: space-between;
-	gap: 10px;
 }
 
 .pss-card-main h3 {

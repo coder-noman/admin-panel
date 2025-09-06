@@ -63,3 +63,14 @@ const sanSoragepsu1 = document.getElementById('san-sorage-psu1');
 const sanSoragepsu2 = document.getElementById('san-sorage-psu2');
 
 bgpPSU1.innerText = 'OFF'
+
+
+// Others Alarm Unit
+
+const waterLeakage = document.getElementById('water-leakage');
+const fireAlarm = document.getElementById('fire-Alarm');
+const generatorStatus = document.getElementById('generator-status');
+const ups1CB = document.getElementById('ups1-cb-status');
+const ups2CB = document.getElementById('ups2-cb-status');
+
+ups2CB.innerText = 'OK';
