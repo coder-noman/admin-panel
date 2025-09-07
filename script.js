@@ -1,3 +1,39 @@
+//bts ="";
+
+//.........websocket_client code..............
+var socket = new WebSocket('ws://27.147.170.162:81');
+socket.onmessage = function (event) {
+	// console.log(event.data);
+
+	const data = event.data.split(":");
+	const data_catagory = data[0] || "";
+	const msg = data[1] || ""
+	//console.log("Data Catagort:",data_catagory);
+	//console.log("Main Data:",msg );
+	if (data_catagory == "hams_HO") {
+		var splited_data = msg.split(",");
+
+		document.getElementById('bts').innerText = splited_data[0];
+		document.getElementById('upsA').innerText = splited_data[1];
+		document.getElementById('upsB').innerText = splited_data[2];
+		document.getElementById('pdb').innerText = splited_data[3];
+		document.getElementById('temperature').innerText = splited_data[4];
+
+		
+
+		if(splited_data[5] == 1){
+			document.getElementById('bgp-psu1').innerText = 'ON';
+		}
+		else{
+			document.getElementById('bgp-psu1').innerText = 'OFF';
+		}
+		// console.log("BGP psu 1:", splited_data[5]);
+		// console.log("bgp psu 2:", splited_data[6]);
+
+
+	}
+}
+
 // Sidebar Dropdown
 const allDropdown = document.querySelectorAll('#sidebar .side-dropdown');
 const sidebar = document.getElementById('sidebar');
@@ -22,17 +58,6 @@ allDropdown.forEach(item => {
 })
 
 // main 
-
-const bts = document.getElementById('bts');
-const upsA = document.getElementById('upsA');
-const upsB = document.getElementById('upsB');
-const pdb = document.getElementById('pdb');
-const temperature = document.getElementById('temperature');
-
-temperature.innerText = 219;
-
-
-
 
 //power supply unit
 
@@ -62,7 +87,7 @@ const sanSwpsu2 = document.getElementById('san-sw-psu2');
 const sanSoragepsu1 = document.getElementById('san-sorage-psu1');
 const sanSoragepsu2 = document.getElementById('san-sorage-psu2');
 
-bgpPSU1.innerText = 'OFF'
+// bgpPSU1.innerText = 'OFF'
 
 
 // Others Alarm Unit
