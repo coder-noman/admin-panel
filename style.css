@@ -78,7 +78,10 @@ a {
 }
 #sidebar .brand h5{
 	font-size: 13px;
-	color: blue;
+	color: #034EA1;
+}
+.logo-text{
+	color: gray;
 }
 
 #sidebar .icon {
@@ -195,8 +198,8 @@ nav {
 	z-index: 100;
 }
 
-nav h1 {
-	color: var(--blue);
+nav a {
+	color: var(--light);
 }
 
 nav .divider {
