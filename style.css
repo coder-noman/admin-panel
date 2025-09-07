@@ -340,3 +340,16 @@ main .card .label {
 	font-size: 14px;
 	font-weight: bolder;
 }
+
+.on-btn{
+	background-color: green;
+	color: white;
+	padding: 2px 5px;
+	border-radius: 7px;
+}
+.off-btn{
+	background-color: red;
+	color: white;
+	padding: 2px 5px;
+	border-radius: 7px;
+}

@@ -19,14 +19,39 @@ socket.onmessage = function (event) {
 		document.getElementById('pdb').innerText = splited_data[3];
 		document.getElementById('temperature').innerText = splited_data[4];
 
-		
+		// power supply unit 
 
-		if(splited_data[5] == 1){
-			document.getElementById('bgp-psu1').innerText = 'ON';
+		const psuId = ['bgp-psu1', 'bgp-psu2', 'fortinet-psu1', 'fortinet-psu2', 'check-point-psu1', 'check-point-psu2', 'cisco-psu', 'lan-psu', 'cisco-distribution-psu', 'ho-dr-psu1', 'ho-dr-psu2', 'ho-service-psu1', 'ho-service-psu2', 'pabx-psu', 'nvr-psu', 'r730-1-psu1', 'r730-1-psu2', 'r730-2-psu1', 'r730-2-psu2', 'san-sw1-psu1', 'san-sw1-psu2', 'san-sw-psu1', 'san-sw-psu2', 'san-sorage-psu1', 'san-sorage-psu2'];
+
+		for (i = 5, j = 0; i <= 29; i++, j++) {
+
+			if (splited_data[i] == 1) {
+				const box = document.getElementById(psuId[j]).innerText = 'ON';
+				document.getElementById(psuId[j]).classList.add('on-btn');
+			}
+			else {
+				const box2 = document.getElementById(psuId[j]).innerText = 'OFF';
+				document.getElementById(psuId[j]).classList.add('off-btn');
+			}
+
 		}
-		else{
-			document.getElementById('bgp-psu1').innerText = 'OFF';
+
+		// Others Alarm Unit
+
+		const alarmId = ['water-leakage', 'fire-Alarm', 'generator-status', 'ups1-cb-status', 'ups2-cb-status'];
+		const alarmData = [['Alarm', 'No Alarm'], ['Alarm', 'No Alarm'], ['Running', 'off'], ['Tripped', 'ok'], ['Tripped', 'ok']]
+
+		for (i = 30, j = 0; i <= 34; i++, j++) {
+			if (splited_data[i] == 1) {
+				const box = document.getElementById(alarmId[j]).innerText = alarmData[j][1];
+				document.getElementById(alarmId[j]).classList.add('on-btn');
+			}
+			else {
+				const box2 = document.getElementById(alarmId[j]).innerText = alarmData[j][0];
+				document.getElementById(alarmId[j]).classList.add('off-btn');
+			}
 		}
+
 		// console.log("BGP psu 1:", splited_data[5]);
 		// console.log("bgp psu 2:", splited_data[6]);
 
