@@ -7,9 +7,11 @@
 	box-sizing: border-box;
 }
 
+/* box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); */
 :root {
-	--grey2: #202124;
-	--grey: #F1F0F6;
+	--grey2: linear-gradient(145deg, #1a2a3d, #152232);
+	--grey: #0f1c2d;
+	--grey3: #0f1c2dfa;
 	--dark-grey: #8D8D8D;
 	--light: #fff;
 	--dark: #000;
@@ -26,7 +28,8 @@ html {
 }
 
 body {
-	background: var(--grey);
+	background: var(--grey3);
+	color: var(--light);
 	overflow-x: hidden;
 }
 
@@ -39,7 +42,6 @@ a {
 	position: fixed;
 	max-width: 260px;
 	width: 100%;
-	background: var(--light);
 	top: 0;
 	left: 0;
 	height: 100%;
@@ -47,6 +49,7 @@ a {
 	scrollbar-width: none;
 	transition: all .3s ease;
 	z-index: 200;
+	background-color: var(--grey);
 }
 
 #sidebar .logo {
@@ -54,21 +57,28 @@ a {
 }
 
 #sidebar .brand {
-	font-size: 30px;
 	display: flex;
 	align-items: center;
-	height: 64px;
+	flex-direction: column;
+	height: 70px;
 	position: sticky;
 	top: 0;
 	left: 0;
 	z-index: 100;
-	background: var(--light);
+	background: var(--grey);
 	transition: all .3s ease;
 	padding: 0 6px;
+	padding-left: 30px;
+}
+#sidebar .brand a{
+	font-size: 30px;
 	font-style: italic;
 	color: var(--red);
 	font-weight: bolder;
-	margin-left: 30px;
+}
+#sidebar .brand h5{
+	font-size: 13px;
+	color: blue;
 }
 
 #sidebar .icon {
@@ -102,8 +112,9 @@ a {
 #sidebar .side-menu a {
 	display: flex;
 	align-items: center;
+	/* justify-content: center; */
 	font-size: 14px;
-	color: var(--dark);
+	color: var(--light);
 	padding: 12px 16px 12px 0;
 	transition: all .3s ease;
 	border-radius: 10px;
@@ -111,28 +122,9 @@ a {
 	white-space: nowrap;
 }
 
-#sidebar .side-menu>li>a.active,
-#sidebar .side-menu>li>a.active:hover {
-	background: var(--blue);
+#sidebar .side-menu>li>a{
+	background: var(--grey2);
 	color: var(--light);
-}
-
-#sidebar .divider {
-	margin-top: 24px;
-	font-size: 12px;
-	text-transform: uppercase;
-	font-weight: 700;
-	color: var(--dark-grey);
-	transition: all .3s ease;
-	white-space: nowrap;
-}
-
-#sidebar.hide:hover .divider {
-	text-align: left;
-}
-
-#sidebar.hide .divider {
-	text-align: center;
 }
 
 #sidebar .side-dropdown {
@@ -154,6 +146,7 @@ a {
 #sidebar .alert {
 	width: 100%;
 	padding: 20px;
+
 }
 
 #sidebar .alert .wrapper {
@@ -161,6 +154,8 @@ a {
 	padding: 20px;
 	border-radius: 10px;
 	overflow-wrap: break-word;
+	background: var(--grey2);
+	box-shadow: 4px 4px 16px rgba(0, 0, 0, .3);
 }
 
 #sidebar .btn-upgrade {
@@ -187,7 +182,7 @@ a {
 
 /* Nav Bar */
 nav {
-	background: var(--light);
+	background: var(--grey);
 	height: 64px;
 	padding: 0 20px;
 	display: flex;
@@ -252,8 +247,8 @@ main .info-data {
 main .info-data .card {
 	padding: 20px;
 	border-radius: 10px;
-	background: var(--light);
-	box-shadow: 4px 4px 16px rgba(0, 0, 0, .05);
+	background: var(--grey2);
+	box-shadow: 4px 4px 16px rgba(0, 0, 0, .3);
 }
 
 main .card .head {
@@ -310,9 +305,10 @@ main .card .label {
 }
 
 /* psu update */
-.psu{
+.psu {
 	margin-bottom: 50px;
 }
+
 .pss-card-box {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
@@ -321,10 +317,10 @@ main .card .label {
 
 .pss-card {
 	padding: 10px 10px;
-	background-color: var(--light);
 	border-radius: 10px;
 	display: inline-block;
-	box-shadow: 4px 4px 16px rgba(0, 0, 0, .05);
+	background: var(--grey2);
+	box-shadow: 4px 4px 16px rgba(0, 0, 0, .3);
 }
 
 .pss-card-main {
@@ -336,18 +332,20 @@ main .card .label {
 	font-size: 14px;
 	font-weight: 500;
 }
+
 .pss-card-main p {
 	font-size: 14px;
 	font-weight: bolder;
 }
 
-.on-btn{
+.on-btn {
 	background-color: green;
 	color: white;
 	padding: 2px 5px;
 	border-radius: 7px;
 }
-.off-btn{
+
+.off-btn {
 	background-color: red;
 	color: white;
 	padding: 2px 5px;
