@@ -248,6 +248,9 @@ main .info-data {
 }
 
 main .info-data .card {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 	padding: 20px;
 	border-radius: 10px;
 	background: var(--grey2);
