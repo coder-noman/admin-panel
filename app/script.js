@@ -1,3 +1,4 @@
+//.........websocket_client code..............
 var socket = new WebSocket('ws://27.147.170.162:81');
 socket.onmessage = function (event) {
 	// console.log(event.data);
@@ -21,7 +22,6 @@ socket.onmessage = function (event) {
 		];
 
 		for (i = 6, j = 0; i <= 30; i++, j++) {
-
 			if (splited_data[i] >= 1) {
 
 				if (splited_data[i] >= 9999) {
@@ -60,6 +60,61 @@ socket.onmessage = function (event) {
 			}
 		}
 	}
+	// else {
+	// 	// Default Data Section 
+	// 	// Default Value
+	// 	const defaultData = [220, 220, 220, 48.5, 25, 75, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1];
+
+	// 	updateAllData(defaultData[0], defaultData[1], defaultData[2], defaultData[3], defaultData[4], defaultData[5])
+
+	// 	// power supply unit 
+
+	// 	const psuId = ['bgp-psu1', 'bgp-psu2', 'fortinet-psu1', 'fortinet-psu2', 'check-point-psu1', 'check-point-psu2', 'cisco-psu', 'lan-psu', 'cisco-distribution-psu', 'ho-dr-psu1', 'ho-dr-psu2', 'ho-service-psu1', 'ho-service-psu2', 'pabx-psu', 'nvr-psu', 'r730-1-psu1', 'r730-1-psu2', 'r730-2-psu1', 'r730-2-psu2', 'san-sw1-psu1', 'san-sw1-psu2', 'san-sw-psu1', 'san-sw-psu2', 'san-sorage-psu1', 'san-sorage-psu2'];
+	// 	const psuDisplayId = [
+	// 		'bgp-d-psu1', 'bgp-d-psu2', 'fortinet-d-psu1', 'fortinet-d-psu2', 'check-point-d-psu1', 'check-point-d-psu2', 'cisco-d-psu', 'lan-d-psu', 'cisco-distribution-d-psu', 'ho-dr-d-psu1', 'ho-dr-d-psu2', 'ho-service-d-psu1', 'ho-service-d-psu2', 'pabx-d-psu', 'nvr-d-psu', 'r730-1-d-psu1', 'r730-1-d-psu2', 'r730-2-d-psu1', 'r730-2-d-psu2',
+	// 		'san-sw1-d-psu1', 'san-sw1-d-psu2', 'san-sw-d-psu1', 'san-sw-d-psu2', 'san-sorage-d-psu1', 'san-sorage-d-psu2'
+	// 	];
+
+	// 	for (i = 6, j = 0; i <= 30; i++, j++) {
+
+	// 		if (defaultData[i] >= 1) {
+
+	// 			if (defaultData[i] >= 9999) {
+	// 				document.getElementById(psuId[j]).innerText = 'ON';
+	// 				document.getElementById(psuId[j]).classList.add('on-btn');
+	// 				document.getElementById(psuDisplayId[j]).innerText = `9999 VA`;
+	// 				document.getElementById(psuDisplayId[j]).classList.add('show-btn');
+	// 			}
+	// 			else {
+	// 				document.getElementById(psuId[j]).innerText = 'ON';
+	// 				document.getElementById(psuId[j]).classList.add('on-btn');
+	// 				document.getElementById(psuDisplayId[j]).innerText = `${defaultData[i]} VA`;
+	// 				document.getElementById(psuDisplayId[j]).classList.add('show-btn');
+	// 			}
+
+	// 		}
+	// 		else {
+	// 			const box2 = document.getElementById(psuId[j]).innerText = 'OFF';
+	// 			document.getElementById(psuId[j]).classList.add('off-btn');
+	// 		}
+	// 	}
+
+	// 	// Others Alarm Unit
+
+	// 	const alarmId = ['water-leakage', 'fire-Alarm', 'generator-status', 'ups1-cb-status', 'ups2-cb-status'];
+	// 	const alarmData = [['Alarm', 'No Alarm'], ['Alarm', 'No Alarm'], ['Off', 'On'], ['Tripped', 'ok'], ['Tripped', 'ok']]
+
+	// 	for (i = 31, j = 0; i <= 35; i++, j++) {
+	// 		if (defaultData[i] == 1) {
+	// 			const box = document.getElementById(alarmId[j]).innerText = alarmData[j][1];
+	// 			document.getElementById(alarmId[j]).classList.add('on-btn'); //green
+	// 		}
+	// 		else {
+	// 			const box2 = document.getElementById(alarmId[j]).innerText = alarmData[j][0];
+	// 			document.getElementById(alarmId[j]).classList.add('off-btn'); //red
+	// 		}
+	// 	}
+	// }
 }
 
 // gauge data start 
