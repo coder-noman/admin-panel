@@ -1,4 +1,3 @@
-//.........websocket_client code..............
 var socket = new WebSocket('ws://27.147.170.162:81');
 socket.onmessage = function (event) {
 	// console.log(event.data);
@@ -9,7 +8,6 @@ socket.onmessage = function (event) {
 
 	if (data_catagory == "hams_HO") {
 		var splited_data = msg.split(",");
-
 
 		// Main Unit
 		updateAllData(splited_data[0], splited_data[1], splited_data[2], splited_data[3], splited_data[4], splited_data[5])
@@ -26,16 +24,16 @@ socket.onmessage = function (event) {
 
 			if (splited_data[i] >= 1) {
 
-				if (splited_data[5] >= 9999) {
+				if (splited_data[i] >= 9999) {
 					document.getElementById(psuId[j]).innerText = 'ON';
 					document.getElementById(psuId[j]).classList.add('on-btn');
-					document.getElementById(psuDisplayId[j]).innerText = `9999VA`;
+					document.getElementById(psuDisplayId[j]).innerText = `9999 VA`;
 					document.getElementById(psuDisplayId[j]).classList.add('show-btn');
 				}
 				else {
 					document.getElementById(psuId[j]).innerText = 'ON';
 					document.getElementById(psuId[j]).classList.add('on-btn');
-					document.getElementById(psuDisplayId[j]).innerText = `${splited_data[5]} VA`;
+					document.getElementById(psuDisplayId[j]).innerText = `${splited_data[i]} VA`;
 					document.getElementById(psuDisplayId[j]).classList.add('show-btn');
 				}
 
@@ -44,22 +42,21 @@ socket.onmessage = function (event) {
 				const box2 = document.getElementById(psuId[j]).innerText = 'OFF';
 				document.getElementById(psuId[j]).classList.add('off-btn');
 			}
-
 		}
 
 		// Others Alarm Unit
 
 		const alarmId = ['water-leakage', 'fire-Alarm', 'generator-status', 'ups1-cb-status', 'ups2-cb-status'];
-		const alarmData = [['Alarm', 'No Alarm'], ['Alarm', 'No Alarm'], ['Running', 'off'], ['Tripped', 'ok'], ['Tripped', 'ok']]
+		const alarmData = [['Alarm', 'No Alarm'], ['Alarm', 'No Alarm'], ['Off', 'On'], ['Tripped', 'ok'], ['Tripped', 'ok']]
 
 		for (i = 31, j = 0; i <= 35; i++, j++) {
 			if (splited_data[i] == 1) {
 				const box = document.getElementById(alarmId[j]).innerText = alarmData[j][1];
-				document.getElementById(alarmId[j]).classList.add('on-btn');
+				document.getElementById(alarmId[j]).classList.add('on-btn'); //green
 			}
 			else {
 				const box2 = document.getElementById(alarmId[j]).innerText = alarmData[j][0];
-				document.getElementById(alarmId[j]).classList.add('off-btn');
+				document.getElementById(alarmId[j]).classList.add('off-btn'); //red
 			}
 		}
 	}
@@ -72,7 +69,7 @@ function getColor(value, ranges) {
 	if (value >= ranges.green[0] && value <= ranges.green[1]) {
 		return '#22c55e'; // Green
 	} else if (value >= ranges.orange[0] && value <= ranges.orange[1]) {
-		return '#eab308'; // Orange
+		return '#d8ab23ff'; // Orange
 	} else {
 		return '#ef4444'; // Red
 	}

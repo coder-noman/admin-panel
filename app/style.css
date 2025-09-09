@@ -165,13 +165,14 @@ a {
 }
 
 #sidebar .btn-upgrade {
-	font-size: 14px;
+	font-size: 16px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	padding: 12px 0;
 	color: var(--light);
-	background: var(--red);
+	/* background: var(--red); */
+	background-color: red;
 	transition: all .5s ease;
 	border-radius: 5px;
 	font-weight: 600;
@@ -374,82 +375,6 @@ main {
             gap: 10px;
         }
 /* gauge end */
-main .title {
-	font-size: 22px;
-	font-weight: 600;
-	margin-bottom: 10px;
-}
-
-main .info-data {
-	margin-top: 36px;
-	display: grid;
-	grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-	grid-gap: 20px;
-	margin-bottom: 50px;
-}
-
-main .info-data .card {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	padding: 20px;
-	border-radius: 10px;
-	background: var(--grey2);
-	box-shadow: 4px 4px 16px rgba(0, 0, 0, .3);
-}
-
-main .card .head {
-	display: flex;
-	justify-content: space-between;
-	align-items: flex-start;
-	margin-bottom: 20px;
-}
-
-main .card .head h2 {
-	font-size: 20px;
-	font-weight: 600;
-	margin-bottom: 10px;
-}
-
-main .card .head p {
-	font-size: 14px;
-}
-
-main .card .head .icon {
-	font-size: 20px;
-	color: var(--green);
-}
-
-main .card .head .icon.down {
-	color: var(--red);
-}
-
-main .card .progress {
-	display: block;
-	margin-top: 24px;
-	height: 10px;
-	width: 100%;
-	border-radius: 10px;
-	background: var(--grey);
-	overflow-y: hidden;
-	position: relative;
-	margin-bottom: 4px;
-}
-
-main .card .progress::before {
-	content: '';
-	position: absolute;
-	top: 0;
-	left: 0;
-	height: 100%;
-	background: var(--blue);
-	width: var(--value);
-}
-
-main .card .label {
-	font-size: 25px;
-	font-weight: 700;
-}
 
 /* psu update */
 .psu {
@@ -470,18 +395,21 @@ main .card .label {
 	box-shadow: 4px 4px 16px rgba(0, 0, 0, .3);
 }
 
-.pss-card-main {
-	display: flex;
-	justify-content: space-between;
-}
 
+.psu-display{
+	margin-top: 10px;
+	display: flex;
+}
+.psu-display p:first-child {
+    margin-right: 15px;
+}
 .pss-card-main h3 {
-	font-size: 14px;
+	font-size: 15px;
 	font-weight: 500;
 }
 
 .pss-card-main p {
-	font-size: 14px;
+	font-size: 12px;
 	font-weight: bolder;
 }
 
@@ -500,7 +428,7 @@ main .card .label {
 }
 
 .show-btn {
-	background-color: yellow;
+	background-color: #d8ab23ff;
 	color: white;
 	padding: 2px 5px;
 	border-radius: 7px;
