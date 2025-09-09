@@ -11,37 +11,41 @@ socket.onmessage = function (event) {
 		var splited_data = msg.split(",");
 
 
-
+		// Main Unit
 		updateAllData(splited_data[0], splited_data[1], splited_data[2], splited_data[3], splited_data[4], splited_data[5])
 
 		// power supply unit 
 
 		const psuId = ['bgp-psu1', 'bgp-psu2', 'fortinet-psu1', 'fortinet-psu2', 'check-point-psu1', 'check-point-psu2', 'cisco-psu', 'lan-psu', 'cisco-distribution-psu', 'ho-dr-psu1', 'ho-dr-psu2', 'ho-service-psu1', 'ho-service-psu2', 'pabx-psu', 'nvr-psu', 'r730-1-psu1', 'r730-1-psu2', 'r730-2-psu1', 'r730-2-psu2', 'san-sw1-psu1', 'san-sw1-psu2', 'san-sw-psu1', 'san-sw-psu2', 'san-sorage-psu1', 'san-sorage-psu2'];
+		const psuDisplayId = [
+			'bgp-d-psu1', 'bgp-d-psu2', 'fortinet-d-psu1', 'fortinet-d-psu2', 'check-point-d-psu1', 'check-point-d-psu2', 'cisco-d-psu', 'lan-d-psu', 'cisco-distribution-d-psu', 'ho-dr-d-psu1', 'ho-dr-d-psu2', 'ho-service-d-psu1', 'ho-service-d-psu2', 'pabx-d-psu', 'nvr-d-psu', 'r730-1-d-psu1', 'r730-1-d-psu2', 'r730-2-d-psu1', 'r730-2-d-psu2',
+			'san-sw1-d-psu1', 'san-sw1-d-psu2', 'san-sw-d-psu1', 'san-sw-d-psu2', 'san-sorage-d-psu1', 'san-sorage-d-psu2'
+		];
 
-		// for (i = 6, j = 0; i <= 30; i++, j++) {
+		for (i = 6, j = 0; i <= 30; i++, j++) {
 
-		if (splited_data[5] >= 1) {
+			if (splited_data[i] >= 1) {
 
-			if (splited_data[5] >= 9999) {
-				document.getElementById('bgp-psu1').innerText = 'ON';
-				document.getElementById('bgp-psu1').classList.add('on-btn');
-				document.getElementById('bgp-d-psu1').innerText = `9999VA`;
-				document.getElementById('bgp-d-psu1').classList.add('show-btn');
+				if (splited_data[5] >= 9999) {
+					document.getElementById(psuId[j]).innerText = 'ON';
+					document.getElementById(psuId[j]).classList.add('on-btn');
+					document.getElementById(psuDisplayId[j]).innerText = `9999VA`;
+					document.getElementById(psuDisplayId[j]).classList.add('show-btn');
+				}
+				else {
+					document.getElementById(psuId[j]).innerText = 'ON';
+					document.getElementById(psuId[j]).classList.add('on-btn');
+					document.getElementById(psuDisplayId[j]).innerText = `${splited_data[5]} VA`;
+					document.getElementById(psuDisplayId[j]).classList.add('show-btn');
+				}
+
 			}
 			else {
-				document.getElementById('bgp-psu1').innerText = 'ON';
-				document.getElementById('bgp-psu1').classList.add('on-btn');
-				document.getElementById('bgp-d-psu1').innerText = splited_data[5];
-				document.getElementById('bgp-d-psu1').classList.add('show-btn');
+				const box2 = document.getElementById(psuId[j]).innerText = 'OFF';
+				document.getElementById(psuId[j]).classList.add('off-btn');
 			}
 
 		}
-		else {
-			const box2 = document.getElementById(psuId[j]).innerText = 'OFF';
-			document.getElementById(psuId[j]).classList.add('off-btn');
-		}
-
-		// }
 
 		// Others Alarm Unit
 
