@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
     <title>AdminSite</title>
 </head>
@@ -60,61 +60,107 @@
         <!-- Main -->
         <main>
             <h1 class="title">Dashboard</h1>
-            <div class="info-data">
-                <div class="card">
-                    <div class="head">
-                        <div>
-                            <h2>Server Room DOWN </h2>
-                            <p>Currently No BTS is down</p>
+            <div class="gauges-container">
+                <div class="gauge-card">
+                    <h3 class="gauge-title"><i class="fas fa-bolt"></i> Input Voltage</h3>
+                    <div class="gauge">
+                        <div class="gauge-bg">
+                            <div class="gauge-fill" id="input-voltage-fill"></div>
+                        </div>
+                        <div class="gauge-center">
+                            <div class="gauge-value" id="input-voltage-value">0<span class="gauge-unit">V</span></div>
+                            <div class="gauge-minmax">
+                                <span>0V</span>
+                                <span>300V</span>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <span id="bts" class="label">0</span>
-                    </div>
+                    <div class="status status-normal" id="input-voltage-status">Normal</div>
                 </div>
-                <div class="card">
-                    <div class="head">
-                        <div>
-                            <h2>UPS A DOWN </h2>
-                            <p>Currently no UPS A is down</p>
+
+                <div class="gauge-card">
+                    <h3 class="gauge-title"><i class="fas fa-plug"></i> UPS1 Output</h3>
+                    <div class="gauge">
+                        <div class="gauge-bg">
+                            <div class="gauge-fill" id="ups1-voltage-fill"></div>
+                        </div>
+                        <div class="gauge-center">
+                            <div class="gauge-value" id="ups1-voltage-value">0<span class="gauge-unit">V</span></div>
+                            <div class="gauge-minmax">
+                                <span>0V</span>
+                                <span>300V</span>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <span id="upsA" class="label">0</span>
-                    </div>
+                    <div class="status status-normal" id="ups1-voltage-status">Normal</div>
                 </div>
-                <div class="card">
-                    <div class="head">
-                        <div>
-                            <h2>UPS B DOWN </h2>
-                            <p>Currently no UPS B is down</p>
+
+                <div class="gauge-card">
+                    <h3 class="gauge-title"><i class="fas fa-plug"></i> UPS2 Output</h3>
+                    <div class="gauge">
+                        <div class="gauge-bg">
+                            <div class="gauge-fill" id="ups2-voltage-fill"></div>
+                        </div>
+                        <div class="gauge-center">
+                            <div class="gauge-value" id="ups2-voltage-value">0<span class="gauge-unit">V</span></div>
+                            <div class="gauge-minmax">
+                                <span>0V</span>
+                                <span>300V</span>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <span id="upsB" class="label">0</span>
-                    </div>
+                    <div class="status status-normal" id="ups2-voltage-status">Normal</div>
                 </div>
-                <div class="card">
-                    <div class="head">
-                        <div>
-                            <h2>PDB OUTAGE </h2>
-                            <p></p>
+
+                <div class="gauge-card">
+                    <h3 class="gauge-title"><i class="fas fa-battery-full"></i> Battery Voltage</h3>
+                    <div class="gauge">
+                        <div class="gauge-bg">
+                            <div class="gauge-fill" id="battery-voltage-fill"></div>
+                        </div>
+                        <div class="gauge-center">
+                            <div class="gauge-value" id="battery-voltage-value">0<span class="gauge-unit">V</span></div>
+                            <div class="gauge-minmax">
+                                <span>0V</span>
+                                <span>60V</span>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <span id="pdb" class="label">0</span>
-                    </div>
+                    <div class="status status-normal" id="battery-voltage-status">Normal</div>
                 </div>
-                <div class="card">
-                    <div class="head">
-                        <div>
-                            <h2>HIGH TEMPERATURE </h2>
-                            <p></p>
+
+                <div class="gauge-card">
+                    <h3 class="gauge-title"><i class="fas fa-temperature-high"></i> Temperature</h3>
+                    <div class="gauge">
+                        <div class="gauge-bg">
+                            <div class="gauge-fill" id="temperature-fill"></div>
+                        </div>
+                        <div class="gauge-center">
+                            <div class="gauge-value" id="temperature-value">0<span class="gauge-unit">°C</span></div>
+                            <div class="gauge-minmax">
+                                <span>0°C</span>
+                                <span>55°C</span>
+                            </div>
                         </div>
                     </div>
-                    <div>
-                        <span id="temperature" class="label">0</span>
+                    <div class="status status-normal" id="temperature-status">Normal</div>
+                </div>
+
+                <div class="gauge-card">
+                    <h3 class="gauge-title"><i class="fas fa-tint"></i> Humidity</h3>
+                    <div class="gauge">
+                        <div class="gauge-bg">
+                            <div class="gauge-fill" id="humidity-fill"></div>
+                        </div>
+                        <div class="gauge-center">
+                            <div class="gauge-value" id="humidity-value">0<span class="gauge-unit">%</span></div>
+                            <div class="gauge-minmax">
+                                <span>0%</span>
+                                <span>100%</span>
+                            </div>
+                        </div>
                     </div>
+                    <div class="status status-normal" id="humidity-status">Normal</div>
                 </div>
             </div>
 
@@ -127,175 +173,176 @@
                         <div class="pss-card-main">
                             <h3>BGP PSU1</h3>
                             <br>
-                            <p id="bgp-psu1" class="off-btn">off</p>
+                            <p id="bgp-d-psu1"></p>
+                            <p id="bgp-psu1">off</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>BGP PSU2</h3>
                             <br>
-                            <p id="bgp-psu2" class="on-btn">ON</p>
+                            <p id="bgp-psu2">ON</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>Fortinet PSU1</h3>
                             <br>
-                            <p id="fortinet-psu1" class="on-btn">ON</p>
+                            <p id="fortinet-psu1">ON</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>Fortinet PSU2</h3>
                             <br>
-                            <p id="fortinet-psu2" class="on-btn">ON</p>
+                            <p id="fortinet-psu2">ON</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>Check P. PSU1</h3>
                             <br>
-                            <p id="check-point-psu1" class="off-btn">Off</p>
+                            <p id="check-point-psu1">Off</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>Check P. PSU2</h3>
                             <br>
-                            <p id="check-point-psu2" class="off-btn">off</p>
+                            <p id="check-point-psu2">off</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>Cisco PSU</h3>
                             <br>
-                            <p id="cisco-psu" class="on-btn">ON</p>
+                            <p id="cisco-psu">ON</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>LAN PSU</h3>
                             <br>
-                            <p id="lan-psu" class="on-btn">ON</p>
+                            <p id="lan-psu">ON</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>CISCO Dist PSU</h3>
                             <br>
-                            <p id="cisco-distribution-psu" class="on-btn">ON</p>
+                            <p id="cisco-distribution-psu">ON</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>HO DR PSU1</h3>
                             <br>
-                            <p id="ho-dr-psu1" class="off-btn">Off</p>
+                            <p id="ho-dr-psu1">Off</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>HO DR PSU2</h3>
                             <br>
-                            <p id="ho-dr-psu2" class="on-btn">ON</p>
+                            <p id="ho-dr-psu2">ON</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>HO S PSU1</h3>
                             <br>
-                            <p id="ho-service-psu1" class="on-btn">ON</p>
+                            <p id="ho-service-psu1">ON</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>HO S PSU2</h3>
                             <br>
-                            <p id="ho-service-psu2" class="on-btn">ON</p>
+                            <p id="ho-service-psu2">ON</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>PABX PSU</h3>
                             <br>
-                            <p id="pabx-psu" class="on-btn">ON</p>
+                            <p id="pabx-psu">ON</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>NVR PSU</h3>
                             <br>
-                            <p id="nvr-psu" class="off-btn">Off</p>
+                            <p id="nvr-psu">Off</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>R 730-1 PSU1</h3>
                             <br>
-                            <p id="r730-1-psu1" class="on-btn">ON</p>
+                            <p id="r730-1-psu1">ON</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>R 730-1 PSU2</h3>
                             <br>
-                            <p id="r730-1-psu2" class="on-btn">ON</p>
+                            <p id="r730-1-psu2">ON</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>R 730-2 PSU1</h3>
                             <br>
-                            <p id="r730-2-psu1" class="on-btn">ON</p>
+                            <p id="r730-2-psu1">ON</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>R 730-2 PSU2</h3>
                             <br>
-                            <p id="r730-2-psu2" class="off-btn">Off</p>
+                            <p id="r730-2-psu2">Off</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>SAN SW 1 PSU1</h3>
                             <br>
-                            <p id="san-sw1-psu1" class="on-btn">ON</p>
+                            <p id="san-sw1-psu1">ON</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>SAN SW 1 PSU2</h3>
                             <br>
-                            <p id="san-sw1-psu2" class="on-btn">ON</p>
+                            <p id="san-sw1-psu2">ON</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>SAN SW PSU1</h3>
                             <br>
-                            <p id="san-sw-psu1" class="on-btn">ON</p>
+                            <p id="san-sw-psu1">ON</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>SAN SW PSU2</h3>
                             <br>
-                            <p id="san-sw-psu2" class="off-btn">Off</p>
+                            <p id="san-sw-psu2">Off</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>SAN SORAGE PSU1</h3>
                             <br>
-                            <p id="san-sorage-psu1" class="on-btn">ON</p>
+                            <p id="san-sorage-psu1">ON</p>
                         </div>
                     </div>
                     <div class="pss-card">
                         <div class="pss-card-main">
                             <h3>SAN SORAGE PSU2</h3>
                             <br>
-                            <p id="san-sorage-psu2" class="on-btn">ON</p>
+                            <p id="san-sorage-psu2">ON</p>
                         </div>
                     </div>
 
