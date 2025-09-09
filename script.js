@@ -157,7 +157,6 @@ allDropdown.forEach(item => {
         }
 
         // Function to generate and update all sensor data
-        function updateAllData() {
             // Input Voltage (0-300V)
             const inputVoltage = getRandomValue(0, 300);
             updateGauge('input-voltage', inputVoltage, {
@@ -211,17 +210,7 @@ allDropdown.forEach(item => {
                 red: [70.1, 100],
                 max: 100
             });
-        }
-
-        // Initialize the dashboard
-        document.addEventListener('DOMContentLoaded', function () {
-            // Initial data update
-            updateAllData();
-
-            // Set up refresh button
-            document.getElementById('refresh-btn').addEventListener('click', updateAllData);
 
             // Auto-refresh every 5 seconds
             setInterval(updateAllData, 5000);
-        });
 // gauge data end 
