@@ -6,16 +6,13 @@ socket.onmessage = function (event) {
 	const data = event.data.split(":");
 	const data_catagory = data[0] || "";
 	const msg = data[1] || ""
-	//console.log("Data Catagort:",data_catagory);
-	//console.log("Main Data:",msg );
+
 	if (data_catagory == "hams_HO") {
 		var splited_data = msg.split(",");
 
-		document.getElementById('bts').innerText = splited_data[0];
-		document.getElementById('upsA').innerText = splited_data[1];
-		document.getElementById('upsB').innerText = splited_data[2];
-		document.getElementById('pdb').innerText = splited_data[3];
-		document.getElementById('temperature').innerText = splited_data[4];
+
+
+		updateAllData(splited_data[0], splited_data[1], splited_data[2], splited_data[3], splited_data[4], splited_data[5])
 
 		// power supply unit 
 
@@ -24,9 +21,6 @@ socket.onmessage = function (event) {
 		// for (i = 6, j = 0; i <= 30; i++, j++) {
 
 		if (splited_data[5] >= 1) {
-
-			// document.getElementById(psuId[j]).innerText = 'ON';
-			// document.getElementById(psuId[j]).classList.add('on-btn');
 
 			if (splited_data[5] >= 9999) {
 				document.getElementById('bgp-psu1').innerText = 'ON';
@@ -64,17 +58,10 @@ socket.onmessage = function (event) {
 				document.getElementById(alarmId[j]).classList.add('off-btn');
 			}
 		}
-
-		// console.log("BGP psu 1:", splited_data[5]);
-		// console.log("bgp psu 2:", splited_data[6]);
 	}
 }
 
 // gauge data start 
-// Function to generate random values within specified ranges
-function getRandomValue(min, max, decimals = 1) {
-	return parseFloat((Math.random() * (max - min) + min).toFixed(decimals));
-}
 
 // Function to determine color based on value and ranges
 function getColor(value, ranges) {
@@ -132,11 +119,12 @@ function updateGauge(elementId, value, ranges) {
 }
 
 // Function to generate and update all sensor data
-function updateAllData() {
+function updateAllData(a, b, c, d, e, f) {
+	console.log("Update all Data - ", a, b, c, d, e, f)
+
 	// Input Voltage (0-300V)
-	// const inputVoltage = getRandomValue(0, 300);
-	x=150;
-	updateGauge('input-voltage', x, {
+	const inputVoltage = a || 230;
+	updateGauge('input-voltage', inputVoltage, {
 		green: [200, 230],
 		orange: [0, 199],
 		red: [231, 300],
@@ -144,7 +132,7 @@ function updateAllData() {
 	});
 
 	// UPS1 Output Voltage (0-300V)
-	const ups1Voltage = getRandomValue(0, 300);
+	const ups1Voltage = b || 220;
 	updateGauge('ups1-voltage', ups1Voltage, {
 		green: [200, 230],
 		orange: [0, 199],
@@ -153,7 +141,7 @@ function updateAllData() {
 	});
 
 	// UPS2 Output Voltage (0-300V)
-	const ups2Voltage = getRandomValue(0, 300);
+	const ups2Voltage = c || 220;
 	updateGauge('ups2-voltage', ups2Voltage, {
 		green: [200, 230],
 		orange: [0, 199],
@@ -162,7 +150,7 @@ function updateAllData() {
 	});
 
 	// Battery Voltage (0-60V)
-	const batteryVoltage = getRandomValue(0, 60);
+	const batteryVoltage = d || 48.5;
 	updateGauge('battery-voltage', batteryVoltage, {
 		green: [48, 55],
 		orange: [0, 47.9],
@@ -171,7 +159,7 @@ function updateAllData() {
 	});
 
 	// Temperature (0-55°C)
-	const temperature = getRandomValue(0, 55);
+	const temperature = e || 25;
 	updateGauge('temperature', temperature, {
 		green: [0, 25],
 		orange: [25.1, 30],
@@ -180,7 +168,7 @@ function updateAllData() {
 	});
 
 	// Humidity (0-100%)
-	const humidity = getRandomValue(0, 100);
+	const humidity = f || 75;
 	updateGauge('humidity', humidity, {
 		green: [40.1, 70],
 		orange: [0, 40],
@@ -188,14 +176,7 @@ function updateAllData() {
 		max: 100
 	});
 }
-
-// Initialize the dashboard
-document.addEventListener('DOMContentLoaded', function () {
-	// Initial data update
-	updateAllData();
-	// Auto-refresh every 5 seconds
-	setInterval(updateAllData, 1000);
-});
+updateAllData();
 
 
 
@@ -224,24 +205,24 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // Sidebar Dropdown
-const allDropdown = document.querySelectorAll('#sidebar .side-dropdown');
-const sidebar = document.getElementById('sidebar');
+// const allDropdown = document.querySelectorAll('#sidebar .side-dropdown');
+// const sidebar = document.getElementById('sidebar');
 
-allDropdown.forEach(item => {
-	const a = item.parentElement.querySelector('a:first-child');
-	a.addEventListener('click', function (e) {
-		e.preventDefault();
+// allDropdown.forEach(item => {
+// 	const a = item.parentElement.querySelector('a:first-child');
+// 	a.addEventListener('click', function (e) {
+// 		e.preventDefault();
 
-		if (!this.classList.contains('active')) {
-			allDropdown.forEach(i => {
-				const aLink = i.parentElement.querySelector('a:first-child');
+// 		if (!this.classList.contains('active')) {
+// 			allDropdown.forEach(i => {
+// 				const aLink = i.parentElement.querySelector('a:first-child');
 
-				aLink.classList.remove('active');
-				i.classList.remove('show');
-			})
-		}
+// 				aLink.classList.remove('active');
+// 				i.classList.remove('show');
+// 			})
+// 		}
 
-		this.classList.toggle('active');
-		item.classList.toggle('show');
-	})
-})
+// 		this.classList.toggle('active');
+// 		item.classList.toggle('show');
+// 	})
+// })
