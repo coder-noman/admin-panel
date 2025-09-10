@@ -224,16 +224,24 @@ nav .profile-box {
 	gap: 10px;
 }
 
+nav .profile-box span{
+	color: #0C5FCD;
+}
+
 nav .profile {
 	position: relative;
 }
-
-nav .profile img {
+nav .profile {
 	width: 50px;
 	height: 50px;
-	border-radius: 50%;
-	object-fit: cover;
-	cursor: pointer;
+}
+
+nav .profile img {
+	width: 100%;
+	/* height: 50px; */
+	border-radius: 30%;
+	/* object-fit: cover; */
+	/* cursor: pointer; */
 }
 
 /* Main */
@@ -244,10 +252,10 @@ main {
 
 /* gauge start */
 .gauges-container {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: center;
-	gap: 12px;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+	/* grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); */
+	grid-gap: 20px;
 	margin-bottom: 20px;
 	margin-top: 50px;
 }
@@ -280,8 +288,8 @@ main {
 
 .gauge {
 	position: relative;
-	width: 100px;
-	height: 100px;
+	width: 130px;
+	height: 130px;
 	margin: 0 auto;
 }
 
