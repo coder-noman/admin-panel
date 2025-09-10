@@ -37,6 +37,7 @@ socket.onmessage = function (event) {
 			document.getElementById(psuId[j]).classList.add('off-btn');
 			let ul = document.getElementById('alert-list');
 			let li = document.createElement('li');
+			li.classList.add('alert-list-card');
 			li.textContent = `${psuId[j]} is Failed.`;
 			ul.appendChild(li);
 		}
@@ -56,6 +57,7 @@ socket.onmessage = function (event) {
 			document.getElementById(alarmId[j]).classList.add('off-btn'); //red
 			let ul = document.getElementById('alert-list');
 			let li = document.createElement('li');
+			li.classList.add('alert-list-card');
 			li.textContent = `${alarmId[j]} is ${alarmData[j][0]}`;
 			ul.appendChild(li);
 		}
@@ -125,6 +127,7 @@ window.onload = function () {
 			document.getElementById(psuId[j]).classList.add('off-btn');
 			const ul = document.getElementById('alert-list');
 			const li = document.createElement('li');
+			li.classList.add('alert-list-card');
 			li.textContent = `${psuId[j]} is Failed.`;
 			ul.appendChild(li);
 		}
@@ -144,6 +147,7 @@ window.onload = function () {
 			document.getElementById(alarmId[j]).classList.add('off-btn'); //red
 			let ul = document.getElementById('alert-list');
 			let li = document.createElement('li');
+			li.classList.add('alert-list-card');
 			li.textContent = `${alarmId[j]} is ${alarmData[j][0]}`;
 			ul.appendChild(li);
 		}
@@ -209,7 +213,7 @@ function updateGauge(elementId, value, ranges) {
 
 // Function to generate and update all sensor data
 function updateAllData(a, b, c, d, e, f) {
-	
+
 	// Input Voltage (0-300V)
 	const inputVoltage = a || 230;
 	updateGauge('input-voltage', inputVoltage, {

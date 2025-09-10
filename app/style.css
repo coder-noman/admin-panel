@@ -52,39 +52,25 @@ a {
 	background-color: var(--grey);
 }
 
-#sidebar .logo {
+.logo {
 	color: var(--blue);
 }
 
-#sidebar .brand {
+.brand {
 	display: flex;
 	align-items: center;
 	flex-direction: column;
-	height: 70px;
+	height: 90px;
 	position: sticky;
-	top: 0;
-	left: 0;
-	z-index: 100;
-	background: var(--grey);
+	/* background: var(--grey); */
+	/* background-color: red; */
 	transition: all .3s ease;
-	padding: 0 6px;
-	padding-left: 30px;
+	padding: 6px;
+	padding-top: 9px;
 }
 
-#sidebar .brand a {
-	font-size: 30px;
-	font-style: italic;
-	color: var(--red);
-	font-weight: bolder;
-}
-
-#sidebar .brand h5 {
-	font-size: 13px;
-	color: #034EA1;
-}
-
-.logo-text {
-	color: gray;
+.brand-img{
+	width: 30%;
 }
 
 #sidebar .icon {
@@ -101,7 +87,7 @@ a {
 }
 
 #sidebar .side-menu {
-	margin: 36px 0;
+	margin-top: 36px ;
 	padding: 0 20px;
 	transition: all .3s ease;
 	list-style: none;
@@ -152,16 +138,57 @@ a {
 #sidebar .alert {
 	width: 100%;
 	padding: 20px;
-
 }
 
 #sidebar .alert .wrapper {
-	background: var(--grey);
 	padding: 20px;
 	border-radius: 10px;
 	overflow-wrap: break-word;
 	background: var(--grey2);
 	box-shadow: 4px 4px 16px rgba(0, 0, 0, .3);
+	height: 400px;
+	overflow-y: auto;
+}
+
+/* Scroll Bar Design start */
+.wrapper::-webkit-scrollbar {
+	width: 10px;
+}
+
+.wrapper::-webkit-scrollbar-track {
+	background: #2c2c2c;
+	border-radius: 10px;
+}
+.wrapper::-webkit-scrollbar-thumb {
+	background: linear-gradient(135deg, #1a2a3d, white);
+	border-radius: 10px;
+	border: 2px solid transparent;
+	background-clip: content-box;
+}
+::-webkit-scrollbar {
+	width: 14px;
+}
+
+::-webkit-scrollbar-track {
+	background: #2c2c2c;
+	border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+	background: linear-gradient(135deg, #1a2a3d, white);
+	border-radius: 10px;
+	border: 2px solid transparent;
+	background-clip: content-box;
+}
+
+/* Scroll Bar Design end */
+
+.alert-list-card{
+	padding: 10px 10px;
+	border-radius: 10px;
+	display: inline-block;
+	background: var(--grey);
+	box-shadow: 4px 4px 16px rgba(0, 0, 0, .3);
+	margin-bottom: 15px;
 }
 
 /* .alert-list {
@@ -248,6 +275,31 @@ nav .profile img {
 main {
 	width: 100%;
 	padding: 24px 20px 20px 20px;
+}
+.breadcumb{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.brand2 {
+	padding: 6px;
+	padding-left: 30px;
+}
+
+.brand2 a {
+	font-size: 30px;
+	font-style: italic;
+	color: var(--red);
+	font-weight: bolder;
+}
+
+.brand2 h5 {
+	font-size: 13px;
+	color: #034EA1;
+}
+
+.logo-text {
+	color: gray;
 }
 
 /* gauge start */
