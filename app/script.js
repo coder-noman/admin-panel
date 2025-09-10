@@ -209,8 +209,7 @@ function updateGauge(elementId, value, ranges) {
 
 // Function to generate and update all sensor data
 function updateAllData(a, b, c, d, e, f) {
-	console.log("Update all Data - ", a, b, c, d, e, f)
-
+	
 	// Input Voltage (0-300V)
 	const inputVoltage = a || 230;
 	updateGauge('input-voltage', inputVoltage, {

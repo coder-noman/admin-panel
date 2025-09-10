@@ -392,6 +392,7 @@ main {
 .pss-card-box {
 	display: grid;
 	grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+	/* grid-template-columns: repeat(auto-fit, minmax(135px, 1fr)); */
 	grid-gap: 20px;
 }
 
