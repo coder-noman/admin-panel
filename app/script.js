@@ -1,156 +1,154 @@
 //.........websocket_client code..............
 var socket = new WebSocket('ws://27.147.170.162:81');
 socket.onmessage = function (event) {
-	// console.log(event.data);
 
 	const data = event.data.split(":");
 	const data_catagory = data[0] || "";
 	const msg = data[1] || ""
 
-	if (data_catagory == "hams_HO") {
-		var splited_data = msg.split(",");
+	if (data_catagory !== "hams_HO") {
+		return;
+	}
 
-		// Main Unit
-		updateAllData(splited_data[0], splited_data[1], splited_data[2], splited_data[3], splited_data[4], splited_data[5])
+	// Clear all data function
+	clearAllData();
 
-		// power supply unit 
+	var splited_data = msg.split(",");
 
-		const psuId = ['bgp-psu1', 'bgp-psu2', 'fortinet-psu1', 'fortinet-psu2', 'check-point-psu1', 'check-point-psu2', 'cisco-psu', 'lan-psu', 'cisco-distribution-psu', 'ho-dr-psu1', 'ho-dr-psu2', 'ho-service-psu1', 'ho-service-psu2', 'pabx-psu', 'nvr-psu', 'r730-1-psu1', 'r730-1-psu2', 'r730-2-psu1', 'r730-2-psu2', 'san-sw1-psu1', 'san-sw1-psu2', 'san-sw-psu1', 'san-sw-psu2', 'san-sorage-psu1', 'san-sorage-psu2'];
-		const psuDisplayId = [
-			'bgp-d-psu1', 'bgp-d-psu2', 'fortinet-d-psu1', 'fortinet-d-psu2', 'check-point-d-psu1', 'check-point-d-psu2', 'cisco-d-psu', 'lan-d-psu', 'cisco-distribution-d-psu', 'ho-dr-d-psu1', 'ho-dr-d-psu2', 'ho-service-d-psu1', 'ho-service-d-psu2', 'pabx-d-psu', 'nvr-d-psu', 'r730-1-d-psu1', 'r730-1-d-psu2', 'r730-2-d-psu1', 'r730-2-d-psu2',
-			'san-sw1-d-psu1', 'san-sw1-d-psu2', 'san-sw-d-psu1', 'san-sw-d-psu2', 'san-sorage-d-psu1', 'san-sorage-d-psu2'
-		];
+	// Main Unit
+	updateAllData(splited_data[0], splited_data[1], splited_data[2], splited_data[3], splited_data[4], splited_data[5])
 
-		// for clear previous data start
+	// power supply unit 
+	const psuId = ['bgp-psu1', 'bgp-psu2', 'fortinet-psu1', 'fortinet-psu2', 'check-point-psu1', 'check-point-psu2', 'cisco-psu', 'lan-psu', 'cisco-distribution-psu', 'ho-dr-psu1', 'ho-dr-psu2', 'ho-service-psu1', 'ho-service-psu2', 'pabx-psu', 'nvr-psu', 'r730-1-psu1', 'r730-1-psu2', 'r730-2-psu1', 'r730-2-psu2', 'san-sw1-psu1', 'san-sw1-psu2', 'san-sw-psu1', 'san-sw-psu2', 'san-sorage-psu1', 'san-sorage-psu2'];
+	const psuDisplayId = [
+		'bgp-d-psu1', 'bgp-d-psu2', 'fortinet-d-psu1', 'fortinet-d-psu2', 'check-point-d-psu1', 'check-point-d-psu2', 'cisco-d-psu', 'lan-d-psu', 'cisco-distribution-d-psu', 'ho-dr-d-psu1', 'ho-dr-d-psu2', 'ho-service-d-psu1', 'ho-service-d-psu2', 'pabx-d-psu', 'nvr-d-psu', 'r730-1-d-psu1', 'r730-1-d-psu2', 'r730-2-d-psu1', 'r730-2-d-psu2',
+		'san-sw1-d-psu1', 'san-sw1-d-psu2', 'san-sw-d-psu1', 'san-sw-d-psu2', 'san-sorage-d-psu1', 'san-sorage-d-psu2'
+	];
 
-		// document.getElementById('alert-list').innerHTML = '';
-		// for (i = 6; i <= 30; i++) {
-		// 	const psuElem = document.getElementById(psuId[i]);
-		// 	const psuDisplayElem = document.getElementById(psuDisplayId[i]);
-		// 	if (psuElem) {
-		// 		psuElem.innerText = '';
-		// 		psuElem.className = '';
-		// 	}
-		// 	if (psuDisplayElem) {
-		// 		psuDisplayElem.innerText = '';
-		// 		psuDisplayElem.className = '';
-		// 	}
-		// }
-
-		// for clear previous data end
-
-		for (i = 6, j = 0; i <= 30; i++, j++) {
-			if (splited_data[i] >= 1) {
-
-				// if (splited_data[i] >= 9999) {
-				// 	document.getElementById(psuId[j]).innerText = 'ON';
-				// 	document.getElementById(psuId[j]).classList.add('on-btn');
-				// 	document.getElementById(psuDisplayId[j]).innerText = `9999 VA`;
-				// 	document.getElementById(psuDisplayId[j]).classList.add('show-btn');
-				// }
-				// else {
-				document.getElementById(psuId[j]).innerText = 'ON';
-				document.getElementById(psuId[j]).classList.add('on-btn');
-				document.getElementById(psuDisplayId[j]).innerText = `${splited_data[i]} VA`;
-				document.getElementById(psuDisplayId[j]).classList.add('show-btn');
-				// }
-
-			}
-			else {
-				const box2 = document.getElementById(psuId[j]).innerText = 'OFF';
-				document.getElementById(psuId[j]).classList.add('off-btn');
-				let ul = document.getElementById('alert-list');
-				let li = document.createElement('li');
-				li.textContent = `${psuId[j]} is Failed.`;
-				ul.appendChild(li);
-			}
+	for (i = 6, j = 0; i <= 30; i++, j++) {
+		if (splited_data[i] >= 1) {
+			document.getElementById(psuId[j]).innerText = 'ON';
+			document.getElementById(psuId[j]).classList.add('on-btn');
+			document.getElementById(psuDisplayId[j]).innerText = `${splited_data[i]} VA`;
+			document.getElementById(psuDisplayId[j]).classList.add('show-btn');
 		}
-
-		// Others Alarm Unit
-
-		const alarmId = ['water-leakage', 'fire-Alarm', 'generator-status', 'ups1-cb-status', 'ups2-cb-status'];
-		const alarmData = [['Alarm', 'No Alarm'], ['Alarm', 'No Alarm'], ['Off', 'On'], ['Tripped', 'ok'], ['Tripped', 'ok']]
-
-		for (i = 31, j = 0; i <= 35; i++, j++) {
-			if (splited_data[i] == 1) {
-				const box = document.getElementById(alarmId[j]).innerText = alarmData[j][1];
-				document.getElementById(alarmId[j]).classList.add('on-btn'); //green
-			}
-			else {
-				const box2 = document.getElementById(alarmId[j]).innerText = alarmData[j][0];
-				document.getElementById(alarmId[j]).classList.add('off-btn'); //red
-				let ul = document.getElementById('alert-list');
-				let li = document.createElement('li');
-				li.textContent = `${alarmId[j]} is ${alarmData[j][0]}`;
-				ul.appendChild(li);
-			}
+		else {
+			document.getElementById(psuId[j]).innerText = 'OFF';
+			document.getElementById(psuId[j]).classList.add('off-btn');
+			let ul = document.getElementById('alert-list');
+			let li = document.createElement('li');
+			li.textContent = `${psuId[j]} is Failed.`;
+			ul.appendChild(li);
 		}
 	}
-	// else{
-	// 	// Default Data Section 
-	// 	// Default Value
-	// 	const defaultData = [220, 220, 220, 48.5, 25, 75, 78, 0, 134, 492, 0, 112, 443, 307, 275, 0, 353, 487, 235, 127, 0, 423, 311, 0, 94, 299, 465, 0, 243, 104, 205, 1, 0, 0, 1, 0];
 
-	// 	updateAllData(defaultData[0], defaultData[1], defaultData[2], defaultData[3], defaultData[4], defaultData[5])
+	// Others Alarm Unit
+	const alarmId = ['water-leakage', 'fire-Alarm', 'generator-status', 'ups1-cb-status', 'ups2-cb-status'];
+	const alarmData = [['Alarm', 'No Alarm'], ['Alarm', 'No Alarm'], ['Off', 'On'], ['Tripped', 'ok'], ['Tripped', 'ok']]
 
-	// 	// power supply unit 
-
-	// 	const psuId = ['bgp-psu1', 'bgp-psu2', 'fortinet-psu1', 'fortinet-psu2', 'check-point-psu1', 'check-point-psu2', 'cisco-psu', 'lan-psu', 'cisco-distribution-psu', 'ho-dr-psu1', 'ho-dr-psu2', 'ho-service-psu1', 'ho-service-psu2', 'pabx-psu', 'nvr-psu', 'r730-1-psu1', 'r730-1-psu2', 'r730-2-psu1', 'r730-2-psu2', 'san-sw1-psu1', 'san-sw1-psu2', 'san-sw-psu1', 'san-sw-psu2', 'san-sorage-psu1', 'san-sorage-psu2'];
-	// 	const psuDisplayId = [
-	// 		'bgp-d-psu1', 'bgp-d-psu2', 'fortinet-d-psu1', 'fortinet-d-psu2', 'check-point-d-psu1', 'check-point-d-psu2', 'cisco-d-psu', 'lan-d-psu', 'cisco-distribution-d-psu', 'ho-dr-d-psu1', 'ho-dr-d-psu2', 'ho-service-d-psu1', 'ho-service-d-psu2', 'pabx-d-psu', 'nvr-d-psu', 'r730-1-d-psu1', 'r730-1-d-psu2', 'r730-2-d-psu1', 'r730-2-d-psu2',
-	// 		'san-sw1-d-psu1', 'san-sw1-d-psu2', 'san-sw-d-psu1', 'san-sw-d-psu2', 'san-sorage-d-psu1', 'san-sorage-d-psu2'
-	// 	];
-	// 	document.getElementById('alert-list').innerHTML = '';
-
-	// 	for (i = 6, j = 0; i <= 30; i++, j++) {
-
-	// 		if (defaultData[i] >= 1) {
-
-	// 			// if (defaultData[i] >= 9999) {
-	// 			// 	document.getElementById(psuId[j]).innerText = 'ON';
-	// 			// 	document.getElementById(psuId[j]).classList.add('on-btn');
-	// 			// 	document.getElementById(psuDisplayId[j]).innerText = `9999 VA`;
-	// 			// 	document.getElementById(psuDisplayId[j]).classList.add('show-btn');
-	// 			// }
-	// 			// else {
-	// 			document.getElementById(psuId[j]).innerText = 'ON';
-	// 			document.getElementById(psuId[j]).classList.add('on-btn');
-	// 			document.getElementById(psuDisplayId[j]).innerText = `${defaultData[i]} VA`;
-	// 			document.getElementById(psuDisplayId[j]).classList.add('show-btn');
-	// 			// }
-
-	// 		}
-	// 		else {
-	// 			const box2 = document.getElementById(psuId[j]).innerText = 'OFF';
-	// 			document.getElementById(psuId[j]).classList.add('off-btn');
-	// 			const ul = document.getElementById('alert-list');
-	// 			const li = document.createElement('li');
-	// 			li.textContent = `${psuId[j]} is Failed.`;
-	// 			ul.appendChild(li);
-	// 		}
-	// 	}
-
-	// 	// Others Alarm Unit
-
-	// 	const alarmId = ['water-leakage', 'fire-Alarm', 'generator-status', 'ups1-cb-status', 'ups2-cb-status'];
-	// 	const alarmData = [['Alarm', 'No Alarm'], ['Alarm', 'No Alarm'], ['Off', 'On'], ['Tripped', 'ok'], ['Tripped', 'ok']]
-
-	// 	for (i = 31, j = 0; i <= 35; i++, j++) {
-	// 		if (defaultData[i] == 1) {
-	// 			const box = document.getElementById(alarmId[j]).innerText = alarmData[j][1];
-	// 			document.getElementById(alarmId[j]).classList.add('on-btn'); //green
-	// 		}
-	// 		else {
-	// 			const box2 = document.getElementById(alarmId[j]).innerText = alarmData[j][0];
-	// 			document.getElementById(alarmId[j]).classList.add('off-btn'); //red
-	// 			let ul = document.getElementById('alert-list');
-	// 			let li = document.createElement('li');
-	// 			li.textContent = `${alarmId[j]} is ${alarmData[j][0]}`;
-	// 			ul.appendChild(li);
-	// 		}
-	// 	}
-	// }
+	for (i = 31, j = 0; i <= 35; i++, j++) {
+		if (splited_data[i] == 1) {
+			document.getElementById(alarmId[j]).innerText = alarmData[j][1];
+			document.getElementById(alarmId[j]).classList.add('on-btn'); //green
+		}
+		else {
+			document.getElementById(alarmId[j]).innerText = alarmData[j][0];
+			document.getElementById(alarmId[j]).classList.add('off-btn'); //red
+			let ul = document.getElementById('alert-list');
+			let li = document.createElement('li');
+			li.textContent = `${alarmId[j]} is ${alarmData[j][0]}`;
+			ul.appendChild(li);
+		}
+	}
 }
+
+// clear all data function
+function clearAllData() {
+
+	document.getElementById('alert-list').innerHTML = '';
+
+	const psuId = ['bgp-psu1', 'bgp-psu2', 'fortinet-psu1', 'fortinet-psu2', 'check-point-psu1', 'check-point-psu2', 'cisco-psu', 'lan-psu', 'cisco-distribution-psu', 'ho-dr-psu1', 'ho-dr-psu2', 'ho-service-psu1', 'ho-service-psu2', 'pabx-psu', 'nvr-psu', 'r730-1-psu1', 'r730-1-psu2', 'r730-2-psu1', 'r730-2-psu2', 'san-sw1-psu1', 'san-sw1-psu2', 'san-sw-psu1', 'san-sw-psu2', 'san-sorage-psu1', 'san-sorage-psu2'];
+
+	const psuDisplayId = [
+		'bgp-d-psu1', 'bgp-d-psu2', 'fortinet-d-psu1', 'fortinet-d-psu2', 'check-point-d-psu1', 'check-point-d-psu2', 'cisco-d-psu', 'lan-d-psu', 'cisco-distribution-d-psu', 'ho-dr-d-psu1', 'ho-dr-d-psu2', 'ho-service-d-psu1', 'ho-service-d-psu2', 'pabx-d-psu', 'nvr-d-psu', 'r730-1-d-psu1', 'r730-1-d-psu2', 'r730-2-d-psu1', 'r730-2-d-psu2',
+		'san-sw1-d-psu1', 'san-sw1-d-psu2', 'san-sw-d-psu1', 'san-sw-d-psu2', 'san-sorage-d-psu1', 'san-sorage-d-psu2'
+	];
+
+	for (let j = 0; j < psuId.length; j++) {
+		const psuElem = document.getElementById(psuId[j]);
+		const psuDisplayElem = document.getElementById(psuDisplayId[j]);
+
+		if (psuElem) {
+			psuElem.innerText = '';
+			psuElem.className = '';
+		}
+		if (psuDisplayElem) {
+			psuDisplayElem.innerText = '';
+			psuDisplayElem.className = '';
+		}
+	}
+
+	// Clear alarm elements
+	const alarmId = ['water-leakage', 'fire-Alarm', 'generator-status', 'ups1-cb-status', 'ups2-cb-status'];
+	for (let j = 0; j < alarmId.length; j++) {
+		const alarmElem = document.getElementById(alarmId[j]);
+		if (alarmElem) {
+			alarmElem.innerText = '';
+			alarmElem.className = '';
+		}
+	}
+}
+
+// Set default data on page load
+window.onload = function () {
+
+	const defaultData = [220, 220, 220, 48.5, 25, 75, 78, 0, 134, 492, 0, 112, 443, 307, 275, 0, 353, 487, 235, 127, 0, 423, 311, 0, 94, 299, 465, 0, 243, 104, 205, 1, 0, 0, 1, 0];
+
+	updateAllData(defaultData[0], defaultData[1], defaultData[2], defaultData[3], defaultData[4], defaultData[5])
+
+
+	const psuId = ['bgp-psu1', 'bgp-psu2', 'fortinet-psu1', 'fortinet-psu2', 'check-point-psu1', 'check-point-psu2', 'cisco-psu', 'lan-psu', 'cisco-distribution-psu', 'ho-dr-psu1', 'ho-dr-psu2', 'ho-service-psu1', 'ho-service-psu2', 'pabx-psu', 'nvr-psu', 'r730-1-psu1', 'r730-1-psu2', 'r730-2-psu1', 'r730-2-psu2', 'san-sw1-psu1', 'san-sw1-psu2', 'san-sw-psu1', 'san-sw-psu2', 'san-sorage-psu1', 'san-sorage-psu2'];
+	const psuDisplayId = [
+		'bgp-d-psu1', 'bgp-d-psu2', 'fortinet-d-psu1', 'fortinet-d-psu2', 'check-point-d-psu1', 'check-point-d-psu2', 'cisco-d-psu', 'lan-d-psu', 'cisco-distribution-d-psu', 'ho-dr-d-psu1', 'ho-dr-d-psu2', 'ho-service-d-psu1', 'ho-service-d-psu2', 'pabx-d-psu', 'nvr-d-psu', 'r730-1-d-psu1', 'r730-1-d-psu2', 'r730-2-d-psu1', 'r730-2-d-psu2',
+		'san-sw1-d-psu1', 'san-sw1-d-psu2', 'san-sw-d-psu1', 'san-sw-d-psu2', 'san-sorage-d-psu1', 'san-sorage-d-psu2'
+	];
+
+	for (i = 6, j = 0; i <= 30; i++, j++) {
+		if (defaultData[i] >= 1) {
+			document.getElementById(psuId[j]).innerText = 'ON';
+			document.getElementById(psuId[j]).classList.add('on-btn');
+			document.getElementById(psuDisplayId[j]).innerText = `${defaultData[i]} VA`;
+			document.getElementById(psuDisplayId[j]).classList.add('show-btn');
+		}
+		else {
+			document.getElementById(psuId[j]).innerText = 'OFF';
+			document.getElementById(psuId[j]).classList.add('off-btn');
+			const ul = document.getElementById('alert-list');
+			const li = document.createElement('li');
+			li.textContent = `${psuId[j]} is Failed.`;
+			ul.appendChild(li);
+		}
+	}
+
+	// Others Alarm Unit
+	const alarmId = ['water-leakage', 'fire-Alarm', 'generator-status', 'ups1-cb-status', 'ups2-cb-status'];
+	const alarmData = [['Alarm', 'No Alarm'], ['Alarm', 'No Alarm'], ['Off', 'On'], ['Tripped', 'ok'], ['Tripped', 'ok']]
+
+	for (i = 31, j = 0; i <= 35; i++, j++) {
+		if (defaultData[i] == 1) {
+			document.getElementById(alarmId[j]).innerText = alarmData[j][1];
+			document.getElementById(alarmId[j]).classList.add('on-btn'); //green
+		}
+		else {
+			document.getElementById(alarmId[j]).innerText = alarmData[j][0];
+			document.getElementById(alarmId[j]).classList.add('off-btn'); //red
+			let ul = document.getElementById('alert-list');
+			let li = document.createElement('li');
+			li.textContent = `${alarmId[j]} is ${alarmData[j][0]}`;
+			ul.appendChild(li);
+		}
+	}
+};
 
 // gauge data start 
 
@@ -268,31 +266,6 @@ function updateAllData(a, b, c, d, e, f) {
 	});
 }
 updateAllData();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 // Sidebar Dropdown
