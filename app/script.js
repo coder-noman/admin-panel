@@ -21,6 +21,24 @@ socket.onmessage = function (event) {
 			'san-sw1-d-psu1', 'san-sw1-d-psu2', 'san-sw-d-psu1', 'san-sw-d-psu2', 'san-sorage-d-psu1', 'san-sorage-d-psu2'
 		];
 
+		// for clear previous data start
+
+		// document.getElementById('alert-list').innerHTML = '';
+		// for (i = 6; i <= 30; i++) {
+		// 	const psuElem = document.getElementById(psuId[i]);
+		// 	const psuDisplayElem = document.getElementById(psuDisplayId[i]);
+		// 	if (psuElem) {
+		// 		psuElem.innerText = '';
+		// 		psuElem.className = '';
+		// 	}
+		// 	if (psuDisplayElem) {
+		// 		psuDisplayElem.innerText = '';
+		// 		psuDisplayElem.className = '';
+		// 	}
+		// }
+
+		// for clear previous data end
+
 		for (i = 6, j = 0; i <= 30; i++, j++) {
 			if (splited_data[i] >= 1) {
 
@@ -68,10 +86,10 @@ socket.onmessage = function (event) {
 			}
 		}
 	}
-	// else {
+	// else{
 	// 	// Default Data Section 
 	// 	// Default Value
-	// 	const defaultData = [220, 220, 220, 48.5, 25, 75, 123, 0, 327, 78, 0, 145, 412, 361, 298, 480, 0, 267, 73, 199, 0, 0, 468, 132, 0, 305, 442, 359, 0, 159, 226, 1, 0, 1, 0, 1];
+	// 	const defaultData = [220, 220, 220, 48.5, 25, 75, 78, 0, 134, 492, 0, 112, 443, 307, 275, 0, 353, 487, 235, 127, 0, 423, 311, 0, 94, 299, 465, 0, 243, 104, 205, 1, 0, 0, 1, 0];
 
 	// 	updateAllData(defaultData[0], defaultData[1], defaultData[2], defaultData[3], defaultData[4], defaultData[5])
 
@@ -82,6 +100,7 @@ socket.onmessage = function (event) {
 	// 		'bgp-d-psu1', 'bgp-d-psu2', 'fortinet-d-psu1', 'fortinet-d-psu2', 'check-point-d-psu1', 'check-point-d-psu2', 'cisco-d-psu', 'lan-d-psu', 'cisco-distribution-d-psu', 'ho-dr-d-psu1', 'ho-dr-d-psu2', 'ho-service-d-psu1', 'ho-service-d-psu2', 'pabx-d-psu', 'nvr-d-psu', 'r730-1-d-psu1', 'r730-1-d-psu2', 'r730-2-d-psu1', 'r730-2-d-psu2',
 	// 		'san-sw1-d-psu1', 'san-sw1-d-psu2', 'san-sw-d-psu1', 'san-sw-d-psu2', 'san-sorage-d-psu1', 'san-sorage-d-psu2'
 	// 	];
+	// 	document.getElementById('alert-list').innerHTML = '';
 
 	// 	for (i = 6, j = 0; i <= 30; i++, j++) {
 
@@ -124,6 +143,10 @@ socket.onmessage = function (event) {
 	// 		else {
 	// 			const box2 = document.getElementById(alarmId[j]).innerText = alarmData[j][0];
 	// 			document.getElementById(alarmId[j]).classList.add('off-btn'); //red
+	// 			let ul = document.getElementById('alert-list');
+	// 			let li = document.createElement('li');
+	// 			li.textContent = `${alarmId[j]} is ${alarmData[j][0]}`;
+	// 			ul.appendChild(li);
 	// 		}
 	// 	}
 	// }
