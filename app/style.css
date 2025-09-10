@@ -164,6 +164,11 @@ a {
 	box-shadow: 4px 4px 16px rgba(0, 0, 0, .3);
 }
 
+/* .alert-list {
+	height: 300px;
+	overflow-y: scroll;
+} */
+
 #sidebar .btn-upgrade {
 	font-size: 16px;
 	display: flex;
@@ -236,144 +241,147 @@ main {
 	width: 100%;
 	padding: 24px 20px 20px 20px;
 }
+
 /* gauge start */
 .gauges-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 20px;
-			margin-top: 50px;
-        }
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 12px;
+	margin-bottom: 20px;
+	margin-top: 50px;
+}
 
-        .gauge-card {
-            background: rgba(15, 23, 42, 0.7);
-            border-radius: 12px;
-            padding: 15px;
-            text-align: center;
-            min-width: 165px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: transform 0.3s ease;
-        }
+.gauge-card {
+	background: rgba(15, 23, 42, 0.7);
+	border-radius: 12px;
+	padding: 15px;
+	text-align: center;
+	min-width: 165px;
+	backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.1);
+	transition: transform 0.3s ease;
+}
 
-        .gauge-title {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            font-size: 0.8rem;
-            margin-bottom: 12px;
-            color: #e2e8f0;
-        }
+.gauge-title {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 6px;
+	font-size: 0.8rem;
+	margin-bottom: 12px;
+	color: #e2e8f0;
+}
 
-        .gauge-title i {
-            font-size: 0.9rem;
-            color: #3b82f6;
-        }
+.gauge-title i {
+	font-size: 0.9rem;
+	color: #3b82f6;
+}
 
-        .gauge {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            margin: 0 auto;
-        }
+.gauge {
+	position: relative;
+	width: 100px;
+	height: 100px;
+	margin: 0 auto;
+}
 
-        .gauge-bg {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background: rgba(30, 41, 59, 0.8);
-            position: relative;
-            overflow: hidden;
-        }
+.gauge-bg {
+	width: 100%;
+	height: 100%;
+	border-radius: 50%;
+	background: rgba(30, 41, 59, 0.8);
+	position: relative;
+	overflow: hidden;
+}
 
-        .gauge-fill {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-            right: 5px;
-            bottom: 5px;
-            border-radius: 50%;
-            background: conic-gradient(transparent 0deg, currentColor 0deg);
-            mask: radial-gradient(transparent 65%, black 66%);
-            -webkit-mask: radial-gradient(transparent 65%, black 66%);
-        }
+.gauge-fill {
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	right: 5px;
+	bottom: 5px;
+	border-radius: 50%;
+	background: conic-gradient(transparent 0deg, currentColor 0deg);
+	mask: radial-gradient(transparent 65%, black 66%);
+	-webkit-mask: radial-gradient(transparent 65%, black 66%);
+}
 
-        .gauge-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 75%;
-            height: 75%;
-            border-radius: 50%;
-            background: rgba(15, 23, 42, 0.9);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
+.gauge-center {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 75%;
+	height: 75%;
+	border-radius: 50%;
+	background: rgba(15, 23, 42, 0.9);
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
 
-        .gauge-value {
-            font-size: 1rem;
-            font-weight: bold;
-            line-height: 1;
-        }
+.gauge-value {
+	font-size: 1rem;
+	font-weight: bold;
+	line-height: 1;
+}
 
-        .gauge-unit {
-            font-size: 0.6rem;
-            margin-top: 2px;
-            opacity: 0.8;
-        }
+.gauge-unit {
+	font-size: 0.6rem;
+	margin-top: 2px;
+	opacity: 0.8;
+}
 
-        .gauge-minmax {
-            display: flex;
-            justify-content: space-between;
-            width: 100%;
-            margin-top: 8px;
-            font-size: 0.55rem;
-            opacity: 0.7;
-        }
+.gauge-minmax {
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	margin-top: 8px;
+	font-size: 0.55rem;
+	opacity: 0.7;
+}
 
-        .status {
-            margin-top: 8px;
-            font-weight: bold;
-            padding: 4px 8px;
-            border-radius: 12px;
-            display: inline-block;
-            font-size: 0.6rem;
-        }
+.status {
+	margin-top: 8px;
+	font-weight: bold;
+	padding: 4px 8px;
+	border-radius: 12px;
+	display: inline-block;
+	font-size: 0.6rem;
+}
 
-        .status-normal {
-            background-color: rgba(34, 197, 94, 0.15);
-            color: #22c55e;
-        }
+.status-normal {
+	background-color: rgba(34, 197, 94, 0.15);
+	color: #22c55e;
+}
 
-        .status-warning {
-            background-color: rgba(234, 179, 8, 0.15);
-            color: #eab308;
-        }
+.status-warning {
+	background-color: rgba(234, 179, 8, 0.15);
+	color: #eab308;
+}
 
-        .status-danger {
-            background-color: rgba(239, 68, 68, 0.15);
-            color: #ef4444;
-        }
+.status-danger {
+	background-color: rgba(239, 68, 68, 0.15);
+	color: #ef4444;
+}
 
-        .controls {
-            text-align: center;
-            margin-top: 20px;
-        }
-        .dashboard-title {
-            text-align: center;
-            margin-bottom: 15px;
-            font-size: 1.2rem;
-            color: #e2e8f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
+.controls {
+	text-align: center;
+	margin-top: 20px;
+}
+
+.dashboard-title {
+	text-align: center;
+	margin-bottom: 15px;
+	font-size: 1.2rem;
+	color: #e2e8f0;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 10px;
+}
+
 /* gauge end */
 
 /* psu update */
@@ -396,13 +404,15 @@ main {
 }
 
 
-.psu-display{
+.psu-display {
 	margin-top: 10px;
 	display: flex;
 }
+
 .psu-display p:first-child {
-    margin-right: 15px;
+	margin-right: 15px;
 }
+
 .pss-card-main h3 {
 	font-size: 15px;
 	font-weight: 500;

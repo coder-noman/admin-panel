@@ -24,23 +24,27 @@ socket.onmessage = function (event) {
 		for (i = 6, j = 0; i <= 30; i++, j++) {
 			if (splited_data[i] >= 1) {
 
-				if (splited_data[i] >= 9999) {
-					document.getElementById(psuId[j]).innerText = 'ON';
-					document.getElementById(psuId[j]).classList.add('on-btn');
-					document.getElementById(psuDisplayId[j]).innerText = `9999 VA`;
-					document.getElementById(psuDisplayId[j]).classList.add('show-btn');
-				}
-				else {
-					document.getElementById(psuId[j]).innerText = 'ON';
-					document.getElementById(psuId[j]).classList.add('on-btn');
-					document.getElementById(psuDisplayId[j]).innerText = `${splited_data[i]} VA`;
-					document.getElementById(psuDisplayId[j]).classList.add('show-btn');
-				}
+				// if (splited_data[i] >= 9999) {
+				// 	document.getElementById(psuId[j]).innerText = 'ON';
+				// 	document.getElementById(psuId[j]).classList.add('on-btn');
+				// 	document.getElementById(psuDisplayId[j]).innerText = `9999 VA`;
+				// 	document.getElementById(psuDisplayId[j]).classList.add('show-btn');
+				// }
+				// else {
+				document.getElementById(psuId[j]).innerText = 'ON';
+				document.getElementById(psuId[j]).classList.add('on-btn');
+				document.getElementById(psuDisplayId[j]).innerText = `${splited_data[i]} VA`;
+				document.getElementById(psuDisplayId[j]).classList.add('show-btn');
+				// }
 
 			}
 			else {
 				const box2 = document.getElementById(psuId[j]).innerText = 'OFF';
 				document.getElementById(psuId[j]).classList.add('off-btn');
+				let ul = document.getElementById('alert-list');
+				let li = document.createElement('li');
+				li.textContent = `${psuId[j]} is Failed.`;
+				ul.appendChild(li);
 			}
 		}
 
@@ -57,13 +61,17 @@ socket.onmessage = function (event) {
 			else {
 				const box2 = document.getElementById(alarmId[j]).innerText = alarmData[j][0];
 				document.getElementById(alarmId[j]).classList.add('off-btn'); //red
+				let ul = document.getElementById('alert-list');
+				let li = document.createElement('li');
+				li.textContent = `${alarmId[j]} is ${alarmData[j][0]}`;
+				ul.appendChild(li);
 			}
 		}
 	}
 	// else {
 	// 	// Default Data Section 
 	// 	// Default Value
-	// 	const defaultData = [220, 220, 220, 48.5, 25, 75, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 1];
+	// 	const defaultData = [220, 220, 220, 48.5, 25, 75, 123, 0, 327, 78, 0, 145, 412, 361, 298, 480, 0, 267, 73, 199, 0, 0, 468, 132, 0, 305, 442, 359, 0, 159, 226, 1, 0, 1, 0, 1];
 
 	// 	updateAllData(defaultData[0], defaultData[1], defaultData[2], defaultData[3], defaultData[4], defaultData[5])
 
@@ -79,23 +87,27 @@ socket.onmessage = function (event) {
 
 	// 		if (defaultData[i] >= 1) {
 
-	// 			if (defaultData[i] >= 9999) {
-	// 				document.getElementById(psuId[j]).innerText = 'ON';
-	// 				document.getElementById(psuId[j]).classList.add('on-btn');
-	// 				document.getElementById(psuDisplayId[j]).innerText = `9999 VA`;
-	// 				document.getElementById(psuDisplayId[j]).classList.add('show-btn');
-	// 			}
-	// 			else {
-	// 				document.getElementById(psuId[j]).innerText = 'ON';
-	// 				document.getElementById(psuId[j]).classList.add('on-btn');
-	// 				document.getElementById(psuDisplayId[j]).innerText = `${defaultData[i]} VA`;
-	// 				document.getElementById(psuDisplayId[j]).classList.add('show-btn');
-	// 			}
+	// 			// if (defaultData[i] >= 9999) {
+	// 			// 	document.getElementById(psuId[j]).innerText = 'ON';
+	// 			// 	document.getElementById(psuId[j]).classList.add('on-btn');
+	// 			// 	document.getElementById(psuDisplayId[j]).innerText = `9999 VA`;
+	// 			// 	document.getElementById(psuDisplayId[j]).classList.add('show-btn');
+	// 			// }
+	// 			// else {
+	// 			document.getElementById(psuId[j]).innerText = 'ON';
+	// 			document.getElementById(psuId[j]).classList.add('on-btn');
+	// 			document.getElementById(psuDisplayId[j]).innerText = `${defaultData[i]} VA`;
+	// 			document.getElementById(psuDisplayId[j]).classList.add('show-btn');
+	// 			// }
 
 	// 		}
 	// 		else {
 	// 			const box2 = document.getElementById(psuId[j]).innerText = 'OFF';
 	// 			document.getElementById(psuId[j]).classList.add('off-btn');
+	// 			const ul = document.getElementById('alert-list');
+	// 			const li = document.createElement('li');
+	// 			li.textContent = `${psuId[j]} is Failed.`;
+	// 			ul.appendChild(li);
 	// 		}
 	// 	}
 
