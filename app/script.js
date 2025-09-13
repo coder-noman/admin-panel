@@ -132,7 +132,43 @@ function deviceInformation(lan,gsmOp,gsmSig,ib,psu1,psu2,ds){
 	const dataSource = document.getElementById('data-source');
 
 	// Lan IP
-	document.getElementById('device-lan').innerHTML = `: ${lan}`;
+	lanIp.innerHTML = `: ${lan}`;
+
+	// Gsm Operator 
+	gsmOperator.innerText = `: ${gsmOp}`;
+
+	// Gsm Signal 
+	gsmSignal.innerText = `: ${gsmSig}`;
+
+	// Internal Battery
+	internalBattery.innerText = `: ${ib} %`;
+
+	// Psu Stutus 1
+	if(psu1==1){
+		devicePsu1.innerText = `: OK`;
+	}else{
+		devicePsu1.innerText = `: Failed`;
+	}
+
+	// Psu Stutus 2
+	if(psu2==1){
+		devicePsu2.innerText = `: OK`;
+	}else{
+		devicePsu2.innerText = `: Failed`;
+	}
+
+	// Data Source
+	if(ds==0){
+		dataSource.innerText = `: LAN`;
+	}else if(ds==1){
+		dataSource.innerText = `: WIFI`;
+	}
+	else if(ds==2){
+		dataSource.innerText = `: GPRS`;
+	}
+
+	
+	
 
 
 
