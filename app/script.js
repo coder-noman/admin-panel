@@ -18,7 +18,12 @@ socket.onmessage = function (event) {
 	console.log(data[3])
 	console.log(data[4])
 	var splited_data = data[4].split(",");
-	
+	console.log(splited_data[7]);
+	console.log(splited_data[8]);
+	console.log(splited_data[9]);
+	console.log(splited_data[10]);
+	console.log(splited_data[11]);
+	console.log(splited_data[12]);
 	
 
 	// Main Unit
@@ -34,7 +39,7 @@ socket.onmessage = function (event) {
 
 	var ipdu1_data=data[1].split(",");
 	for (i = 2, j = 0; i <= 9; i++, j++) {
-		if (splited_data[i] >= 1) {
+		if (ipdu1_data[i] >= 1) {
 			document.getElementById(psuId[j]).innerText = 'ON';
 			document.getElementById(psuId[j]).classList.add('on-btn');
 			document.getElementById(psuDisplayId[j]).innerText = `${ipdu1_data[i]} VA`;
@@ -54,7 +59,7 @@ socket.onmessage = function (event) {
 
 	var ipdu2_data=data[2].split(",");
 	for (i = 2, j = 8; i <=9; i++, j++) {
-		if (splited_data[i] >= 1) {
+		if (ipdu1_data[i] >= 1) {
 			document.getElementById(psuId[j]).innerText = 'ON';
 			document.getElementById(psuId[j]).classList.add('on-btn');
 			document.getElementById(psuDisplayId[j]).innerText = `${ipdu2_data[i]} VA`;
@@ -74,7 +79,7 @@ socket.onmessage = function (event) {
 
 	var ipdu3_data=data[3].split(",");
 	for (i = 2, j = 16; i <= 9; i++, j++) {
-		if (splited_data[i] >= 1) {
+		if (ipdu1_data[i] >= 1) {
 			document.getElementById(psuId[j]).innerText = 'ON';
 			document.getElementById(psuId[j]).classList.add('on-btn');
 			document.getElementById(psuDisplayId[j]).innerText = `${ipdu3_data[i]} VA`;
@@ -93,24 +98,24 @@ socket.onmessage = function (event) {
 	}
 
 	// Others Alarm Unit
-	// const alarmId = ['water-leakage', 'fire-Alarm', 'generator-status', 'ups1-cb-status', 'ups2-cb-status'];
-	// const alarmData = [['Alarm', 'No Alarm'], ['Alarm', 'No Alarm'], ['Off', 'On'], ['Tripped', 'ok'], ['Tripped', 'ok']]
+	const alarmId = ['water-leakage', 'fire-Alarm', 'generator-status', 'ups1-cb-status', 'ups2-cb-status'];
+	const alarmData = [['Alarm', 'No Alarm'], ['Alarm', 'No Alarm'], ['Off', 'On'], ['Tripped', 'ok'], ['Tripped', 'ok']]
 	// var ipdu1_data=data[2].split(",");
-	// for (i = 3, j = 0; i <= 9; i++, j++) {
-	// 	if (splited_data[i] == 1) {
-	// 		document.getElementById(alarmId[j]).innerText = alarmData[j][1];
-	// 		document.getElementById(alarmId[j]).classList.add('on-btn'); //green
-	// 	}
-	// 	else {
-	// 		document.getElementById(alarmId[j]).innerText = alarmData[j][0];
-	// 		document.getElementById(alarmId[j]).classList.add('off-btn'); //red
-	// 		let ul = document.getElementById('alert-list');
-	// 		let li = document.createElement('li');
-	// 		li.classList.add('alert-list-card');
-	// 		li.textContent = `${alarmId[j]} is ${alarmData[j][0]}`;
-	// 		ul.appendChild(li);
-	// 	}
-	// }
+	for (i = 7, j = 0; i <= 11; i++, j++) {
+		if (splited_data[i] == 1) {
+			document.getElementById(alarmId[j]).innerText = alarmData[j][1];
+			document.getElementById(alarmId[j]).classList.add('on-btn'); //green
+		}
+		else {
+			document.getElementById(alarmId[j]).innerText = alarmData[j][0];
+			document.getElementById(alarmId[j]).classList.add('off-btn'); //red
+			let ul = document.getElementById('alert-list');
+			let li = document.createElement('li');
+			li.classList.add('alert-list-card');
+			li.textContent = `${alarmId[j]} is ${alarmData[j][0]}`;
+			ul.appendChild(li);
+		}
+	}
 }
 
 // clear all data function
@@ -132,22 +137,25 @@ function clearAllData() {
 		if (psuElem) {
 			psuElem.innerText = '';
 			psuElem.className = '';
+			// psuElem.classList.remove('on-btn');
+			// psuElem.classList.remove('off-btn');
 		}
 		if (psuDisplayElem) {
 			psuDisplayElem.innerText = '';
 			psuDisplayElem.className = '';
+			// psuDisplayElem.classList.remove('show-btn');
 		}
 	}
 
 	// Clear alarm elements
-	// const alarmId = ['water-leakage', 'fire-Alarm', 'generator-status', 'ups1-cb-status', 'ups2-cb-status'];
-	// for (let j = 0; j < alarmId.length; j++) {
-	// 	const alarmElem = document.getElementById(alarmId[j]);
-	// 	if (alarmElem) {
-	// 		alarmElem.innerText = '';
-	// 		alarmElem.className = '';
-	// 	}
-	// }
+	const alarmId = ['water-leakage', 'fire-Alarm', 'generator-status', 'ups1-cb-status', 'ups2-cb-status'];
+	for (let j = 0; j < alarmId.length; j++) {
+		const alarmElem = document.getElementById(alarmId[j]);
+		if (alarmElem) {
+			alarmElem.innerText = '';
+			alarmElem.className = '';
+		}
+	}
 }
 
 // Set default data on page load
