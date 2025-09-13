@@ -140,14 +140,14 @@ function clearAllData() {
 	}
 
 	// Clear alarm elements
-	const alarmId = ['water-leakage', 'fire-Alarm', 'generator-status', 'ups1-cb-status', 'ups2-cb-status'];
-	for (let j = 0; j < alarmId.length; j++) {
-		const alarmElem = document.getElementById(alarmId[j]);
-		if (alarmElem) {
-			alarmElem.innerText = '';
-			alarmElem.className = '';
-		}
-	}
+	// const alarmId = ['water-leakage', 'fire-Alarm', 'generator-status', 'ups1-cb-status', 'ups2-cb-status'];
+	// for (let j = 0; j < alarmId.length; j++) {
+	// 	const alarmElem = document.getElementById(alarmId[j]);
+	// 	if (alarmElem) {
+	// 		alarmElem.innerText = '';
+	// 		alarmElem.className = '';
+	// 	}
+	// }
 }
 
 // Set default data on page load
