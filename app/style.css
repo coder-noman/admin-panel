@@ -15,12 +15,13 @@
   --dark-grey: #8d8d8d;
   --light: #fff;
   --dark: #000;
-  --green: #81d43a;
   --light-green: #e3ffcb;
-  --blue: #1775f1;
+  --blue: #3867D6;
   --light-blue: #d0e4ff;
   --dark-blue: #0c5fcd;
-  --red: rgba(255, 0, 0, 0.815);
+  --red: #FC5C65;
+  --yellow: #FE9B13;
+  --green: #4ECDC4;
 }
 
 html {
@@ -75,6 +76,7 @@ a {
 .brand-img {
   width: 28%;
 }
+
 .brand2 {
   padding: 3px;
   margin-left: 10px;
@@ -83,7 +85,8 @@ a {
 .brand2 a {
   font-size: 30px;
   font-style: italic;
-  color: var(--red);
+  /* color: var(--red); */
+  color: red;
   font-weight: bolder;
 }
 
@@ -95,6 +98,7 @@ a {
 .logo-text {
   color: gray;
 }
+
 #sidebar .icon {
   min-width: 48px;
   display: flex;
@@ -136,7 +140,7 @@ a {
   white-space: nowrap;
 }
 
-#sidebar .side-menu > li > a {
+#sidebar .side-menu>li>a {
   background: var(--grey2);
   color: var(--light);
 }
@@ -157,13 +161,15 @@ a {
   color: var(--blue);
 }
 
-#sidebar .alert {
+/* Alert Box  */
+.alert {
   width: 100%;
   padding: 20px;
 }
 
-#sidebar .alert .wrapper {
-  padding: 20px;
+
+.alert .wrapper {
+  padding: 10px;
   border-radius: 10px;
   overflow-wrap: break-word;
   background: var(--grey2);
@@ -171,6 +177,7 @@ a {
   height: 400px;
   overflow-y: auto;
 }
+
 .alert-list-card {
   padding: 10px 10px;
   border-radius: 10px;
@@ -179,9 +186,75 @@ a {
   box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.3);
   margin-bottom: 15px;
   font-style: italic;
-  color: #bb2124;
+  color: var(--red);
   font-weight: bold;
 }
+
+.alert-btn-upgrade {
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0;
+  color: var(--light);
+  background: var(--red);
+  /* background-color: red; */
+  transition: all 0.5s ease;
+  border-radius: 5px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* Device Information start*/
+.device {
+  width: 100%;
+  padding: 20px;
+}
+
+.device-wrapper {
+  padding: 10px;
+  border-radius: 10px;
+  overflow-wrap: break-word;
+  background: var(--grey2);
+  box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.3);
+  color: var(--light);
+  max-width: 400px;
+
+}
+
+.device-wrapper-card {
+  display: flex;
+  justify-content: space-between;
+}
+
+.device-label {
+  color: var(--green);
+  font-weight: bold;
+  font-size: 12px;
+  flex: 1;
+}
+
+.device-value {
+  text-align: left;
+  font-size: 12px;
+  flex: 1;
+}
+
+.device-btn-upgrade {
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0;
+  color: var(--dark);
+  background: var(--green);
+  transition: all 0.5s ease;
+  border-radius: 5px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+
+/* Device Information End */
 
 /* .alert-list {
 	height: 300px;
@@ -197,12 +270,14 @@ a {
   background: #2c2c2c;
   border-radius: 10px;
 }
+
 .wrapper::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, #1a2a3d, white);
   border-radius: 10px;
   border: 2px solid transparent;
   background-clip: content-box;
 }
+
 ::-webkit-scrollbar {
   width: 14px;
 }
@@ -211,6 +286,7 @@ a {
   background: #2c2c2c;
   border-radius: 10px;
 }
+
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, #1a2a3d, white);
   border-radius: 10px;
@@ -219,21 +295,6 @@ a {
 }
 
 /* Scroll Bar Design end */
-
-#sidebar .btn-upgrade {
-  font-size: 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 12px 0;
-  color: var(--light);
-  /* background: var(--red); */
-  background-color: red;
-  transition: all 0.5s ease;
-  border-radius: 5px;
-  font-weight: 600;
-  margin-bottom: 12px;
-}
 
 /* Content */
 #content {
@@ -277,13 +338,14 @@ nav .profile-box {
 }
 
 nav .profile-box span {
-  color: #0c5fcd;
+  color: var(--blue);
   font-size: 24px;
 }
 
 nav .profile {
   position: relative;
 }
+
 nav .profile {
   width: 50px;
   height: 50px;
@@ -340,7 +402,7 @@ main {
 
 .gauge-title i {
   font-size: 0.9rem;
-  color: #3b82f6;
+  color: var(--blue);
 }
 
 .gauge {
@@ -418,17 +480,17 @@ main {
 
 .status-normal {
   background-color: rgba(34, 197, 94, 0.15);
-  color: #22c55e;
+  color: var(--green);
 }
 
 .status-warning {
   background-color: rgba(234, 179, 8, 0.15);
-  color: #eab308;
+  color: var(--yellow);
 }
 
 .status-danger {
   background-color: rgba(239, 68, 68, 0.15);
-  color: #ef4444;
+  color: var(--red);
 }
 
 .controls {
@@ -451,7 +513,7 @@ main {
 
 /* psu update */
 .psu {
-  margin-bottom: 50px;
+  margin-bottom: 25px;
 }
 
 .pss-card-box {
@@ -489,22 +551,21 @@ main {
 }
 
 .on-btn {
-  background-color: green;
-  color: white;
+  background: var(--green);
+  color: black;
   padding: 2px 5px;
   border-radius: 7px;
 }
 
 .off-btn {
-  background-color: red;
-  color: white;
+  background: var(--red);
+  color: black;
   padding: 2px 5px;
   border-radius: 7px;
 }
 
 .show-btn {
-  background-color: #d8ab23ff;
-  color: white;
+  background: var(--yellow);
   padding: 2px 5px;
   border-radius: 7px;
   color: #000;
