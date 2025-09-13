@@ -18,12 +18,14 @@ socket.onmessage = function (event) {
 	console.log(data[3])
 	console.log(data[4])
 	var splited_data = data[4].split(",");
-	console.log(splited_data[7]);
-	console.log(splited_data[8]);
-	console.log(splited_data[9]);
-	console.log(splited_data[10]);
-	console.log(splited_data[11]);
-	console.log(splited_data[12]);
+	// console.log(splited_data[12]);
+	// console.log(splited_data[13]);
+	// console.log(splited_data[14]);
+	// console.log(splited_data[15]);
+	// console.log(splited_data[16]);
+	// console.log(splited_data[17]);
+	// console.log(splited_data[18]);
+	deviceInformation(splited_data[12],splited_data[13],splited_data[14],splited_data[15],splited_data[16],splited_data[17],splited_data[18],)
 	
 
 	// Main Unit
@@ -118,6 +120,46 @@ socket.onmessage = function (event) {
 	}
 }
 
+// device Information
+
+function deviceInformation(lan,gsmOp,gsmSig,ib,psu1,psu2,ds){
+	const lanIp = document.getElementById('device-lan');
+	const gsmOperator = document.getElementById('gsm-operator');
+	const gsmSignal = document.getElementById('gsm-signal');
+	const internalBattery = document.getElementById('internal-battery');
+	const devicePsu1 = document.getElementById('device-psu1');
+	const devicePsu2 = document.getElementById('device-psu2');
+	const dataSource = document.getElementById('data-source');
+
+	// Lan IP
+	document.getElementById('device-lan').innerHTML = `: ${lan}`;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	console.log(lan)
+	console.log(gsmOp)
+	console.log(gsmSig)
+	console.log(ib)
+	console.log(psu1)
+	console.log(psu2)
+	console.log(ds)
+
+
+
+}
+
 // clear all data function
 function clearAllData() {
 
@@ -137,13 +179,10 @@ function clearAllData() {
 		if (psuElem) {
 			psuElem.innerText = '';
 			psuElem.className = '';
-			// psuElem.classList.remove('on-btn');
-			// psuElem.classList.remove('off-btn');
 		}
 		if (psuDisplayElem) {
 			psuDisplayElem.innerText = '';
 			psuDisplayElem.className = '';
-			// psuDisplayElem.classList.remove('show-btn');
 		}
 	}
 
@@ -157,59 +196,6 @@ function clearAllData() {
 		}
 	}
 }
-
-// Set default data on page load
-// window.onload = function () {
-
-// 	const defaultData = [220, 220, 220, 48.5, 25, 75, 78, 0, 134, 492, 0, 112, 443, 307, 275, 0, 353, 487, 235, 127, 0, 423, 311, 0, 94, 299, 465, 0, 243, 104, 205, 1, 0, 0, 1, 0];
-
-// 	updateAllData(defaultData[0], defaultData[1], defaultData[2], defaultData[3], defaultData[4], defaultData[5])
-
-
-// 	const psuId = ['bgp-psu1', 'bgp-psu2', 'fortinet-psu1', 'fortinet-psu2', 'check-point-psu1', 'check-point-psu2', 'cisco-psu', 'lan-psu', 'cisco-distribution-psu', 'ho-dr-psu1', 'ho-dr-psu2', 'ho-service-psu1', 'ho-service-psu2', 'pabx-psu', 'nvr-psu', 'r730-1-psu1', 'r730-1-psu2', 'r730-2-psu1', 'r730-2-psu2', 'san-sw1-psu1', 'san-sw1-psu2', 'san-sw-psu1', 'san-sw-psu2', 'san-sorage-psu1', 'san-sorage-psu2'];
-// 	const psuDisplayId = [
-// 		'bgp-d-psu1', 'bgp-d-psu2', 'fortinet-d-psu1', 'fortinet-d-psu2', 'check-point-d-psu1', 'check-point-d-psu2', 'cisco-d-psu', 'lan-d-psu', 'cisco-distribution-d-psu', 'ho-dr-d-psu1', 'ho-dr-d-psu2', 'ho-service-d-psu1', 'ho-service-d-psu2', 'pabx-d-psu', 'nvr-d-psu', 'r730-1-d-psu1', 'r730-1-d-psu2', 'r730-2-d-psu1', 'r730-2-d-psu2',
-// 		'san-sw1-d-psu1', 'san-sw1-d-psu2', 'san-sw-d-psu1', 'san-sw-d-psu2', 'san-sorage-d-psu1', 'san-sorage-d-psu2'
-// 	];
-// 	var ipdu2_data=data[2].split(",");	
-// 	for (i = 2, j = 0; i <= 9; i++, j++) {
-// 		if (defaultData[i] >= 1) {
-// 			document.getElementById(psuId[j]).innerText = 'ON';
-// 			document.getElementById(psuId[j]).classList.add('on-btn');
-// 			document.getElementById(psuDisplayId[j]).innerText = `${defaultData[i]} VA`;
-// 			document.getElementById(psuDisplayId[j]).classList.add('show-btn');
-// 		}
-// 		else {
-// 			document.getElementById(psuId[j]).innerText = 'OFF';
-// 			document.getElementById(psuId[j]).classList.add('off-btn');
-// 			const ul = document.getElementById('alert-list');
-// 			const li = document.createElement('li');
-// 			li.classList.add('alert-list-card');
-// 			li.textContent = `${psuId[j]} is Failed.`;
-// 			ul.appendChild(li);
-// 		}
-// 	}
-
-// 	// Others Alarm Unit
-// 	const alarmId = ['water-leakage', 'fire-Alarm', 'generator-status', 'ups1-cb-status', 'ups2-cb-status'];
-// 	const alarmData = [['Alarm', 'No Alarm'], ['Alarm', 'No Alarm'], ['Off', 'On'], ['Tripped', 'ok'], ['Tripped', 'ok']]
-
-// 	for (i = 31, j = 0; i <= 35; i++, j++) {
-// 		if (defaultData[i] == 1) {
-// 			document.getElementById(alarmId[j]).innerText = alarmData[j][1];
-// 			document.getElementById(alarmId[j]).classList.add('on-btn'); //green
-// 		}
-// 		else {
-// 			document.getElementById(alarmId[j]).innerText = alarmData[j][0];
-// 			document.getElementById(alarmId[j]).classList.add('off-btn'); //red
-// 			let ul = document.getElementById('alert-list');
-// 			let li = document.createElement('li');
-// 			li.classList.add('alert-list-card');
-// 			li.textContent = `${alarmId[j]} is ${alarmData[j][0]}`;
-// 			ul.appendChild(li);
-// 		}
-// 	}
-// };
 
 // gauge data start 
 
