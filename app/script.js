@@ -12,23 +12,19 @@ socket.onmessage = function (event) {
 
 	// Clear all data function
 	clearAllData();
-    //var splited_data1 = msg.split(":");
-	console.log(data[1])
-	console.log(data[2])
-	console.log(data[3])
-	console.log(data[4])
+
+	// console.log(data[1])
+	// console.log(data[2])
+	// console.log(data[3])
+	// console.log(data[4])
+	
 	var splited_data = data[4].split(",");
-	// console.log(splited_data[12]);
-	// console.log(splited_data[13]);
-	// console.log(splited_data[14]);
-	// console.log(splited_data[15]);
-	// console.log(splited_data[16]);
-	// console.log(splited_data[17]);
-	// console.log(splited_data[18]);
+
+	// Device Inforfation
 	deviceInformation(splited_data[12],splited_data[13],splited_data[14],splited_data[15],splited_data[16],splited_data[17],splited_data[18],)
 	
 
-	// Main Unit
+	// Main Gauge
 	updateAllData(splited_data[1], splited_data[2], splited_data[3], splited_data[4], splited_data[5], splited_data[6])
 
 	// power supply unit 
@@ -138,10 +134,10 @@ function deviceInformation(lan,gsmOp,gsmSig,ib,psu1,psu2,ds){
 	gsmOperator.innerText = `: ${gsmOp}`;
 
 	// Gsm Signal 
-	gsmSignal.innerText = `: ${gsmSig}`;
+	gsmSignal.innerText = `: ${gsmSig} %`;
 
 	// Internal Battery
-	internalBattery.innerText = `: ${ib} %`;
+	internalBattery.innerText = `: ${ib} V`;
 
 	// Psu Stutus 1
 	if(psu1==1){
@@ -166,34 +162,6 @@ function deviceInformation(lan,gsmOp,gsmSig,ib,psu1,psu2,ds){
 	else if(ds==2){
 		dataSource.innerText = `: GPRS`;
 	}
-
-	
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	console.log(lan)
-	console.log(gsmOp)
-	console.log(gsmSig)
-	console.log(ib)
-	console.log(psu1)
-	console.log(psu2)
-	console.log(ds)
-
-
-
 }
 
 // clear all data function
@@ -238,11 +206,11 @@ function clearAllData() {
 // Function to determine color based on value and ranges
 function getColor(value, ranges) {
 	if (value >= ranges.green[0] && value <= ranges.green[1]) {
-		return '#22c55e'; // Green
+		return '#4ECDC4'; // Green
 	} else if (value >= ranges.orange[0] && value <= ranges.orange[1]) {
-		return '#d8ab23ff'; // Orange
+		return '#FE9B13'; // Orange
 	} else {
-		return '#ef4444'; // Red
+		return '#FC5C65'; // Red
 	}
 }
 
