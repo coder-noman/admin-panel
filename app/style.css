@@ -374,6 +374,10 @@ main {
   width: 100%;
   padding: 6px 20px 20px 20px;
 }
+main h1{
+  font-size: 20px;
+}
+
 /* gauge start */
 .gauges-container {
   display: grid;
