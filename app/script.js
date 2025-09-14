@@ -217,6 +217,20 @@ function deviceInformation(lan, gsmOp, gsmSig, ib, psu1, psu2, ds) {
   // Gsm Operator
   gsmOperator.innerText = `: ${gsmOp}`;
 
+  // if(gsmOp == 0){
+  //   gsmOperator.innerText = ': Not Found';
+  // }else if(gsmOp == 1){
+  //   gsmOperator.innerText = ': GP';
+  // }else if(gsmOp == 2){
+  //   gsmOperator.innerText = ': Robi';
+  // }else if(gsmOp == 3){
+  //   gsmOperator.innerText = ': Banglalink';
+  // }else if(gsmOp == 4){
+  //   gsmOperator.innerText = ': Airtel';
+  // }else if(gsmOp == 5){
+  //   gsmOperator.innerText = ': Teletalk';
+  // }
+
   // Gsm Signal
   gsmSignal.innerText = `: ${gsmSig} %`;
 

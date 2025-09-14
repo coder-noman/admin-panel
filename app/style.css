@@ -114,7 +114,7 @@ a {
 }
 
 #sidebar .side-menu {
-  margin-top: 36px;
+  margin-top: 17px;
   padding: 0 20px;
   transition: all 0.3s ease;
   list-style: none;
@@ -165,7 +165,7 @@ a {
 /* Alert Box  */
 .alert {
   width: 100%;
-  padding: 20px;
+  padding: 10px 20px;
 }
 
 
@@ -175,7 +175,7 @@ a {
   overflow-wrap: break-word;
   background: var(--grey2);
   box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.3);
-  height: 400px;
+  height: 176px;
   overflow-y: auto;
 }
 
@@ -208,7 +208,7 @@ a {
 /* Device Information start*/
 .device {
   width: 100%;
-  padding: 20px;
+  padding: 0 20px 20px 20px;
 }
 
 .device-wrapper {
@@ -311,7 +311,7 @@ nav {
   height: 64px;
   padding: 0 20px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
   grid-gap: 28px;
   position: sticky;
@@ -320,39 +320,48 @@ nav {
   z-index: 100;
 }
 
-nav h3 {
+.breadcumb {
+  display: flex;
+  justify-content: flex-end;
+  color: var(--green);
+  flex: 1;
+}
+
+.profile-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  font-size: 15px;
+  flex: 1;
+}
+
+.profile-box h3 {
   color: var(--yellow);
 }
 
-nav .divider {
+.profile-box .divider {
   width: 1px;
   background: var(--dark-grey);
   height: 12px;
   display: block;
 }
 
-nav .profile-box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 15px;
-}
-
-nav .profile-box span {
+.profile-box span {
   color: var(--blue);
   font-size: 24px;
 }
 
-nav .profile {
+.profile {
   position: relative;
 }
 
-nav .profile {
+.profile {
   width: 50px;
   height: 50px;
 }
 
-nav .profile img {
+.profile img {
   width: 100%;
   /* height: 50px; */
   border-radius: 30%;
@@ -365,12 +374,6 @@ main {
   width: 100%;
   padding: 6px 20px 20px 20px;
 }
-
-.breadcumb {
-  text-align: center;
-  color: var(--green);
-}
-
 /* gauge start */
 .gauges-container {
   display: grid;
