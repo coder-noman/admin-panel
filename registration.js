@@ -9,6 +9,7 @@ document.getElementById("login-form").addEventListener("submit", function (event
     const passwordInput = document.getElementById("password").value.trim();
 
     if (usernameInput === validUsername && passwordInput === validPassword) {
+        sessionStorage.setItem("loggedInUser", usernameInput);
         window.location.href = "./app/index.html";
     } else {
         alert("Incorrect username or password!");

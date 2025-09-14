@@ -1,3 +1,17 @@
+//Handle Logout Button Start
+const user = sessionStorage.getItem("loggedInUser");
+if (!user || user !== "admin") {
+  window.location.href = "../registration.html";
+}
+
+// logOut Button 
+document.getElementById("log-out").addEventListener("click", function () {
+  sessionStorage.removeItem("loggedInUser");
+  window.location.href = "../registration.html";
+});
+//Handle Logout Button End
+
+
 let ipdu1_arr = [];
 let ipdu2_arr = [];
 let ipdu3_arr = [];
