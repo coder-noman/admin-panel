@@ -175,7 +175,7 @@ a {
   overflow-wrap: break-word;
   background: var(--grey2);
   box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.3);
-  height: 176px;
+  height: 300px;
   overflow-y: auto;
 }
 
