@@ -4,17 +4,16 @@ if (!user || user !== "admin") {
   window.location.href = "../registration.html";
 }
 
-// logOut Button 
+// logOut Button
 document.getElementById("log-out").addEventListener("click", function () {
   sessionStorage.removeItem("loggedInUser");
   window.location.href = "../registration.html";
 });
 //Handle Logout Button End
 
-
-let ipdu1_arr = [];
-let ipdu2_arr = [];
-let ipdu3_arr = [];
+let ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
+let ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
+let ipdu3_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 
 //.........websocket_client code..............
 var socket = new WebSocket("ws://27.147.170.162:81");
@@ -112,44 +111,100 @@ socket.onmessage = function (event) {
     "san-sorage-d-psu1",
     "san-sorage-d-psu2",
   ];
+  const psuCardData = [
+  "BGP PSU1",
+  "BGP PSU2",
+  "Fortinet PSU1",
+  "Fortinet PSU2",
+  "Check P. PSU1",
+  "Check P. PSU2",
+  "Core Router PSU",
+  "LAN Router",
+  "CISCO Dist PSU",
+  "HO DR PSU1",
+  "HO DR PSU2",
+  "HO S PSU1",
+  "HO S PSU2",
+  "NVR PSU",
+  "R 730 1 PSU1",
+  "R 730 1 PSU2",
+  "R 730 2 PSU1",
+  "R 730 2 PSU2",
+  "SAN SW 1 PSU1",
+  "SAN SW 1 PSU2",
+  "SAN SW PSU1",
+  "SAN SW PSU2",
+  "SAN SORAGE PSU1",
+  "SAN SORAGE PSU2"
+];
 
+  // ipdu 1 Data Insert
   if (data[1] != "") {
     var ipdu1_data = data[1].split(",");
-    for (i = 2, j = 0; i <= 9; i++, j++) {
+    for (i = 2, k = 0; i <= 9; i++, k++) {
       if (ipdu1_data[i] >= 1) {
-        psuOnShowData(psuId[j], psuDisplayId[j], ipdu1_data[i]);
+        ipdu1_arr[k] = parseInt(ipdu1_data[i]);
       } else {
-        psuOffShowData(psuId[j]);
+        ipdu1_arr[k] = parseInt(ipdu1_data[i]);
       }
     }
   }
-  // else{
-  // 	console.log("ipdu1 is off.")
-  // }
 
+  // ipdu 1 Data show
+  for (i = 0, j = 0; i <= 7; i++, j++) {
+    if (ipdu1_arr[i] >= 1) {
+      psuOnShowData(psuId[j], psuDisplayId[j], ipdu1_arr[i]);
+    } else {
+      psuOffShowData(psuId[j],psuCardData[j]);
+    }
+  }
+
+  // ipdu 2 Data Insert
   if (data[2] != "") {
     var ipdu2_data = data[2].split(",");
-    for (i = 2, j = 8; i <= 9; i++, j++) {
+    for (i = 2, k = 0; i <= 9; i++, k++) {
       if (ipdu2_data[i] >= 1) {
-        psuOnShowData(psuId[j], psuDisplayId[j], ipdu2_data[i]);
+        ipdu2_arr[k] = parseInt(ipdu2_data[i]);
       } else {
-        psuOffShowData(psuId[j]);
+        ipdu2_arr[k] = parseInt(ipdu2_data[i]);
       }
     }
-  } else {
-    console.log("ipdu1 is off.");
   }
 
+  // ipdu 2 Data show
+  for (i = 0, j = 8; i <= 7; i++, j++) {
+    if (ipdu2_arr[i] >= 1) {
+      psuOnShowData(psuId[j], psuDisplayId[j], ipdu2_arr[i]);
+    } else {
+      psuOffShowData(psuId[j],psuCardData[j]);
+    }
+  }
+
+  // ipdu 3 Data Insert
   if (data[3] != "") {
     var ipdu3_data = data[3].split(",");
-    for (i = 2, j = 16; i <= 9; i++, j++) {
+    for (i = 2, k = 0; i <= 9; i++, k++) {
       if (ipdu3_data[i] >= 1) {
-        psuOnShowData(psuId[j], psuDisplayId[j], ipdu3_data[i]);
+        ipdu3_arr[k] = parseInt(ipdu3_data[i]);
       } else {
-        psuOffShowData(psuId[j]);
+        ipdu3_arr[k] = parseInt(ipdu3_data[i]);
       }
     }
   }
+
+  // ipdu 3 Data show
+  for (i = 0, j = 16; i <= 7; i++, j++) {
+    if (ipdu3_arr[i] >= 1) {
+      psuOnShowData(psuId[j], psuDisplayId[j], ipdu3_arr[i]);
+    } else {
+      psuOffShowData(psuId[j],psuCardData[j]);
+    }
+  }
+
+  console.log("ipdu1 = ", ipdu1_arr);
+  console.log("ipdu2 = ", ipdu2_arr);
+  console.log("ipdu3 = ", ipdu3_arr);
+
   // Others Alarm Unit
   const alarmId = [
     "water-leakage",
@@ -157,6 +212,13 @@ socket.onmessage = function (event) {
     "generator-status",
     "ups1-cb-status",
     "ups2-cb-status",
+  ];
+  const alarmCardId = [
+    "Water Leakage",
+    "Fire-Alarm",
+    "Generator Status",
+    "Ups1 cb Status",
+    "Ups2 cb Status",
   ];
   const alarmData = [
     ["Alarm", "No Alarm"],
@@ -176,7 +238,7 @@ socket.onmessage = function (event) {
       let ul = document.getElementById("alert-list");
       let li = document.createElement("li");
       li.classList.add("alert-list-card");
-      li.textContent = `${alarmId[j]} is ${alarmData[j][0]}`;
+      li.textContent = `${alarmCardId[j]} is ${alarmData[j][0]}`;
       ul.appendChild(li);
     }
   }
@@ -190,13 +252,13 @@ function psuOnShowData(psu_Id, psu_d_id, psu_value) {
   document.getElementById(psu_d_id).classList.add("show-btn");
 }
 //Psu Off Show Data Funtion
-function psuOffShowData(psu_Id) {
+function psuOffShowData(psu_Id,psuCardData) {
   document.getElementById(psu_Id).innerText = "OFF";
   document.getElementById(psu_Id).classList.add("off-btn");
   let ul = document.getElementById("alert-list");
   let li = document.createElement("li");
   li.classList.add("alert-list-card");
-  li.textContent = `${psu_Id} is Failed.`;
+  li.textContent = `${psuCardData} Failed.`;
   ul.appendChild(li);
 }
 
