@@ -25,7 +25,7 @@ socket.onmessage = function (event) {
   if (data_catagory !== "Hams_HO") {
     return;
   }
-
+  
   // Clear all data function
   clearAllData();
 
@@ -243,6 +243,7 @@ socket.onmessage = function (event) {
     }
   }
 };
+console.log('hello nOman');
 
 //Psu On Show Data Funtion
 function psuOnShowData(psu_Id, psu_d_id, psu_value) {
