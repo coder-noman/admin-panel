@@ -695,6 +695,8 @@ function initCharts() {
       },
       scales: {
         y: {
+          min: 0,
+          max: 350,
           beginAtZero: true,
           grid: {
             color: "rgba(160, 174, 192, 0.1)",
@@ -704,9 +706,7 @@ function initCharts() {
             font: {
               size: 12,
             },
-          },
-          suggestedMin: 0,
-          suggestedMax: 350,
+          }
         },
         x: {
           grid: {
@@ -724,8 +724,7 @@ function initCharts() {
   });
 }
 
-// Start the dashboard when the page loads
-window.addEventListener("load", initCharts);
+initCharts();
 // Chart data end
 
 // Sidebar Dropdown
