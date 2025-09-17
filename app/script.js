@@ -11,6 +11,21 @@ document.getElementById("log-out").addEventListener("click", function () {
 });
 //Handle Logout Button End
 
+// if data is not coming start 
+let dataReceived = false;
+
+const timeout = setTimeout(() => {
+  if (!dataReceived) {
+    showDefaultData();
+  }
+}, 9000);
+
+function showDefaultData() {
+  console.log("Hello from default!");
+}
+
+// if data is not coming end 
+
 let ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu3_arr = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -22,9 +37,19 @@ socket.onmessage = function (event) {
   const data_catagory = data[0] || "";
   const msg = data[1] || "";
 
-  if (data_catagory !== "Hams_HO") {
+  // checking data is coming or not start 
+  if (data_catagory == "Hams_HO") {
+    dataReceived = true;
+    clearTimeout(timeout);
+  }
+  else{
     return;
   }
+// checking data is coming or not end 
+
+  // if (data_catagory !== "Hams_HO") {
+  //   return;
+  // }
   
   // Clear all data function
   clearAllData();
@@ -243,7 +268,7 @@ socket.onmessage = function (event) {
     }
   }
 };
-console.log('hello nOman');
+// console.log('hello nOman');
 
 //Psu On Show Data Funtion
 function psuOnShowData(psu_Id, psu_d_id, psu_value) {
