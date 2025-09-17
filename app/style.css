@@ -508,17 +508,6 @@ main h1 {
   margin-top: 20px;
 }
 
-.dashboard-title {
-  text-align: center;
-  margin-bottom: 15px;
-  font-size: 1.2rem;
-  color: #e2e8f0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-}
-
 /* gauge end */
 
 /* chart start */
@@ -538,10 +527,6 @@ main h1 {
   padding: 15px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  /* width: 518px;
-  height: 300px; */
-  /* width: 500px;
-  height: 350px; */
 }
 
 .chart-title {
