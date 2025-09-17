@@ -5,6 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart js  -->
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+     <!-- css -->
     <link rel="stylesheet" href="style.css">
     <title>AdminSite</title>
 </head>
@@ -214,7 +217,24 @@
                 </div>
             </div>
             <!-- Gauge card end -->
-            
+
+            <!-- Chart start -->
+            <div class="dashboard">
+                <div class="chart-card">
+                    <div class="chart-title">Temperature & Humidity</div>
+                    <div class="chart-container">
+                        <canvas id="environment-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="chart-title">Input1, UPS1 and UPS2 Voltage </div>
+                    <div class="chart-container">
+                        <canvas id="voltage-chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <!-- Chart end -->
 
             <!-- psu update -->
             <section class="psu">

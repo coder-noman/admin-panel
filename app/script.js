@@ -11,7 +11,7 @@ document.getElementById("log-out").addEventListener("click", function () {
 });
 //Handle Logout Button End
 
-// if data is not coming start 
+// if data is not coming start
 let dataReceived = false;
 
 const timeout = setTimeout(() => {
@@ -24,7 +24,7 @@ function showDefaultData() {
   console.log("Hello from default!");
 }
 
-// if data is not coming end 
+// if data is not coming end
 
 let ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -37,20 +37,19 @@ socket.onmessage = function (event) {
   const data_catagory = data[0] || "";
   const msg = data[1] || "";
 
-  // checking data is coming or not start 
+  // checking data is coming or not start
   if (data_catagory == "Hams_HO") {
     dataReceived = true;
     clearTimeout(timeout);
-  }
-  else{
+  } else {
     return;
   }
-// checking data is coming or not end 
+  // checking data is coming or not end
 
   // if (data_catagory !== "Hams_HO") {
   //   return;
   // }
-  
+
   // Clear all data function
   clearAllData();
 
@@ -137,31 +136,31 @@ socket.onmessage = function (event) {
     "san-sorage-d-psu2",
   ];
   const psuCardData = [
-  "BGP PSU1",
-  "BGP PSU2",
-  "Fortinet PSU1",
-  "Fortinet PSU2",
-  "Check P. PSU1",
-  "Check P. PSU2",
-  "Core Router PSU",
-  "LAN Router",
-  "CISCO Dist PSU",
-  "HO DR PSU1",
-  "HO DR PSU2",
-  "HO S PSU1",
-  "HO S PSU2",
-  "NVR PSU",
-  "R 730 1 PSU1",
-  "R 730 1 PSU2",
-  "R 730 2 PSU1",
-  "R 730 2 PSU2",
-  "SAN SW 1 PSU1",
-  "SAN SW 1 PSU2",
-  "SAN SW PSU1",
-  "SAN SW PSU2",
-  "SAN SORAGE PSU1",
-  "SAN SORAGE PSU2"
-];
+    "BGP PSU1",
+    "BGP PSU2",
+    "Fortinet PSU1",
+    "Fortinet PSU2",
+    "Check P. PSU1",
+    "Check P. PSU2",
+    "Core Router PSU",
+    "LAN Router",
+    "CISCO Dist PSU",
+    "HO DR PSU1",
+    "HO DR PSU2",
+    "HO S PSU1",
+    "HO S PSU2",
+    "NVR PSU",
+    "R 730 1 PSU1",
+    "R 730 1 PSU2",
+    "R 730 2 PSU1",
+    "R 730 2 PSU2",
+    "SAN SW 1 PSU1",
+    "SAN SW 1 PSU2",
+    "SAN SW PSU1",
+    "SAN SW PSU2",
+    "SAN SORAGE PSU1",
+    "SAN SORAGE PSU2",
+  ];
 
   // ipdu 1 Data Insert
   if (data[1] != "") {
@@ -180,7 +179,7 @@ socket.onmessage = function (event) {
     if (ipdu1_arr[i] >= 1) {
       psuOnShowData(psuId[j], psuDisplayId[j], ipdu1_arr[i]);
     } else {
-      psuOffShowData(psuId[j],psuCardData[j]);
+      psuOffShowData(psuId[j], psuCardData[j]);
     }
   }
 
@@ -201,7 +200,7 @@ socket.onmessage = function (event) {
     if (ipdu2_arr[i] >= 1) {
       psuOnShowData(psuId[j], psuDisplayId[j], ipdu2_arr[i]);
     } else {
-      psuOffShowData(psuId[j],psuCardData[j]);
+      psuOffShowData(psuId[j], psuCardData[j]);
     }
   }
 
@@ -222,7 +221,7 @@ socket.onmessage = function (event) {
     if (ipdu3_arr[i] >= 1) {
       psuOnShowData(psuId[j], psuDisplayId[j], ipdu3_arr[i]);
     } else {
-      psuOffShowData(psuId[j],psuCardData[j]);
+      psuOffShowData(psuId[j], psuCardData[j]);
     }
   }
 
@@ -278,7 +277,7 @@ function psuOnShowData(psu_Id, psu_d_id, psu_value) {
   document.getElementById(psu_d_id).classList.add("show-btn");
 }
 //Psu Off Show Data Funtion
-function psuOffShowData(psu_Id,psuCardData) {
+function psuOffShowData(psu_Id, psuCardData) {
   document.getElementById(psu_Id).innerText = "OFF";
   document.getElementById(psu_Id).classList.add("off-btn");
   let ul = document.getElementById("alert-list");
@@ -552,6 +551,182 @@ function updateAllData(a, b, c, d, e, f) {
   });
 }
 updateAllData();
+
+// Chart data Start
+// Initialize variables
+let environmentChart, voltageChart;
+
+// Static data for the charts
+const timeLabels = ["10:00", "10:05", "10:10", "10:15", "10:20"];
+let temperature = [10, 20, 10, 40, 10]; // Your specified default data
+let humidity = [10, 50, 10, 60, 40]; // Sample humidity data
+
+const voltageData = {
+  input: [150], // Initialized to 0
+  ups1: [350], // Initialized to 0
+  ups2: [300], // Initialized to 0
+};
+let color = "white";
+
+// Initialize charts
+function initCharts() {
+  // Environment chart (temperature and humidity)
+  const environmentCtx = document
+    .getElementById("environment-chart")
+    .getContext("2d");
+  environmentChart = new Chart(environmentCtx, {
+    type: "line",
+    data: {
+      labels: timeLabels,
+      datasets: [
+        {
+          label: "Temperature (°C)",
+          data: temperature,
+          borderColor: "#ff9f1a",
+          backgroundColor: "rgba(255, 159, 26, 0.1)",
+          borderWidth: 2,
+          tension: 0.3,
+          yAxisID: "y",
+          fill: true,
+        },
+        {
+          label: "Humidity (%)",
+          data: humidity,
+          borderColor: "#3867d6",
+          backgroundColor: "rgba(56, 103, 214, 0.1)",
+          borderWidth: 2,
+          tension: 0.3,
+          yAxisID: "y1",
+          fill: true,
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          labels: {
+            color: `${color}`,
+            font: {
+              size: 14,
+            },
+          },
+        },
+      },
+      scales: {
+        x: {
+          grid: {
+            color: "rgba(160, 174, 192, 0.1)",
+          },
+          ticks: {
+            color: `${color}`,
+            maxTicksLimit: 5,
+            font: {
+              size: 12,
+            },
+          },
+        },
+        y: {
+          type: "linear",
+          display: true,
+          position: "left",
+          grid: {
+            color: "rgba(160, 174, 192, 0.1)",
+          },
+          ticks: {
+            color: `${color}`,
+            font: {
+              size: 12,
+            },
+          },
+          suggestedMin: 0,
+          suggestedMax: 60,
+        },
+        y1: {
+          type: "linear",
+          display: true,
+          position: "right",
+          grid: {
+            drawOnChartArea: false,
+          },
+          ticks: {
+            color: `${color}`,
+            font: {
+              size: 12,
+            },
+          },
+          suggestedMin: 30,
+          suggestedMax: 70,
+        },
+      },
+    },
+  });
+
+  // bar chart
+  const voltageCtx = document.getElementById("voltage-chart").getContext("2d");
+  voltageChart = new Chart(voltageCtx, {
+    type: "bar",
+    data: {
+      labels: ["Input", "UPS 1", "UPS 2"],
+      datasets: [
+        {
+          label: "Voltage (V)",
+          data: [
+            voltageData.input[voltageData.input.length - 1],
+            voltageData.ups1[voltageData.ups1.length - 1],
+            voltageData.ups2[voltageData.ups2.length - 1],
+          ],
+          backgroundColor: [
+            "rgba(78, 205, 196, 0.7)",
+            "rgba(252, 92, 101, 0.7)",
+            "rgba(136, 152, 176, 0.7)",
+          ],
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          display: false,
+        },
+      },
+      scales: {
+        y: {
+          beginAtZero: true,
+          grid: {
+            color: "rgba(160, 174, 192, 0.1)",
+          },
+          ticks: {
+            color: `${color}`,
+            font: {
+              size: 12,
+            },
+          },
+          suggestedMin: 0,
+          suggestedMax: 350,
+        },
+        x: {
+          grid: {
+            display: false,
+          },
+          ticks: {
+            color: `${color}`,
+            font: {
+              size: 12,
+            },
+          },
+        },
+      },
+    },
+  });
+}
+
+// Start the dashboard when the page loads
+window.addEventListener("load", initCharts);
+// Chart data end
 
 // Sidebar Dropdown
 // const allDropdown = document.querySelectorAll('#sidebar .side-dropdown');
