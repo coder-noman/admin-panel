@@ -1,296 +1,310 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IoT Monitoring Dashboard</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            background-color: #0f1c2d;
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-        
-        .dashboard {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            max-width: 800px;
-        }
-        
-        .chart-card {
-            background: linear-gradient(145deg, #1a2a3d, #152232);
-            border-radius: 8px;
-            padding: 15px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-            width: 500px;
-            height: 350px;
-        }
-        
-        .chart-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #a0aec0;
-            margin-bottom: 10px;
-            text-align: center;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        .chart-container {
-            height: 300px;
-            width: 100%;
-        }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        background-color: #0f1c2d;
+        padding: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      .dashboard {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        max-width: 800px;
+      }
+
+      .chart-card {
+        background: linear-gradient(145deg, #1a2a3d, #152232);
+        border-radius: 8px;
+        padding: 15px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        width: 500px;
+        height: 350px;
+      }
+
+      .chart-title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #a0aec0;
+        margin-bottom: 10px;
+        text-align: center;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      .chart-container {
+        height: 300px;
+        width: 100%;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="dashboard">
-        <div class="chart-card">
-            <div class="chart-title">Temperature & Humidity</div>
-            <div class="chart-container">
-                <canvas id="environment-chart"></canvas>
-            </div>
+      <div class="chart-card">
+        <div class="chart-title">Temperature & Humidity</div>
+        <div class="chart-container">
+          <canvas id="environment-chart"></canvas>
         </div>
-        
-        <div class="chart-card">
-            <div class="chart-title">Voltage Readings</div>
-            <div class="chart-container">
-                <canvas id="voltage-chart"></canvas>
-            </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-title">Voltage Readings</div>
+        <div class="chart-container">
+          <canvas id="voltage-chart"></canvas>
         </div>
+      </div>
     </div>
 
     <script>
-        // Initialize variables
-        let environmentChart, voltageChart;
-        const timeLabels = [];
-        const environmentData = { temperature: [], humidity: [] };
-        const voltageData = { input: [], ups1: [], ups2: [] };
-        
-        // Initialize charts
-        function initCharts() {
-            // Environment chart (temperature and humidity)
-            const environmentCtx = document.getElementById('environment-chart').getContext('2d');
-            environmentChart = new Chart(environmentCtx, {
-                type: 'line',
-                data: {
-                    labels: timeLabels,
-                    datasets: [
-                        {
-                            label: 'Temperature (°C)',
-                            data: environmentData.temperature,
-                            borderColor: '#ff9f1a',
-                            backgroundColor: 'rgba(255, 159, 26, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.3,
-                            yAxisID: 'y',
-                            fill: true
-                        },
-                        {
-                            label: 'Humidity (%)',
-                            data: environmentData.humidity,
-                            borderColor: '#3867d6',
-                            backgroundColor: 'rgba(56, 103, 214, 0.1)',
-                            borderWidth: 2,
-                            tension: 0.3,
-                            yAxisID: 'y1',
-                            fill: true
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            labels: {
-                                color: '#a0aec0',
-                                font: {
-                                    size: 10
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        x: {
-                            grid: {
-                                color: 'rgba(160, 174, 192, 0.1)'
-                            },
-                            ticks: {
-                                color: '#a0aec0',
-                                maxTicksLimit: 5,
-                                font: {
-                                    size: 9
-                                }
-                            }
-                        },
-                        y: {
-                            type: 'linear',
-                            display: true,
-                            position: 'left',
-                            grid: {
-                                color: 'rgba(160, 174, 192, 0.1)'
-                            },
-                            ticks: {
-                                color: '#a0aec0',
-                                font: {
-                                    size: 9
-                                }
-                            },
-                            suggestedMin: 15,
-                            suggestedMax: 35
-                        }
-                    }
-                }
-            });
-            
-            // Voltage chart (bar chart)
-            const voltageCtx = document.getElementById('voltage-chart').getContext('2d');
-            voltageChart = new Chart(voltageCtx, {
-                type: 'bar',
-                data: {
-                    labels: ['Input', 'UPS 1', 'UPS 2'],
-                    datasets: [
-                        {
-                            label: 'Voltage (V)',
-                            data: [voltageData.input[voltageData.input.length-1] || 0, 
-                                   voltageData.ups1[voltageData.ups1.length-1] || 0, 
-                                   voltageData.ups2[voltageData.ups2.length-1] || 0],
-                            backgroundColor: [
-                                'rgba(78, 205, 196, 0.7)',
-                                'rgba(252, 92, 101, 0.7)',
-                                'rgba(136, 152, 176, 0.7)'
-                            ],
-                            borderColor: [
-                                'rgb(78, 205, 196)',
-                                'rgb(252, 92, 101)',
-                                'rgb(136, 152, 176)'
-                            ],
-                            borderWidth: 1
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: false
-                        }
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: false,
-                            grid: {
-                                color: 'rgba(160, 174, 192, 0.1)'
-                            },
-                            ticks: {
-                                color: '#a0aec0',
-                                font: {
-                                    size: 9
-                                }
-                            },
-                            suggestedMin: 0,
-                            suggestedMax: 350
-                        },
-                        x: {
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: '#a0aec0',
-                                font: {
-                                    size: 10
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }
-        
-        // Generate random data within realistic ranges
-        function generateRandomData() {
-            return {
-                inputVoltage: 100,
-                ups1Voltage: 80,
-                ups2Voltage: 90,
-                temperature: 50,
-                humidity: 3
-            };
-        }
-        
-        // Update dashboard with new data
-        function updateDashboard() {
-            const data = generateRandomData();
-            const now = new Date();
-            const timeString = now.toLocaleTimeString();
+      // Initialize variables
+      let environmentChart, voltageChart;
+      const timeLabels = [];
+      const environmentData = { temperature: [], humidity: [] };
+      const voltageData = { input: [], ups1: [], ups2: [] };
 
-            console.log(now);
-            console.log(timeString);
-            
-            // Update chart data
-            if (timeLabels.length >= 8) {
-                timeLabels.shift();
-                environmentData.temperature.shift();
-                environmentData.humidity.shift();
-                voltageData.input.shift();
-                voltageData.ups1.shift();
-                voltageData.ups2.shift();
-            }
-            
-            timeLabels.push(timeString);
-            environmentData.temperature.push(parseFloat(data.temperature));
-            environmentData.humidity.push(parseFloat(data.humidity));
-            voltageData.input.push(parseFloat(data.inputVoltage));
-            voltageData.ups1.push(parseFloat(data.ups1Voltage));
-            voltageData.ups2.push(parseFloat(data.ups2Voltage));
-            
-            // Update charts
-            environmentChart.update();
-            
-            // For the bar chart, we only show the latest reading
-            voltageChart.data.datasets[0].data = [
-                voltageData.input[voltageData.input.length-1],
-                voltageData.ups1[voltageData.ups1.length-1],
-                voltageData.ups2[voltageData.ups2.length-1]
-            ];
-            voltageChart.update();
+      // Initialize charts
+      function initCharts() {
+        // Environment chart (temperature and humidity)
+        const environmentCtx = document
+          .getElementById("environment-chart")
+          .getContext("2d");
+        environmentChart = new Chart(environmentCtx, {
+          type: "line",
+          data: {
+            labels: timeLabels,
+            datasets: [
+              {
+                label: "Temperature (°C)",
+                data: environmentData.temperature,
+                borderColor: "#ff9f1a",
+                backgroundColor: "rgba(255, 159, 26, 0.1)",
+                borderWidth: 2,
+                tension: 0.3,
+                yAxisID: "y",
+                fill: true,
+              },
+              {
+                label: "Humidity (%)",
+                data: environmentData.humidity,
+                borderColor: "#3867d6",
+                backgroundColor: "rgba(56, 103, 214, 0.1)",
+                borderWidth: 2,
+                tension: 0.3,
+                yAxisID: "y1",
+                fill: true,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                labels: {
+                  color: "#a0aec0",
+                  font: {
+                    size: 10,
+                  },
+                },
+              },
+            },
+            scales: {
+              x: {
+                grid: {
+                  color: "rgba(160, 174, 192, 0.1)",
+                },
+                ticks: {
+                  color: "#a0aec0",
+                  maxTicksLimit: 5,
+                  font: {
+                    size: 9,
+                  },
+                },
+              },
+              y: {
+                type: "linear",
+                display: true,
+                position: "left",
+                grid: {
+                  color: "rgba(160, 174, 192, 0.1)",
+                },
+                ticks: {
+                  color: "#a0aec0",
+                  font: {
+                    size: 9,
+                  },
+                },
+                suggestedMin: 15,
+                suggestedMax: 35,
+              },
+            },
+          },
+        });
+
+        // Voltage chart (bar chart)
+        const voltageCtx = document
+          .getElementById("voltage-chart")
+          .getContext("2d");
+        voltageChart = new Chart(voltageCtx, {
+          type: "bar",
+          data: {
+            labels: ["Input", "UPS 1", "UPS 2"],
+            datasets: [
+              {
+                label: "Voltage (V)",
+                data: [
+                  voltageData.input[voltageData.input.length - 1] || 0,
+                  voltageData.ups1[voltageData.ups1.length - 1] || 0,
+                  voltageData.ups2[voltageData.ups2.length - 1] || 0,
+                ],
+                backgroundColor: [
+                  "rgba(78, 205, 196, 0.7)",
+                  "rgba(252, 92, 101, 0.7)",
+                  "rgba(136, 152, 176, 0.7)",
+                ],
+                borderColor: [
+                  "rgb(78, 205, 196)",
+                  "rgb(252, 92, 101)",
+                  "rgb(136, 152, 176)",
+                ],
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: false,
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: false,
+                grid: {
+                  color: "rgba(160, 174, 192, 0.1)",
+                },
+                ticks: {
+                  color: "#a0aec0",
+                  font: {
+                    size: 9,
+                  },
+                },
+                suggestedMin: 0,
+                suggestedMax: 350,
+              },
+              x: {
+                grid: {
+                  display: false,
+                },
+                ticks: {
+                  color: "#a0aec0",
+                  font: {
+                    size: 10,
+                  },
+                },
+              },
+            },
+          },
+        });
+      }
+
+      // Generate random data within realistic ranges
+      function generateRandomData() {
+        return {
+          inputVoltage: 100,
+          ups1Voltage: 80,
+          ups2Voltage: 90,
+          temperature: 50,
+          humidity: 3,
+        };
+      }
+
+      // Update dashboard with new data
+      function updateDashboard() {
+        const data = generateRandomData();
+        const now = new Date();
+        const timeString = now.toLocaleTimeString();
+
+        console.log(now);
+        console.log(timeString);
+
+        // Update chart data
+        if (timeLabels.length >= 8) {
+          timeLabels.shift();
+          environmentData.temperature.shift();
+          environmentData.humidity.shift();
+          voltageData.input.shift();
+          voltageData.ups1.shift();
+          voltageData.ups2.shift();
         }
-        
-        // Initialize dashboard
-        function initDashboard() {
-            // Generate initial data points
-            for (let i = 7; i >= 0; i--) {
-                const time = new Date();
-                time.setMinutes(time.getMinutes() - i);
-                timeLabels.push(time.toLocaleTimeString());
-                
-                const data = generateRandomData();
-                environmentData.temperature.push(parseFloat(data.temperature));
-                environmentData.humidity.push(parseFloat(data.humidity));
-                voltageData.input.push(parseFloat(data.inputVoltage));
-                voltageData.ups1.push(parseFloat(data.ups1Voltage));
-                voltageData.ups2.push(parseFloat(data.ups2Voltage));
-            }
-            
-            initCharts();
-            
-            // Set up periodic updates
-            setInterval(updateDashboard, 5000);
+
+        timeLabels.push(timeString);
+        environmentData.temperature.push(parseFloat(data.temperature));
+        environmentData.humidity.push(parseFloat(data.humidity));
+        voltageData.input.push(parseFloat(data.inputVoltage));
+        voltageData.ups1.push(parseFloat(data.ups1Voltage));
+        voltageData.ups2.push(parseFloat(data.ups2Voltage));
+
+        // Update charts
+        environmentChart.update();
+
+        // For the bar chart, we only show the latest reading
+        voltageChart.data.datasets[0].data = [
+          voltageData.input[voltageData.input.length - 1],
+          voltageData.ups1[voltageData.ups1.length - 1],
+          voltageData.ups2[voltageData.ups2.length - 1],
+        ];
+        voltageChart.update();
+      }
+
+      // Initialize dashboard
+      function initDashboard() {
+        // Generate initial data points
+        for (let i = 7; i >= 0; i--) {
+          const time = new Date();
+          time.setMinutes(time.getMinutes() - i);
+          timeLabels.push(time.toLocaleTimeString());
+
+          const data = generateRandomData();
+          environmentData.temperature.push(parseFloat(data.temperature));
+          environmentData.humidity.push(parseFloat(data.humidity));
+          voltageData.input.push(parseFloat(data.inputVoltage));
+          voltageData.ups1.push(parseFloat(data.ups1Voltage));
+          voltageData.ups2.push(parseFloat(data.ups2Voltage));
         }
-        
-        // Start the dashboard when the page loads
-        window.addEventListener('load', initDashboard);
+
+        initCharts();
+
+        // Set up periodic updates
+        setInterval(updateDashboard, 5000);
+      }
+
+      // Start the dashboard when the page loads
+      window.addEventListener("load", initDashboard);
+    //   let frozenTime = new Date().toLocaleTimeString();
+
+    //   console.log("Captured time:", frozenTime);
+
+    //   setInterval(() => {
+    //     let currentTime = new Date().toLocaleTimeString();
+    //     console.log("Live time:", currentTime, "| Frozen time:", frozenTime);
+    //   }, 1000);
     </script>
-</body>
+  </body>
 </html>

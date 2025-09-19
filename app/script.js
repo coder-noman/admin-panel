@@ -12,23 +12,39 @@ document.getElementById("log-out").addEventListener("click", function () {
 //Handle Logout Button End
 
 // if data is not coming start
-let dataReceived = false;
+// let dataReceived = false;
 
 // const timeout = setTimeout(() => {
 //   if (!dataReceived) {
 //     showDefaultData();
 //   }
-// }, 9000);
-
-function showDefaultData() {
-  console.log("Hello from default!");
-}
+// }, 2000);
+// showDefaultData();
+// function showDefaultData() {
+//   console.log("Hello from default!");
+// }
 
 // if data is not coming end
 
 let ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu3_arr = [0, 0, 0, 0, 0, 0, 0, 0];
+
+let alarm_arr = [1, 1, 1, 1, 1];
+
+// Chart data Start
+let temp = [0, 0, 0, 0, 0, 0, 0, 0];
+let hum = [0, 0, 0, 0, 0, 0, 0, 0];
+const tim = [
+  "11:00",
+  "11:05",
+  "11:10",
+  "11:15",
+  "11:20",
+  "11:25",
+  "11:30",
+  "11:35",
+];
 
 //.........websocket_client code..............
 var socket = new WebSocket("ws://27.147.170.162:81");
@@ -39,8 +55,8 @@ socket.onmessage = function (event) {
 
   // checking data is coming or not start
   if (data_catagory == "Hams_HO") {
-    dataReceived = true;
-    clearTimeout(timeout);
+    // dataReceived = true;
+    // clearTimeout(timeout);
   } else {
     return;
   }
@@ -60,6 +76,19 @@ socket.onmessage = function (event) {
 
   var splited_data = data[4].split(",");
 
+  // Main Gauge
+  updateAllData(
+    splited_data[1],
+    splited_data[2],
+    splited_data[3],
+    splited_data[4],
+    splited_data[5],
+    splited_data[6]
+  );
+
+  // Line chart Data
+  updateLineChart(splited_data[5], splited_data[6]);
+
   // Device Inforfation
   deviceInformation(
     splited_data[12],
@@ -71,17 +100,18 @@ socket.onmessage = function (event) {
     splited_data[18]
   );
 
-  // Main Gauge
-  updateAllData(
-    splited_data[1],
-    splited_data[2],
-    splited_data[3],
-    splited_data[4],
-    splited_data[5],
-    splited_data[6]
-  );
-
   // power supply unit
+  psuData(data[1], data[2], data[3]);
+
+  // Others Alarm Unit
+
+  for (i = 7, j = 0; i <= 11; i++, j++) {
+    alarm_arr[j] = parseInt(splited_data[i]);
+  }
+  alarmData(alarm_arr);
+};
+// Psu data start
+function psuData(x, y, z) {
   const psuId = [
     "bgp-psu1",
     "bgp-psu2",
@@ -161,16 +191,11 @@ socket.onmessage = function (event) {
     "SAN SORAGE PSU1",
     "SAN SORAGE PSU2",
   ];
-
   // ipdu 1 Data Insert
-  if (data[1] != "") {
-    var ipdu1_data = data[1].split(",");
+  if (x != "") {
+    var ipdu1_data = x.split(",");
     for (i = 2, k = 0; i <= 9; i++, k++) {
-      if (ipdu1_data[i] >= 1) {
-        ipdu1_arr[k] = parseInt(ipdu1_data[i]);
-      } else {
-        ipdu1_arr[k] = parseInt(ipdu1_data[i]);
-      }
+      ipdu1_arr[k] = parseInt(ipdu1_data[i]);
     }
   }
 
@@ -184,14 +209,10 @@ socket.onmessage = function (event) {
   }
 
   // ipdu 2 Data Insert
-  if (data[2] != "") {
-    var ipdu2_data = data[2].split(",");
+  if (y != "") {
+    var ipdu2_data = y.split(",");
     for (i = 2, k = 0; i <= 9; i++, k++) {
-      if (ipdu2_data[i] >= 1) {
-        ipdu2_arr[k] = parseInt(ipdu2_data[i]);
-      } else {
-        ipdu2_arr[k] = parseInt(ipdu2_data[i]);
-      }
+      ipdu2_arr[k] = parseInt(ipdu2_data[i]);
     }
   }
 
@@ -205,14 +226,10 @@ socket.onmessage = function (event) {
   }
 
   // ipdu 3 Data Insert
-  if (data[3] != "") {
-    var ipdu3_data = data[3].split(",");
+  if (z != "") {
+    var ipdu3_data = z.split(",");
     for (i = 2, k = 0; i <= 9; i++, k++) {
-      if (ipdu3_data[i] >= 1) {
-        ipdu3_arr[k] = parseInt(ipdu3_data[i]);
-      } else {
-        ipdu3_arr[k] = parseInt(ipdu3_data[i]);
-      }
+      ipdu3_arr[k] = parseInt(ipdu3_data[i]);
     }
   }
 
@@ -225,11 +242,34 @@ socket.onmessage = function (event) {
     }
   }
 
-  console.log("ipdu1 = ", ipdu1_arr);
-  console.log("ipdu2 = ", ipdu2_arr);
-  console.log("ipdu3 = ", ipdu3_arr);
+  // Sum of Ipdu
+  let ipdu1sum = ipdu1_arr.reduce((x, y) => x + y, 0);
+  let ipdu2sum = ipdu2_arr.reduce((x, y) => x + y, 0);
+  let ipdu3sum = ipdu3_arr.reduce((x, y) => x + y, 0);
+  updateBarChart(ipdu1sum, ipdu2sum, ipdu3sum);
+}
 
-  // Others Alarm Unit
+//Psu On Show Data Funtion
+function psuOnShowData(psu_Id, psu_d_id, psu_value) {
+  document.getElementById(psu_Id).innerText = "ON";
+  document.getElementById(psu_Id).classList.add("on-btn");
+  document.getElementById(psu_d_id).innerText = `${psu_value} VA`;
+  document.getElementById(psu_d_id).classList.add("show-btn");
+}
+//Psu Off Show Data Funtion
+function psuOffShowData(psu_Id, psuCardData) {
+  document.getElementById(psu_Id).innerText = "OFF";
+  document.getElementById(psu_Id).classList.add("off-btn");
+  let ul = document.getElementById("alert-list");
+  let li = document.createElement("li");
+  li.classList.add("alert-list-card");
+  li.textContent = `${psuCardData} Failed.`;
+  ul.appendChild(li);
+}
+// Psu data end
+
+//Alarm data start
+function alarmData(x) {
   const alarmId = [
     "water-leakage",
     "fire-Alarm",
@@ -251,44 +291,25 @@ socket.onmessage = function (event) {
     ["Tripped", "ok"],
     ["Tripped", "ok"],
   ];
-  // var ipdu1_data=data[2].split(",");
-  for (i = 7, j = 0; i <= 11; i++, j++) {
-    if (splited_data[i] == 1) {
-      document.getElementById(alarmId[j]).innerText = alarmData[j][1];
-      document.getElementById(alarmId[j]).classList.add("on-btn"); //green
+
+  for (i = 0; i <= 4; i++) {
+    if (x[i] == 1) {
+      document.getElementById(alarmId[i]).innerText = alarmData[i][1];
+      document.getElementById(alarmId[i]).classList.add("on-btn"); //green
     } else {
-      document.getElementById(alarmId[j]).innerText = alarmData[j][0];
-      document.getElementById(alarmId[j]).classList.add("off-btn"); //red
+      document.getElementById(alarmId[i]).innerText = alarmData[i][0];
+      document.getElementById(alarmId[i]).classList.add("off-btn"); //red
       let ul = document.getElementById("alert-list");
       let li = document.createElement("li");
       li.classList.add("alert-list-card");
-      li.textContent = `${alarmCardId[j]} is ${alarmData[j][0]}`;
+      li.textContent = `${alarmCardId[i]} is ${alarmData[i][0]}`;
       ul.appendChild(li);
     }
   }
-};
-// console.log('hello nOman');
-
-//Psu On Show Data Funtion
-function psuOnShowData(psu_Id, psu_d_id, psu_value) {
-  document.getElementById(psu_Id).innerText = "ON";
-  document.getElementById(psu_Id).classList.add("on-btn");
-  document.getElementById(psu_d_id).innerText = `${psu_value} VA`;
-  document.getElementById(psu_d_id).classList.add("show-btn");
 }
-//Psu Off Show Data Funtion
-function psuOffShowData(psu_Id, psuCardData) {
-  document.getElementById(psu_Id).innerText = "OFF";
-  document.getElementById(psu_Id).classList.add("off-btn");
-  let ul = document.getElementById("alert-list");
-  let li = document.createElement("li");
-  li.classList.add("alert-list-card");
-  li.textContent = `${psuCardData} Failed.`;
-  ul.appendChild(li);
-}
+//Alarm data end
 
-// device Information
-
+// device Information start
 function deviceInformation(lan, gsmOp, gsmSig, ib, psu1, psu2, ds) {
   const lanIp = document.getElementById("device-lan");
   const gsmOperator = document.getElementById("gsm-operator");
@@ -347,8 +368,9 @@ function deviceInformation(lan, gsmOp, gsmSig, ib, psu1, psu2, ds) {
     dataSource.innerText = `: GPRS`;
   }
 }
+// device Information end
 
-// clear all data function
+// clear all data function start
 function clearAllData() {
   document.getElementById("alert-list").innerHTML = "";
 
@@ -436,10 +458,10 @@ function clearAllData() {
     }
   }
 }
+// clear all data function end
 
 // gauge data start
-
-// Function to determine color based on value and ranges
+//getting color
 function getColor(value, ranges) {
   if (value >= ranges.green[0] && value <= ranges.green[1]) {
     return "#4ECDC4"; // Green
@@ -450,7 +472,7 @@ function getColor(value, ranges) {
   }
 }
 
-// Function to determine status based on value and ranges
+// get status
 function getStatus(value, ranges) {
   if (value >= ranges.green[0] && value <= ranges.green[1]) {
     return { text: "Normal", class: "status-normal" };
@@ -461,7 +483,7 @@ function getStatus(value, ranges) {
   }
 }
 
-// Function to update circular gauge
+// update circular gauge
 function updateGauge(elementId, value, ranges) {
   const fillElement = document.getElementById(`${elementId}-fill`);
   const valueElement = document.getElementById(`${elementId}-value`);
@@ -494,7 +516,7 @@ function updateGauge(elementId, value, ranges) {
   }
 }
 
-// Function to generate and update all sensor data
+//update all sensor data
 function updateAllData(a, b, c, d, e, f) {
   // Input Voltage (0-300V)
   const inputVoltage = a || 230;
@@ -551,37 +573,47 @@ function updateAllData(a, b, c, d, e, f) {
   });
 }
 updateAllData();
+// gauge data end
 
-// Chart data Start
-// Initialize variables
-let environmentChart, voltageChart;
-
-// Static data for the charts
-const timeLabels = ["10:00", "10:05", "10:10", "10:15", "10:20"];
-let temperature = [10, 20, 10, 40, 10]; // Your specified default data
-let humidity = [10, 50, 10, 60, 40]; // Sample humidity data
-
-const voltageData = {
-  input: [150], // Initialized to 0
-  ups1: [350], // Initialized to 0
-  ups2: [300], // Initialized to 0
-};
+// Chart data start
+let voltageChart;
+let environmentChart;
 let color = "white";
 
-// Initialize charts
-function initCharts() {
-  // Environment chart (temperature and humidity)
+// update Line chart
+function updateLineChart(x, y) {
+  //getting time
+  let z = new Date().toLocaleTimeString();
+
+  // Data shifting
+  for (let i = 0; i < 7; i++) {
+    temp[i] = temp[i + 1];
+    hum[i] = hum[i + 1];
+    tim[i] = tim[i + 1];
+  }
+
+  temp[7] = x;
+  hum[7] = y;
+  tim[7] = z;
+
+  // Destroying chart everytime
+  if (environmentChart) {
+    environmentChart.destroy();
+  }
+
+  // creating everytime new chart
   const environmentCtx = document
     .getElementById("environment-chart")
     .getContext("2d");
+
   environmentChart = new Chart(environmentCtx, {
     type: "line",
     data: {
-      labels: timeLabels,
+      labels: tim,
       datasets: [
         {
           label: "Temperature (°C)",
-          data: temperature,
+          data: temp,
           borderColor: "#ff9f1a",
           backgroundColor: "rgba(255, 159, 26, 0.1)",
           borderWidth: 2,
@@ -591,7 +623,7 @@ function initCharts() {
         },
         {
           label: "Humidity (%)",
-          data: humidity,
+          data: hum,
           borderColor: "#3867d6",
           backgroundColor: "rgba(56, 103, 214, 0.1)",
           borderWidth: 2,
@@ -640,8 +672,6 @@ function initCharts() {
               size: 12,
             },
           },
-          suggestedMin: 0,
-          suggestedMax: 60,
         },
         y1: {
           type: "linear",
@@ -656,19 +686,31 @@ function initCharts() {
               size: 12,
             },
           },
-          suggestedMin: 30,
-          suggestedMax: 70,
         },
       },
     },
   });
+}
+// update Bar chart
+function updateBarChart(x, y, z) {
+  const voltageData = {
+    input: [x],
+    ups1: [y],
+    ups2: [z],
+  };
 
-  // bar chart
+  // Destroying chart everytime
+  if (voltageChart) {
+    voltageChart.destroy();
+  }
+
+  // creating everytime new chart
   const voltageCtx = document.getElementById("voltage-chart").getContext("2d");
+
   voltageChart = new Chart(voltageCtx, {
     type: "bar",
     data: {
-      labels: ["Input", "UPS 1", "UPS 2"],
+      labels: ["Ipdu1", "Ipdu2", "Ipdu3"],
       datasets: [
         {
           label: "Voltage (V)",
@@ -679,8 +721,8 @@ function initCharts() {
           ],
           backgroundColor: [
             "rgba(78, 205, 196, 0.7)",
-            "rgba(252, 92, 101, 0.7)",
-            "rgba(136, 152, 176, 0.7)",
+            "#ffa01ab2",
+            "#3a67d1af",
           ],
         },
       ],
@@ -695,8 +737,6 @@ function initCharts() {
       },
       scales: {
         y: {
-          min: 0,
-          max: 350,
           beginAtZero: true,
           grid: {
             color: "rgba(160, 174, 192, 0.1)",
@@ -706,7 +746,7 @@ function initCharts() {
             font: {
               size: 12,
             },
-          }
+          },
         },
         x: {
           grid: {
@@ -723,9 +763,6 @@ function initCharts() {
     },
   });
 }
-
-initCharts();
-
 // Chart data end
 
 // Sidebar Dropdown
