@@ -578,37 +578,15 @@ updateAllData();
 // gauge data end
 
 // Chart data start
-let voltageChart;
-let environmentChart;
+let barChart;
+let lineChart;
 let color = "white";
 
-// update Line chart
-function updateLineChart(x, y) {
-  //getting time
-  let z = new Date().toLocaleTimeString();
-
-  // Data shifting
-  for (let i = 0; i < 7; i++) {
-    temp[i] = temp[i + 1];
-    hum[i] = hum[i + 1];
-    tim[i] = tim[i + 1];
-  }
-
-  temp[7] = x;
-  hum[7] = y;
-  tim[7] = z;
-
-  // Destroying chart everytime
-  if (environmentChart) {
-    environmentChart.destroy();
-  }
-
-  // creating everytime new chart
-  const environmentCtx = document
-    .getElementById("environment-chart")
-    .getContext("2d");
-
-  environmentChart = new Chart(environmentCtx, {
+// Initialize charts on page load
+function initializeCharts() {
+  // Environment Chart (Line Chart)
+  const environmentCtx = document.getElementById("environment-chart").getContext("2d");
+  lineChart = new Chart(environmentCtx, {
     type: "line",
     data: {
       labels: tim,
@@ -692,40 +670,23 @@ function updateLineChart(x, y) {
       },
     },
   });
-}
-// update Bar chart
-function updateBarChart(x, y, z) {
-  const voltageData = {
-    input: [x],
-    ups1: [y],
-    ups2: [z],
-  };
 
-  // Destroying chart everytime
-  if (voltageChart) {
-    voltageChart.destroy();
-  }
-
-  // creating everytime new chart
+  // Voltage Chart (Bar Chart)
   const voltageCtx = document.getElementById("voltage-chart").getContext("2d");
-
-  voltageChart = new Chart(voltageCtx, {
+  barChart = new Chart(voltageCtx, {
     type: "bar",
     data: {
       labels: ["Ipdu1", "Ipdu2", "Ipdu3"],
       datasets: [
         {
           label: "Voltage (V)",
-          data: [
-            voltageData.input[voltageData.input.length - 1],
-            voltageData.ups1[voltageData.ups1.length - 1],
-            voltageData.ups2[voltageData.ups2.length - 1],
-          ],
+          data: [0, 0, 0],
           backgroundColor: [
             "rgba(78, 205, 196, 0.7)",
             "#fc5c6491",
             "#3a67d1af",
           ],
+          borderRadius: 10,
         },
       ],
     },
@@ -764,6 +725,44 @@ function updateBarChart(x, y, z) {
       },
     },
   });
+}
+
+// Initialize charts when the page loads
+window.addEventListener('load', initializeCharts);
+
+// update Line chart
+function updateLineChart(x, y) {
+  //getting time
+  let z = new Date().toLocaleTimeString();
+  document.getElementById('lastUpdateTime').textContent = z;
+
+  // Data shifting
+  for (let i = 0; i < 7; i++) {
+    temp[i] = temp[i + 1];
+    hum[i] = hum[i + 1];
+    tim[i] = tim[i + 1];
+  }
+
+  temp[7] = x;
+  hum[7] = y;
+  tim[7] = z;
+
+  // Update Line chart
+  if (lineChart) {
+    lineChart.data.labels = [...tim];
+    lineChart.data.datasets[0].data = [...temp];
+    lineChart.data.datasets[1].data = [...hum];
+    lineChart.update('none');
+  }
+}
+
+// update Bar chart
+function updateBarChart(x, y, z) {
+  // Update chart 
+  if (barChart) {
+    barChart.data.datasets[0].data = [x, y, z];
+    barChart.update('none'); 
+  }
 }
 // Chart data end
 
