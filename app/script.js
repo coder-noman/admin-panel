@@ -46,7 +46,7 @@ const tim = [
   "11:35",
 ];
 
-//.........websocket_client code..............
+//.........websocket_client code Start..............
 var socket = new WebSocket("ws://27.147.170.162:81");
 socket.onmessage = function (event) {
   const data = event.data.split(":");
@@ -104,12 +104,14 @@ socket.onmessage = function (event) {
   psuData(data[1], data[2], data[3]);
 
   // Others Alarm Unit
-
   for (i = 7, j = 0; i <= 11; i++, j++) {
     alarm_arr[j] = parseInt(splited_data[i]);
   }
   alarmData(alarm_arr);
+
 };
+//.........websocket_client code end..............
+
 // Psu data start
 function psuData(x, y, z) {
   const psuId = [
