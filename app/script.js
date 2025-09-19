@@ -11,28 +11,14 @@ document.getElementById("log-out").addEventListener("click", function () {
 });
 //Handle Logout Button End
 
-// if data is not coming start
-// let dataReceived = false;
-
-// const timeout = setTimeout(() => {
-//   if (!dataReceived) {
-//     showDefaultData();
-//   }
-// }, 2000);
-// showDefaultData();
-// function showDefaultData() {
-//   console.log("Hello from default!");
-// }
-
-// if data is not coming end
-
+//Declare psu array and variable
 let ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu3_arr = [0, 0, 0, 0, 0, 0, 0, 0];
-
+let ipduSum_arr = [10, 20, 30];
 let alarm_arr = [1, 1, 1, 1, 1];
 
-// Chart data Start
+// Chart array and variable Declare
 let temp = [0, 0, 0, 0, 0, 0, 0, 0];
 let hum = [0, 0, 0, 0, 0, 0, 0, 0];
 const tim = [
@@ -45,6 +31,16 @@ const tim = [
   "11:30",
   "11:35",
 ];
+let barChart;
+let lineChart;
+
+// Default Data Show Start
+updateAllData(0, 0, 0, 0, 0, 0);
+updateLineChart(10, 0);
+updateBarChart();
+psuDataShow();
+alarmData(alarm_arr);
+// Default Data Show end
 
 //.........websocket_client code Start..............
 var socket = new WebSocket("ws://27.147.170.162:81");
@@ -101,19 +97,49 @@ socket.onmessage = function (event) {
   );
 
   // power supply unit
-  psuData(data[1], data[2], data[3]);
+  psuDataInsert(data[1], data[2], data[3]);
 
   // Others Alarm Unit
   for (i = 7, j = 0; i <= 11; i++, j++) {
     alarm_arr[j] = parseInt(splited_data[i]);
   }
   alarmData(alarm_arr);
-
 };
 //.........websocket_client code end..............
 
 // Psu data start
-function psuData(x, y, z) {
+function psuDataInsert(x, y, z) {
+  // ipdu 1 Data Insert
+  if (x != "") {
+    var ipdu1_data = x.split(",");
+    for (i = 2, k = 0; i <= 9; i++, k++) {
+      ipdu1_arr[k] = parseInt(ipdu1_data[i]);
+    }
+  }
+  // ipdu 2 Data Insert
+  if (y != "") {
+    var ipdu2_data = y.split(",");
+    for (i = 2, k = 0; i <= 9; i++, k++) {
+      ipdu2_arr[k] = parseInt(ipdu2_data[i]);
+    }
+  }
+  // ipdu 3 Data Insert
+  if (z != "") {
+    var ipdu3_data = z.split(",");
+    for (i = 2, k = 0; i <= 9; i++, k++) {
+      ipdu3_arr[k] = parseInt(ipdu3_data[i]);
+    }
+  }
+
+  psuDataShow();
+
+  // Sum of Ipdu
+  ipduSum_arr[0] = ipdu1_arr.reduce((x, y) => x + y, 0);
+  ipduSum_arr[1] = ipdu2_arr.reduce((x, y) => x + y, 0);
+  ipduSum_arr[2] = ipdu3_arr.reduce((x, y) => x + y, 0);
+  updateBarChart();
+}
+function psuDataShow() {
   const psuId = [
     "bgp-psu1",
     "bgp-psu2",
@@ -193,28 +219,12 @@ function psuData(x, y, z) {
     "SAN SORAGE PSU1",
     "SAN SORAGE PSU2",
   ];
-  // ipdu 1 Data Insert
-  if (x != "") {
-    var ipdu1_data = x.split(",");
-    for (i = 2, k = 0; i <= 9; i++, k++) {
-      ipdu1_arr[k] = parseInt(ipdu1_data[i]);
-    }
-  }
-
   // ipdu 1 Data show
   for (i = 0, j = 0; i <= 7; i++, j++) {
     if (ipdu1_arr[i] >= 1) {
       psuOnShowData(psuId[j], psuDisplayId[j], ipdu1_arr[i]);
     } else {
       psuOffShowData(psuId[j], psuCardData[j]);
-    }
-  }
-
-  // ipdu 2 Data Insert
-  if (y != "") {
-    var ipdu2_data = y.split(",");
-    for (i = 2, k = 0; i <= 9; i++, k++) {
-      ipdu2_arr[k] = parseInt(ipdu2_data[i]);
     }
   }
 
@@ -227,14 +237,6 @@ function psuData(x, y, z) {
     }
   }
 
-  // ipdu 3 Data Insert
-  if (z != "") {
-    var ipdu3_data = z.split(",");
-    for (i = 2, k = 0; i <= 9; i++, k++) {
-      ipdu3_arr[k] = parseInt(ipdu3_data[i]);
-    }
-  }
-
   // ipdu 3 Data show
   for (i = 0, j = 16; i <= 7; i++, j++) {
     if (ipdu3_arr[i] >= 1) {
@@ -243,12 +245,6 @@ function psuData(x, y, z) {
       psuOffShowData(psuId[j], psuCardData[j]);
     }
   }
-
-  // Sum of Ipdu
-  let ipdu1sum = ipdu1_arr.reduce((x, y) => x + y, 0);
-  let ipdu2sum = ipdu2_arr.reduce((x, y) => x + y, 0);
-  let ipdu3sum = ipdu3_arr.reduce((x, y) => x + y, 0);
-  updateBarChart(ipdu1sum, ipdu2sum, ipdu3sum);
 }
 
 //Psu On Show Data Funtion
@@ -518,10 +514,10 @@ function updateGauge(elementId, value, ranges) {
   }
 }
 
-//update all sensor data
+//update all gauge data
 function updateAllData(a, b, c, d, e, f) {
   // Input Voltage (0-300V)
-  const inputVoltage = a || 0;
+  const inputVoltage = a;
   updateGauge("input-voltage", inputVoltage, {
     green: [200, 230],
     orange: [0, 199],
@@ -530,7 +526,7 @@ function updateAllData(a, b, c, d, e, f) {
   });
 
   // UPS1 Output Voltage (0-300V)
-  const ups1Voltage = b || 0;
+  const ups1Voltage = b;
   updateGauge("ups1-voltage", ups1Voltage, {
     green: [200, 230],
     orange: [0, 199],
@@ -539,7 +535,7 @@ function updateAllData(a, b, c, d, e, f) {
   });
 
   // UPS2 Output Voltage (0-300V)
-  const ups2Voltage = c || 0;
+  const ups2Voltage = c;
   updateGauge("ups2-voltage", ups2Voltage, {
     green: [200, 230],
     orange: [0, 199],
@@ -548,7 +544,7 @@ function updateAllData(a, b, c, d, e, f) {
   });
 
   // Battery Voltage (0-60V)
-  const batteryVoltage = d || 0;
+  const batteryVoltage = d;
   updateGauge("battery-voltage", batteryVoltage, {
     green: [48, 55],
     orange: [0, 47.9],
@@ -557,7 +553,7 @@ function updateAllData(a, b, c, d, e, f) {
   });
 
   // Temperature (0-55°C)
-  const temperature = e || 0;
+  const temperature = e;
   updateGauge("temperature", temperature, {
     green: [0, 25],
     orange: [25.1, 30],
@@ -566,7 +562,7 @@ function updateAllData(a, b, c, d, e, f) {
   });
 
   // Humidity (0-100%)
-  const humidity = f || 0;
+  const humidity = f;
   updateGauge("humidity", humidity, {
     green: [40.1, 70],
     orange: [0, 40],
@@ -574,18 +570,18 @@ function updateAllData(a, b, c, d, e, f) {
     max: 100,
   });
 }
-updateAllData();
+// updateAllData();
 // gauge data end
 
 // Chart data start
-let barChart;
-let lineChart;
 let color = "white";
 
 // Initialize charts on page load
 function initializeCharts() {
   // Environment Chart (Line Chart)
-  const environmentCtx = document.getElementById("environment-chart").getContext("2d");
+  const environmentCtx = document
+    .getElementById("environment-chart")
+    .getContext("2d");
   lineChart = new Chart(environmentCtx, {
     type: "line",
     data: {
@@ -643,6 +639,7 @@ function initializeCharts() {
           type: "linear",
           display: true,
           position: "left",
+          min: 0,
           grid: {
             color: "rgba(160, 174, 192, 0.1)",
           },
@@ -657,6 +654,7 @@ function initializeCharts() {
           type: "linear",
           display: true,
           position: "right",
+          min: 0,
           grid: {
             drawOnChartArea: false,
           },
@@ -680,7 +678,7 @@ function initializeCharts() {
       datasets: [
         {
           label: "Voltage (V)",
-          data: [0, 0, 0],
+          data: ipduSum_arr,
           backgroundColor: [
             "rgba(78, 205, 196, 0.7)",
             "#fc5c6491",
@@ -728,13 +726,13 @@ function initializeCharts() {
 }
 
 // Initialize charts when the page loads
-window.addEventListener('load', initializeCharts);
+window.addEventListener("load", initializeCharts);
 
 // update Line chart
 function updateLineChart(x, y) {
   //getting time
   let z = new Date().toLocaleTimeString();
-  document.getElementById('lastUpdateTime').textContent = z;
+  document.getElementById("lastUpdateTime").textContent = z;
 
   // Data shifting
   for (let i = 0; i < 7; i++) {
@@ -752,16 +750,17 @@ function updateLineChart(x, y) {
     lineChart.data.labels = [...tim];
     lineChart.data.datasets[0].data = [...temp];
     lineChart.data.datasets[1].data = [...hum];
-    lineChart.update('none');
+    lineChart.update("none");
   }
 }
 
 // update Bar chart
-function updateBarChart(x, y, z) {
-  // Update chart 
+function updateBarChart() {
+  console.log("ipduSum_arr update= ", ipduSum_arr);
+  // Update chart
   if (barChart) {
-    barChart.data.datasets[0].data = [x, y, z];
-    barChart.update('none'); 
+    barChart.data.datasets[0].data = ipduSum_arr;
+    barChart.update("none");
   }
 }
 // Chart data end
