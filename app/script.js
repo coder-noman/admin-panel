@@ -521,7 +521,7 @@ function updateGauge(elementId, value, ranges) {
 //update all sensor data
 function updateAllData(a, b, c, d, e, f) {
   // Input Voltage (0-300V)
-  const inputVoltage = a || 230;
+  const inputVoltage = a || 0;
   updateGauge("input-voltage", inputVoltage, {
     green: [200, 230],
     orange: [0, 199],
@@ -530,7 +530,7 @@ function updateAllData(a, b, c, d, e, f) {
   });
 
   // UPS1 Output Voltage (0-300V)
-  const ups1Voltage = b || 220;
+  const ups1Voltage = b || 0;
   updateGauge("ups1-voltage", ups1Voltage, {
     green: [200, 230],
     orange: [0, 199],
@@ -539,7 +539,7 @@ function updateAllData(a, b, c, d, e, f) {
   });
 
   // UPS2 Output Voltage (0-300V)
-  const ups2Voltage = c || 220;
+  const ups2Voltage = c || 0;
   updateGauge("ups2-voltage", ups2Voltage, {
     green: [200, 230],
     orange: [0, 199],
@@ -548,7 +548,7 @@ function updateAllData(a, b, c, d, e, f) {
   });
 
   // Battery Voltage (0-60V)
-  const batteryVoltage = d || 48.5;
+  const batteryVoltage = d || 0;
   updateGauge("battery-voltage", batteryVoltage, {
     green: [48, 55],
     orange: [0, 47.9],
@@ -557,7 +557,7 @@ function updateAllData(a, b, c, d, e, f) {
   });
 
   // Temperature (0-55°C)
-  const temperature = e || 25;
+  const temperature = e || 0;
   updateGauge("temperature", temperature, {
     green: [0, 25],
     orange: [25.1, 30],
@@ -566,7 +566,7 @@ function updateAllData(a, b, c, d, e, f) {
   });
 
   // Humidity (0-100%)
-  const humidity = f || 75;
+  const humidity = f || 0;
   updateGauge("humidity", humidity, {
     green: [40.1, 70],
     orange: [0, 40],
@@ -723,7 +723,7 @@ function updateBarChart(x, y, z) {
           ],
           backgroundColor: [
             "rgba(78, 205, 196, 0.7)",
-            "#ffa01ab2",
+            "#fc5c6491",
             "#3a67d1af",
           ],
         },
