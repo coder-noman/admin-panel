@@ -472,27 +472,27 @@ function updateAllData(a, b, c, d, e, f) {
   // Input Voltage (0-300V)
   const inputVoltage = a;
   updateGauge("input-voltage", inputVoltage, {
-    green: [200, 230],
-    orange: [0, 199],
-    red: [231, 300],
+    green: [191, 245],
+    orange: [0, 190],
+    red: [246, 300],
     max: 300,
   });
 
   // UPS1 Output Voltage (0-300V)
   const ups1Voltage = b;
   updateGauge("ups1-voltage", ups1Voltage, {
-    green: [200, 230],
-    orange: [0, 199],
-    red: [231, 300],
+    green: [191, 245],
+    orange: [0, 190],
+    red: [246, 300],
     max: 300,
   });
 
   // UPS2 Output Voltage (0-300V)
   const ups2Voltage = c;
   updateGauge("ups2-voltage", ups2Voltage, {
-    green: [200, 230],
-    orange: [0, 199],
-    red: [231, 300],
+    green: [191, 245],
+    orange: [0, 190],
+    red: [246, 300],
     max: 300,
   });
 
@@ -508,9 +508,9 @@ function updateAllData(a, b, c, d, e, f) {
   // Temperature (0-55°C)
   const temperature = e;
   updateGauge("temperature", temperature, {
-    green: [0, 25],
-    orange: [25.1, 30],
-    red: [30.1, 55],
+    green: [0, 26],
+    orange: [26.1, 32],
+    red: [32.1, 55],
     max: 55,
   });
 
@@ -518,8 +518,8 @@ function updateAllData(a, b, c, d, e, f) {
   const humidity = f;
   updateGauge("humidity", humidity, {
     green: [40.1, 70],
-    orange: [0, 40],
-    red: [70.1, 100],
+    orange: [76, 100],
+    red: [0, 40],
     max: 100,
   });
 }
