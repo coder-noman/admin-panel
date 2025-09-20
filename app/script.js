@@ -15,7 +15,7 @@ document.getElementById("log-out").addEventListener("click", function () {
 let ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu3_arr = [0, 0, 0, 0, 0, 0, 0, 0];
-let ipduSum_arr = [10, 20, 30];
+let ipduSum_arr = [0, 0, 0];
 let alarm_arr = [1, 1, 1, 1, 1];
 
 // Chart array and variable Declare
@@ -36,10 +36,10 @@ let lineChart;
 
 // Default Data Show Start
 updateAllData(0, 0, 0, 0, 0, 0);
-updateLineChart(10, 0);
+updateLineChart(0, 0);
 updateBarChart();
 psuDataShow();
-alarmData(alarm_arr);
+alarmData(alarm_arr,0);
 // Default Data Show end
 
 //.........websocket_client code Start..............
@@ -103,7 +103,8 @@ socket.onmessage = function (event) {
   for (i = 7, j = 0; i <= 11; i++, j++) {
     alarm_arr[j] = parseInt(splited_data[i]);
   }
-  alarmData(alarm_arr);
+  alarmData(alarm_arr,splited_data[1]);
+  console.log(splited_data[1]);
 };
 //.........websocket_client code end..............
 
@@ -267,7 +268,7 @@ function psuOffShowData(psu_Id, psuCardData) {
 // Psu data end
 
 //Alarm data start
-function alarmData(x) {
+function alarmData(x,input_voltage) {
   const alarmId = [
     "water-leakage",
     "fire-Alarm",
@@ -677,7 +678,7 @@ function initializeCharts() {
       labels: ["Ipdu1", "Ipdu2", "Ipdu3"],
       datasets: [
         {
-          label: "Voltage (V)",
+          label: "Load (VA)",
           data: ipduSum_arr,
           backgroundColor: [
             "rgba(78, 205, 196, 0.7)",
