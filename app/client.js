@@ -5,7 +5,10 @@ if (window.location.pathname.includes("./app/index.html") && role !== "admin") {
   window.location.href = "../registration.html";
 }
 
-if (window.location.pathname.includes("./app/client.html") && role !== "client") {
+if (
+  window.location.pathname.includes("./app/client.html") &&
+  role !== "client"
+) {
   window.location.href = "../registration.html";
 }
 
@@ -94,15 +97,15 @@ socket.onmessage = function (event) {
   updateLineChart(splited_data[5], splited_data[6]);
 
   // Device Inforfation
-//   deviceInformation(
-//     splited_data[12],
-//     splited_data[13],
-//     splited_data[14],
-//     splited_data[15],
-//     splited_data[16],
-//     splited_data[17],
-//     splited_data[18]
-//   );
+  //   deviceInformation(
+  //     splited_data[12],
+  //     splited_data[13],
+  //     splited_data[14],
+  //     splited_data[15],
+  //     splited_data[16],
+  //     splited_data[17],
+  //     splited_data[18]
+  //   );
 
   // power supply unit
   psuDataInsert(data[1], data[2], data[3]);
@@ -499,10 +502,10 @@ function updateAllData(a, b, c, d, e, f) {
   // Battery Voltage (0-60V)
   const batteryVoltage = d;
   updateGauge("battery-voltage", batteryVoltage, {
-    green: [48, 55],
-    orange: [0, 47.9],
-    red: [56, 60],
-    max: 60,
+    green: [241, 280],
+    orange: [220, 240],
+    red: [0, 219],
+    max: 280,
   });
 
   // Temperature (0-55°C)
@@ -685,8 +688,8 @@ window.addEventListener("load", initializeCharts);
 function updateLineChart(x, y) {
   //getting time
   let z = new Date().toLocaleTimeString();
-  let date = new Date().toLocaleDateString()
-  
+  let date = new Date().toLocaleDateString();
+
   document.getElementById("lastUpdateTime").textContent = z;
   document.getElementById("lastUpdateDate").textContent = date;
 

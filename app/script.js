@@ -561,12 +561,12 @@ function updateAllData(a, b, c, d, e, f) {
   });
 
   // Battery Voltage (0-60V)
-  const batteryVoltage = d;
+ const batteryVoltage = d;
   updateGauge("battery-voltage", batteryVoltage, {
-    green: [48, 55],
-    orange: [0, 47.9],
-    red: [56, 60],
-    max: 60,
+    green: [241, 280],
+    orange: [220, 240],
+    red: [0, 219],
+    max: 280,
   });
 
   // Temperature (0-55°C)
