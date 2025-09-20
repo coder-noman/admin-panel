@@ -1,14 +1,42 @@
 //Handle Logout Button Start
-const user = sessionStorage.getItem("loggedInUser");
-if (!user || user !== "admin") {
+
+// //for admin
+// const admin = sessionStorage.getItem("loggedInAdmin");
+// // if (!admin || admin !== "admin") {
+// //   window.location.href = "../registration.html";
+// // }
+
+// // for client
+// const client = sessionStorage.getItem("loggedInClient");
+// if (!client || client !== "client") {
+//   window.location.href = "../registration.html";
+// }
+
+// // logOut Button
+// document.getElementById("log-out").addEventListener("click", function () {
+//   sessionStorage.removeItem("loggedInAdmin");
+//   sessionStorage.removeItem("loggedInClient");
+//   window.location.href = "../registration.html";
+// });
+// Shared Dashboard Logic (for Admin and Client Pages)
+const role = sessionStorage.getItem("userRole");
+
+if (window.location.pathname.includes("./app/index.html") && role !== "admin") {
   window.location.href = "../registration.html";
 }
 
-// logOut Button
-document.getElementById("log-out").addEventListener("click", function () {
-  sessionStorage.removeItem("loggedInUser");
+if (window.location.pathname.includes("./app/client.html") && role !== "client") {
   window.location.href = "../registration.html";
-});
+}
+
+const logoutBtn = document.getElementById("log-out");
+if (logoutBtn) {
+  logoutBtn.addEventListener("click", function () {
+    sessionStorage.removeItem("userRole");
+    window.location.href = "../registration.html";
+  });
+}
+
 //Handle Logout Button End
 
 //Declare psu array and variable
@@ -16,7 +44,7 @@ let ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu3_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipduSum_arr = [0, 0, 0];
-let alarm_arr = [1, 1, 1, 1, 1];
+let alarm_arr = [0, 0, 0, 0, 0];
 
 // Chart array and variable Declare
 let temp = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -39,7 +67,7 @@ updateAllData(0, 0, 0, 0, 0, 0);
 updateLineChart(0, 0);
 updateBarChart();
 psuDataShow();
-alarmData(alarm_arr,0);
+alarmData(alarm_arr, 0);
 // Default Data Show end
 
 //.........websocket_client code Start..............
@@ -103,8 +131,7 @@ socket.onmessage = function (event) {
   for (i = 7, j = 0; i <= 11; i++, j++) {
     alarm_arr[j] = parseInt(splited_data[i]);
   }
-  alarmData(alarm_arr,splited_data[1]);
-  console.log(splited_data[1]);
+  alarmData(alarm_arr, splited_data[1]);
 };
 //.........websocket_client code end..............
 
@@ -268,7 +295,7 @@ function psuOffShowData(psu_Id, psuCardData) {
 // Psu data end
 
 //Alarm data start
-function alarmData(x,input_voltage) {
+function alarmData(x, input_voltage) {
   const alarmId = [
     "water-leakage",
     "fire-Alarm",
@@ -284,25 +311,31 @@ function alarmData(x,input_voltage) {
     "Ups2 cb Status",
   ];
   const alarmData = [
-    ["Alarm", "No Alarm"],
-    ["Alarm", "No Alarm"],
+    ["Detected", "No Alarm"],
+    ["Detected", "No Alarm"],
     ["Off", "On"],
     ["Tripped", "ok"],
     ["Tripped", "ok"],
   ];
 
   for (i = 0; i <= 4; i++) {
-    if (x[i] == 1) {
-      document.getElementById(alarmId[i]).innerText = alarmData[i][1];
-      document.getElementById(alarmId[i]).classList.add("on-btn"); //green
+    //Another check for generator
+    if (i == 2 && input_voltage > 0) {
+      document.getElementById(alarmId[i]).innerText = "Stand by";
+      document.getElementById(alarmId[i]).classList.add("stand-btn");
     } else {
-      document.getElementById(alarmId[i]).innerText = alarmData[i][0];
-      document.getElementById(alarmId[i]).classList.add("off-btn"); //red
-      let ul = document.getElementById("alert-list");
-      let li = document.createElement("li");
-      li.classList.add("alert-list-card");
-      li.textContent = `${alarmCardId[i]} is ${alarmData[i][0]}`;
-      ul.appendChild(li);
+      if (x[i] == 1) {
+        document.getElementById(alarmId[i]).innerText = alarmData[i][1];
+        document.getElementById(alarmId[i]).classList.add("on-btn"); //green
+      } else {
+        document.getElementById(alarmId[i]).innerText = alarmData[i][0];
+        document.getElementById(alarmId[i]).classList.add("off-btn"); //red
+        let ul = document.getElementById("alert-list");
+        let li = document.createElement("li");
+        li.classList.add("alert-list-card");
+        li.textContent = `${alarmCardId[i]} is ${alarmData[i][0]}`;
+        ul.appendChild(li);
+      }
     }
   }
 }
@@ -733,7 +766,10 @@ window.addEventListener("load", initializeCharts);
 function updateLineChart(x, y) {
   //getting time
   let z = new Date().toLocaleTimeString();
+  let date = new Date().toLocaleDateString()
+  
   document.getElementById("lastUpdateTime").textContent = z;
+  document.getElementById("lastUpdateDate").textContent = date;
 
   // Data shifting
   for (let i = 0; i < 7; i++) {

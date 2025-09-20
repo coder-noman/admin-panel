@@ -1,18 +1,27 @@
-
 const validUsername = "admin";
 const validPassword = "1234";
+const validClientUsername = "client";
+const validClientPassword = "12345";
 
-document.getElementById("login-form").addEventListener("submit", function (event) {
+document
+  .getElementById("login-form")
+  .addEventListener("submit", function (event) {
     event.preventDefault();
 
     const usernameInput = document.getElementById("username").value.trim();
     const passwordInput = document.getElementById("password").value.trim();
 
     if (usernameInput === validUsername && passwordInput === validPassword) {
-        sessionStorage.setItem("loggedInUser", usernameInput);
-        window.location.href = "./app/index.html";
+      sessionStorage.setItem("userRole", "admin");
+      window.location.href = "./app/index.html";
+    } else if (
+      usernameInput === validClientUsername &&
+      passwordInput === validClientPassword
+    ) {
+      sessionStorage.setItem("userRole", "client");
+      window.location.href = "./app/client.html";
     } else {
-        alert("Incorrect username or password!");
-        window.location.reload();
+      alert("Incorrect username or password!");
+      window.location.reload();
     }
-});
+  });

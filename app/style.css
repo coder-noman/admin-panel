@@ -127,7 +127,7 @@ a {
   gap: 5px;
   font-size: 14px;
   background: var(--grey2);
-  padding: 12px 16px 12px 0;
+  padding: 12px 0;
   border-radius: 10px;
   margin: 4px 0;
 }
@@ -592,6 +592,12 @@ main h1 {
 
 .show-btn {
   background: var(--green);
+  padding: 2px 5px;
+  border-radius: 7px;
+  color: #000;
+}
+.stand-btn {
+  background: var(--blue);
   padding: 2px 5px;
   border-radius: 7px;
   color: #000;
