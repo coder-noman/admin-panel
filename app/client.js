@@ -5,7 +5,7 @@ if (window.location.pathname.includes("./app/index.html") && role !== "admin") {
   window.location.href = "../registration.html";
 }
 
-if (window.location.pathname.includes("./app/client.html") && role !== "rakesh") {
+if (window.location.pathname.includes("./app/client.html") && role !== "client") {
   window.location.href = "../registration.html";
 }
 
@@ -94,15 +94,15 @@ socket.onmessage = function (event) {
   updateLineChart(splited_data[5], splited_data[6]);
 
   // Device Inforfation
-  deviceInformation(
-    splited_data[12],
-    splited_data[13],
-    splited_data[14],
-    splited_data[15],
-    splited_data[16],
-    splited_data[17],
-    splited_data[18]
-  );
+//   deviceInformation(
+//     splited_data[12],
+//     splited_data[13],
+//     splited_data[14],
+//     splited_data[15],
+//     splited_data[16],
+//     splited_data[17],
+//     splited_data[18]
+//   );
 
   // power supply unit
   psuDataInsert(data[1], data[2], data[3]);
@@ -320,67 +320,6 @@ function alarmData(x, input_voltage) {
   }
 }
 //Alarm data end
-
-// device Information start
-function deviceInformation(lan, gsmOp, gsmSig, ib, psu1, psu2, ds) {
-  const lanIp = document.getElementById("device-lan");
-  const gsmOperator = document.getElementById("gsm-operator");
-  const gsmSignal = document.getElementById("gsm-signal");
-  const internalBattery = document.getElementById("internal-battery");
-  const devicePsu1 = document.getElementById("device-psu1");
-  const devicePsu2 = document.getElementById("device-psu2");
-  const dataSource = document.getElementById("data-source");
-
-  // Lan IP
-  lanIp.innerHTML = `: ${lan}`;
-
-  // Gsm Operator
-  gsmOperator.innerText = `: ${gsmOp}`;
-
-  // if(gsmOp == 0){
-  //   gsmOperator.innerText = ': Not Found';
-  // }else if(gsmOp == 1){
-  //   gsmOperator.innerText = ': GP';
-  // }else if(gsmOp == 2){
-  //   gsmOperator.innerText = ': Robi';
-  // }else if(gsmOp == 3){
-  //   gsmOperator.innerText = ': Banglalink';
-  // }else if(gsmOp == 4){
-  //   gsmOperator.innerText = ': Airtel';
-  // }else if(gsmOp == 5){
-  //   gsmOperator.innerText = ': Teletalk';
-  // }
-
-  // Gsm Signal
-  gsmSignal.innerText = `: ${gsmSig} %`;
-
-  // Internal Battery
-  internalBattery.innerText = `: ${ib} V`;
-
-  // Psu Stutus 1
-  if (psu1 == 1) {
-    devicePsu1.innerText = `: OK`;
-  } else {
-    devicePsu1.innerText = `: Failed`;
-  }
-
-  // Psu Stutus 2
-  if (psu2 == 1) {
-    devicePsu2.innerText = `: OK`;
-  } else {
-    devicePsu2.innerText = `: Failed`;
-  }
-
-  // Data Source
-  if (ds == 0) {
-    dataSource.innerText = `: LAN`;
-  } else if (ds == 1) {
-    dataSource.innerText = `: WIFI`;
-  } else if (ds == 2) {
-    dataSource.innerText = `: GPRS`;
-  }
-}
-// device Information end
 
 // clear all data function start
 function clearAllData() {

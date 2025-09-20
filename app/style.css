@@ -238,6 +238,11 @@ a {
   flex: 1;
 }
 
+/* client Side */
+.device-value a{
+  color: var(--dark-blue);
+}
+
 .device-btn-upgrade {
   font-size: 16px;
   display: flex;

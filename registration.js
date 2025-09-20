@@ -1,7 +1,7 @@
 const validUsername = "admin";
-const validPassword = "1234";
-const validClientUsername = "client";
-const validClientPassword = "12345";
+const validPassword = "1745#";
+const validClientUsername = "rakesh";
+const validClientPassword = "rakesh007#";
 
 document
   .getElementById("login-form")
@@ -18,7 +18,7 @@ document
       usernameInput === validClientUsername &&
       passwordInput === validClientPassword
     ) {
-      sessionStorage.setItem("userRole", "client");
+      sessionStorage.setItem("userRole", "rakesh");
       window.location.href = "./app/client.html";
     } else {
       alert("Incorrect username or password!");
