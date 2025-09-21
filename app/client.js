@@ -741,7 +741,8 @@ function updateLineChart(x, y) {
   //getting time
   let z = new Date().toLocaleTimeString();
   let date = new Date().toLocaleDateString();
-
+  
+  //last Update/synced 
   document.getElementById("lastUpdateTime").textContent = z;
   document.getElementById("lastUpdateDate").textContent = date;
 
