@@ -324,6 +324,16 @@ function alarmData(x, input_voltage) {
 }
 //Alarm data end
 
+//Gauge alert start
+function gaugeAlert(data, status) {
+  let ul = document.getElementById("alert-list");
+  let li = document.createElement("li");
+  li.classList.add("alert-list-card");
+  li.textContent = `${data} is ${status}.`;
+  ul.appendChild(li);
+}
+//Gauge alert end
+
 // clear all data function start
 function clearAllData() {
   document.getElementById("alert-list").innerHTML = "";
@@ -481,50 +491,92 @@ function updateAllData(a, b, c, d, e, f) {
     max: 300,
   });
 
+  // Alert for inputVoltage
+  if (inputVoltage >= 0 && inputVoltage <= 190) {
+    gaugeAlert("Input Voltage", "low");
+  } else if (inputVoltage >= 246 && inputVoltage <= 300) {
+    gaugeAlert("Input Voltage", "high");
+  }
+
   // UPS1 Output Voltage (0-300V)
   const ups1Voltage = b;
   updateGauge("ups1-voltage", ups1Voltage, {
-    green: [191, 245],
-    orange: [0, 190],
-    red: [246, 300],
+    green: [211, 230],
+    orange: [0, 210],
+    red: [231, 300],
     max: 300,
   });
+
+  // Alert for Ups1
+  if (ups1Voltage >= 0 && ups1Voltage <= 210) {
+    gaugeAlert("UPS1 Voltage", "low");
+  } else if (ups1Voltage >= 231 && ups1Voltage <= 300) {
+    gaugeAlert("UPS1 Voltage", "high");
+  }
 
   // UPS2 Output Voltage (0-300V)
   const ups2Voltage = c;
   updateGauge("ups2-voltage", ups2Voltage, {
-    green: [191, 245],
-    orange: [0, 190],
-    red: [246, 300],
+    green: [211, 230],
+    orange: [0, 210],
+    red: [231, 300],
     max: 300,
   });
+
+  // Alert for Ups2
+  if (ups2Voltage >= 0 && ups2Voltage <= 210) {
+    gaugeAlert("UPS2 Voltage", "low");
+  } else if (ups2Voltage >= 231 && ups2Voltage <= 300) {
+    gaugeAlert("UPS2 Voltage", "high");
+  }
 
   // Battery Voltage (0-60V)
   const batteryVoltage = d;
   updateGauge("battery-voltage", batteryVoltage, {
     green: [241, 280],
-    orange: [220, 240],
-    red: [0, 219],
+    orange: [221, 240],
+    red: [0, 220],
     max: 280,
   });
+
+  // Alert for Battery Voltage
+  if (batteryVoltage >= 221 && batteryVoltage <= 240) {
+    gaugeAlert("Battery Voltage", "low");
+  } else if (batteryVoltage >= 0 && batteryVoltage <= 220) {
+    gaugeAlert("Battery Voltage", "very Low");
+  }
 
   // Temperature (0-55°C)
   const temperature = e;
   updateGauge("temperature", temperature, {
-    green: [0, 26],
-    orange: [26.1, 32],
-    red: [32.1, 55],
+    green: [0, 25],
+    orange: [26, 31],
+    red: [32, 55],
     max: 55,
   });
+
+  // Alert for Temperature
+  if (temperature >= 26 && temperature <= 31) {
+    gaugeAlert("Temperature", "high");
+  } else if (temperature >= 32 && temperature <= 55) {
+    gaugeAlert("Temperature", "very high");
+  }
 
   // Humidity (0-100%)
   const humidity = f;
   updateGauge("humidity", humidity, {
-    green: [40.1, 70],
-    orange: [76, 100],
+    green: [41, 80],
+    orange: [81, 100],
     red: [0, 40],
     max: 100,
   });
+
+    // Alert for Humidity
+  if (humidity >= 0 && humidity <= 40) {
+    gaugeAlert("Humidity", "low");
+  } else if (humidity >= 81 && humidity <= 100) {
+    gaugeAlert("Humidity", "high");
+  }
 }
 // updateAllData();
 // gauge data end
