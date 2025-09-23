@@ -306,7 +306,22 @@ function alarmData(x, input_voltage) {
     if (i == 2 && input_voltage > 50) {
       document.getElementById(alarmId[i]).innerText = "Stand by";
       document.getElementById(alarmId[i]).classList.add("stand-btn");
-    } else {
+    } 
+    else if(i==2){   // only for generator
+      if (x[i] == 0) {
+        document.getElementById(alarmId[i]).innerText = alarmData[i][1];
+        document.getElementById(alarmId[i]).classList.add("on-btn"); //green
+      } else {
+        document.getElementById(alarmId[i]).innerText = alarmData[i][0];
+        document.getElementById(alarmId[i]).classList.add("off-btn"); //red
+        let ul = document.getElementById("alert-list");
+        let li = document.createElement("li");
+        li.classList.add("alert-list-card");
+        li.textContent = `${alarmCardId[i]} is ${alarmData[i][0]}`;
+        ul.appendChild(li);
+      }
+    }
+    else {
       if (x[i] == 1) {
         document.getElementById(alarmId[i]).innerText = alarmData[i][1];
         document.getElementById(alarmId[i]).classList.add("on-btn"); //green
