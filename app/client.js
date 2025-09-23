@@ -303,7 +303,7 @@ function alarmData(x, input_voltage) {
 
   for (i = 0; i <= 4; i++) {
     //Another check for generator
-    if (i == 2 && input_voltage > 0) {
+    if (i == 2 && input_voltage > 50) {
       document.getElementById(alarmId[i]).innerText = "Stand by";
       document.getElementById(alarmId[i]).classList.add("stand-btn");
     } else {
