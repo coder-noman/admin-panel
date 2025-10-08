@@ -9,14 +9,14 @@ if (
   window.location.pathname.includes("./app/client.html") &&
   role !== "client"
 ) {
-  window.location.href = "../registration.html";
+  window.location.href = "../../registration.html";
 }
 
 const logoutBtn = document.getElementById("log-out");
 if (logoutBtn) {
   logoutBtn.addEventListener("click", function () {
     sessionStorage.removeItem("userRole");
-    window.location.href = "../registration.html";
+    window.location.href = "../../registration.html";
   });
 }
 
@@ -167,15 +167,7 @@ function psuDataShow() {
     "ho-service-psu2",
     "nvr-psu",
     "r730-1-psu1",
-    "r730-1-psu2",
-    "r730-2-psu1",
-    "r730-2-psu2",
-    "san-sw1-psu1",
-    "san-sw1-psu2",
-    "san-sw-psu1",
-    "san-sw-psu2",
-    "san-sorage-psu1",
-    "san-sorage-psu2",
+    "r730-1-psu2"
   ];
 
   const psuDisplayId = [
@@ -194,15 +186,7 @@ function psuDataShow() {
     "ho-service-d-psu2",
     "nvr-d-psu",
     "r730-1-d-psu1",
-    "r730-1-d-psu2",
-    "r730-2-d-psu1",
-    "r730-2-d-psu2",
-    "san-sw1-d-psu1",
-    "san-sw1-d-psu2",
-    "san-sw-d-psu1",
-    "san-sw-d-psu2",
-    "san-sorage-d-psu1",
-    "san-sorage-d-psu2",
+    "r730-1-d-psu2"
   ];
   const psuCardData = [
     "BGP PSU1",
@@ -220,15 +204,7 @@ function psuDataShow() {
     "HO S PSU2",
     "NVR PSU",
     "R 730 1 PSU1",
-    "R 730 1 PSU2",
-    "R 730 2 PSU1",
-    "R 730 2 PSU2",
-    "SAN SW 1 PSU1",
-    "SAN SW 1 PSU2",
-    "SAN SW PSU1",
-    "SAN SW PSU2",
-    "SAN SORAGE PSU1",
-    "SAN SORAGE PSU2",
+    "R 730 1 PSU2"
   ];
   // ipdu 1 Data show
   for (i = 0, j = 0; i <= 7; i++, j++) {
@@ -248,14 +224,14 @@ function psuDataShow() {
     }
   }
 
-  // ipdu 3 Data show
-  for (i = 0, j = 16; i <= 7; i++, j++) {
-    if (ipdu3_arr[i] >= 1) {
-      psuOnShowData(psuId[j], psuDisplayId[j], ipdu3_arr[i]);
-    } else {
-      psuOffShowData(psuId[j], psuCardData[j]);
-    }
-  }
+  // // ipdu 3 Data show
+  // for (i = 0, j = 16; i <= 7; i++, j++) {
+  //   if (ipdu3_arr[i] >= 1) {
+  //     psuOnShowData(psuId[j], psuDisplayId[j], ipdu3_arr[i]);
+  //   } else {
+  //     psuOffShowData(psuId[j], psuCardData[j]);
+  //   }
+  // }
 }
 
 //Psu On Show Data Funtion
@@ -783,6 +759,7 @@ function updateLineChart(x, y) {
 
 // update Bar chart
 function updateBarChart() {
+  console.log("ipduSum_arr update= ", ipduSum_arr);
   // Update chart
   if (barChart) {
     barChart.data.datasets[0].data = ipduSum_arr;
