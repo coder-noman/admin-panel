@@ -1,16 +1,17 @@
 //Handle Logout Button Start
 const role = sessionStorage.getItem("userRole");
+const path = window.location.pathname;
 
-if (window.location.pathname.includes("./app/index.html") && role !== "admin") {
+// Protect index.html for admin only
+if (path.endsWith("/app/index.html") && role !== "admin") {
   window.location.href = "../registration.html";
 }
 
-if (
-  window.location.pathname.includes("./app/client.html") &&
-  role !== "client"
-) {
+// Protect client.html for rakesh only
+if (path.endsWith("/app/client.html") && role !== "rakesh") {
   window.location.href = "../registration.html";
 }
+
 
 const logoutBtn = document.getElementById("log-out");
 if (logoutBtn) {
