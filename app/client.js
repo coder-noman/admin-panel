@@ -297,7 +297,7 @@ function alarmData(x, input_voltage) {
   const alarmData = [
     ["Detected", "No Alarm"],
     ["Detected", "No Alarm"],
-    ["Off", "On"],
+    ["Failed", "Running"],
     ["Tripped", "ok"],
     ["Tripped", "ok"],
   ];
@@ -307,8 +307,8 @@ function alarmData(x, input_voltage) {
     if (i == 2 && input_voltage > 50) {
       document.getElementById(alarmId[i]).innerText = "Stand by";
       document.getElementById(alarmId[i]).classList.add("stand-btn");
-    } 
-    else if(i==2){   // only for generator
+    }
+    else if (i == 2) {   // only for generator
       if (x[i] == 0) {
         document.getElementById(alarmId[i]).innerText = alarmData[i][1];
         document.getElementById(alarmId[i]).classList.add("on-btn"); //green
@@ -587,7 +587,7 @@ function updateAllData(a, b, c, d, e, f) {
     max: 100,
   });
 
-    // Alert for Humidity
+  // Alert for Humidity
   if (humidity >= 0 && humidity <= 40) {
     gaugeAlert("Humidity", "low");
   } else if (humidity >= 81 && humidity <= 100) {
@@ -757,7 +757,7 @@ function updateLineChart(x, y) {
   //getting time
   let z = new Date().toLocaleTimeString();
   let date = new Date().toLocaleDateString();
-  
+
   //last Update/synced 
   document.getElementById("lastUpdateTime").textContent = z;
   document.getElementById("lastUpdateDate").textContent = date;

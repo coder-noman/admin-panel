@@ -268,7 +268,7 @@ function alarmData(x, input_voltage) {
   const alarmData = [
     ["Detected", "No Alarm"],
     ["Detected", "No Alarm"],
-    ["Off", "On"],
+    ["Failed", "Running"],
     ["Tripped", "ok"],
     ["Tripped", "ok"],
   ];
@@ -278,8 +278,8 @@ function alarmData(x, input_voltage) {
     if (i == 2 && input_voltage > 50) {
       document.getElementById(alarmId[i]).innerText = "Stand by";
       document.getElementById(alarmId[i]).classList.add("stand-btn");
-    } else if (i == 2) {
-      // only for generator
+    }
+    else if (i == 2) {   // only for generator
       if (x[i] == 0) {
         document.getElementById(alarmId[i]).innerText = alarmData[i][1];
         document.getElementById(alarmId[i]).classList.add("on-btn"); //green
@@ -292,7 +292,8 @@ function alarmData(x, input_voltage) {
         li.textContent = `${alarmCardId[i]} is ${alarmData[i][0]}`;
         ul.appendChild(li);
       }
-    } else {
+    }
+    else {
       if (x[i] == 1) {
         document.getElementById(alarmId[i]).innerText = alarmData[i][1];
         document.getElementById(alarmId[i]).classList.add("on-btn"); //green
