@@ -1,17 +1,35 @@
-//Handle Logout Button Start
+const menuToggle = document.getElementById('menuToggle');
+const sidebar = document.getElementById('sidebar');
+const content = document.getElementById('content');
+let overlay;
+
+menuToggle.addEventListener('click', function () {
+  sidebar.classList.toggle('active');
+
+  if (!overlay) {
+    overlay = document.createElement('div');
+    overlay.className = 'overlay';
+    content.appendChild(overlay);
+
+    overlay.addEventListener('click', function () {
+      sidebar.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+  }
+
+  overlay.classList.toggle('active');
+});
+
 const role = sessionStorage.getItem("userRole");
 const path = window.location.pathname;
 
-// Protect index.html for admin only
 if (path.endsWith("/app/index.html") && role !== "admin") {
   window.location.href = "../registration.html";
 }
 
-// Protect client.html for rakesh only
 if (path.endsWith("/app/client.html") && role !== "rakesh") {
   window.location.href = "../registration.html";
 }
-
 
 const logoutBtn = document.getElementById("log-out");
 if (logoutBtn) {
@@ -21,16 +39,12 @@ if (logoutBtn) {
   });
 }
 
-//Handle Logout Button End
-
-//Declare psu array and variable
 let ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu3_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipduSum_arr = [0, 0, 0];
 let alarm_arr = [0, 0, 0, 0, 0];
 
-// Chart array and variable Declare
 let temp = [0, 0, 0, 0, 0, 0, 0, 0];
 let hum = [0, 0, 0, 0, 0, 0, 0, 0];
 const tim = [
@@ -46,35 +60,23 @@ const tim = [
 let barChart;
 let lineChart;
 
-// Default Data Show Start
 updateAllData(0, 0, 0, 0, 0, 0);
 updateLineChart(0, 0);
 updateBarChart();
 psuDataShow();
 alarmData(alarm_arr, 0);
-// Default Data Show end
 
-//.........websocket_client code Start..............
 var socket = new WebSocket("ws://27.147.170.162:81");
 socket.onmessage = function (event) {
   const data = event.data.split(":");
   const data_catagory = data[0] || "";
   const msg = data[1] || "";
 
-  // checking data is coming or not start
   if (data_catagory == "Hams_HO") {
-    // dataReceived = true;
-    // clearTimeout(timeout);
   } else {
     return;
   }
-  // checking data is coming or not end
 
-  // if (data_catagory !== "Hams_HO") {
-  //   return;
-  // }
-
-  // Clear all data function
   clearAllData();
 
   console.log(data[1]);
@@ -84,7 +86,6 @@ socket.onmessage = function (event) {
 
   var splited_data = data[4].split(",");
 
-  // Main Gauge
   updateAllData(
     splited_data[1],
     splited_data[2],
@@ -94,48 +95,29 @@ socket.onmessage = function (event) {
     splited_data[6]
   );
 
-  // Line chart Data
   updateLineChart(splited_data[5], splited_data[6]);
 
-  // Device Inforfation
-  //   deviceInformation(
-  //     splited_data[12],
-  //     splited_data[13],
-  //     splited_data[14],
-  //     splited_data[15],
-  //     splited_data[16],
-  //     splited_data[17],
-  //     splited_data[18]
-  //   );
-
-  // power supply unit
   psuDataInsert(data[1], data[2], data[3]);
 
-  // Others Alarm Unit
   for (i = 7, j = 0; i <= 11; i++, j++) {
     alarm_arr[j] = parseInt(splited_data[i]);
   }
   alarmData(alarm_arr, splited_data[1]);
 };
-//.........websocket_client code end..............
 
-// Psu data start
 function psuDataInsert(x, y, z) {
-  // ipdu 1 Data Insert
   if (x != "") {
     var ipdu1_data = x.split(",");
     for (i = 2, k = 0; i <= 9; i++, k++) {
       ipdu1_arr[k] = parseInt(ipdu1_data[i]);
     }
   }
-  // ipdu 2 Data Insert
   if (y != "") {
     var ipdu2_data = y.split(",");
     for (i = 2, k = 0; i <= 9; i++, k++) {
       ipdu2_arr[k] = parseInt(ipdu2_data[i]);
     }
   }
-  // ipdu 3 Data Insert
   if (z != "") {
     var ipdu3_data = z.split(",");
     for (i = 2, k = 0; i <= 9; i++, k++) {
@@ -145,7 +127,6 @@ function psuDataInsert(x, y, z) {
 
   psuDataShow();
 
-  // Sum of Ipdu
   ipduSum_arr[0] = ipdu1_arr.reduce((x, y) => x + y, 0);
   ipduSum_arr[1] = ipdu2_arr.reduce((x, y) => x + y, 0);
   ipduSum_arr[2] = ipdu3_arr.reduce((x, y) => x + y, 0);
@@ -231,7 +212,6 @@ function psuDataShow() {
     "SAN SORAGE PSU1",
     "SAN SORAGE PSU2",
   ];
-  // ipdu 1 Data show
   for (i = 0, j = 0; i <= 7; i++, j++) {
     if (ipdu1_arr[i] >= 1) {
       psuOnShowData(psuId[j], psuDisplayId[j], ipdu1_arr[i]);
@@ -240,7 +220,6 @@ function psuDataShow() {
     }
   }
 
-  // ipdu 2 Data show
   for (i = 0, j = 8; i <= 7; i++, j++) {
     if (ipdu2_arr[i] >= 1) {
       psuOnShowData(psuId[j], psuDisplayId[j], ipdu2_arr[i]);
@@ -249,7 +228,6 @@ function psuDataShow() {
     }
   }
 
-  // ipdu 3 Data show
   for (i = 0, j = 16; i <= 7; i++, j++) {
     if (ipdu3_arr[i] >= 1) {
       psuOnShowData(psuId[j], psuDisplayId[j], ipdu3_arr[i]);
@@ -259,14 +237,12 @@ function psuDataShow() {
   }
 }
 
-//Psu On Show Data Funtion
 function psuOnShowData(psu_Id, psu_d_id, psu_value) {
   document.getElementById(psu_Id).innerText = "ON";
   document.getElementById(psu_Id).classList.add("on-btn");
   document.getElementById(psu_d_id).innerText = `${psu_value} VA`;
   document.getElementById(psu_d_id).classList.add("show-btn");
 }
-//Psu Off Show Data Funtion
 function psuOffShowData(psu_Id, psuCardData) {
   document.getElementById(psu_Id).innerText = "OFF";
   document.getElementById(psu_Id).classList.add("off-btn");
@@ -276,9 +252,7 @@ function psuOffShowData(psu_Id, psuCardData) {
   li.textContent = `${psuCardData} Failed.`;
   ul.appendChild(li);
 }
-// Psu data end
 
-//Alarm data start
 function alarmData(x, input_voltage) {
   const alarmId = [
     "water-leakage",
@@ -303,18 +277,17 @@ function alarmData(x, input_voltage) {
   ];
 
   for (i = 0; i <= 4; i++) {
-    //Another check for generator
     if (i == 2 && input_voltage > 50) {
       document.getElementById(alarmId[i]).innerText = "Stand by";
       document.getElementById(alarmId[i]).classList.add("stand-btn");
     }
-    else if (i == 2) {   // only for generator
+    else if (i == 2) {
       if (x[i] == 0) {
         document.getElementById(alarmId[i]).innerText = alarmData[i][1];
-        document.getElementById(alarmId[i]).classList.add("on-btn"); //green
+        document.getElementById(alarmId[i]).classList.add("on-btn");
       } else {
         document.getElementById(alarmId[i]).innerText = alarmData[i][0];
-        document.getElementById(alarmId[i]).classList.add("off-btn"); //red
+        document.getElementById(alarmId[i]).classList.add("off-btn");
         let ul = document.getElementById("alert-list");
         let li = document.createElement("li");
         li.classList.add("alert-list-card");
@@ -325,10 +298,10 @@ function alarmData(x, input_voltage) {
     else {
       if (x[i] == 1) {
         document.getElementById(alarmId[i]).innerText = alarmData[i][1];
-        document.getElementById(alarmId[i]).classList.add("on-btn"); //green
+        document.getElementById(alarmId[i]).classList.add("on-btn");
       } else {
         document.getElementById(alarmId[i]).innerText = alarmData[i][0];
-        document.getElementById(alarmId[i]).classList.add("off-btn"); //red
+        document.getElementById(alarmId[i]).classList.add("off-btn");
         let ul = document.getElementById("alert-list");
         let li = document.createElement("li");
         li.classList.add("alert-list-card");
@@ -338,9 +311,7 @@ function alarmData(x, input_voltage) {
     }
   }
 }
-//Alarm data end
 
-//Gauge alert start
 function gaugeAlert(data, status) {
   let ul = document.getElementById("alert-list");
   let li = document.createElement("li");
@@ -348,9 +319,7 @@ function gaugeAlert(data, status) {
   li.textContent = `${data} is ${status}.`;
   ul.appendChild(li);
 }
-//Gauge alert end
 
-// clear all data function start
 function clearAllData() {
   document.getElementById("alert-list").innerHTML = "";
 
@@ -422,7 +391,6 @@ function clearAllData() {
     }
   }
 
-  // Clear alarm elements
   const alarmId = [
     "water-leakage",
     "fire-Alarm",
@@ -438,21 +406,17 @@ function clearAllData() {
     }
   }
 }
-// clear all data function end
 
-// gauge data start
-//getting color
 function getColor(value, ranges) {
   if (value >= ranges.green[0] && value <= ranges.green[1]) {
-    return "#4ECDC4"; // Green
+    return "#4ECDC4";
   } else if (value >= ranges.orange[0] && value <= ranges.orange[1]) {
-    return "#FE9B13"; // Orange
+    return "#FE9B13";
   } else {
-    return "#FC5C65"; // Red
+    return "#FC5C65";
   }
 }
 
-// get status
 function getStatus(value, ranges) {
   if (value >= ranges.green[0] && value <= ranges.green[1]) {
     return { text: "Normal", class: "status-normal" };
@@ -463,32 +427,25 @@ function getStatus(value, ranges) {
   }
 }
 
-// update circular gauge
 function updateGauge(elementId, value, ranges) {
   const fillElement = document.getElementById(`${elementId}-fill`);
   const valueElement = document.getElementById(`${elementId}-value`);
   const statusElement = document.getElementById(`${elementId}-status`);
 
-  // Calculate rotation based on value (0 to 360 degrees for 0 to max value)
   const rotation = (value / ranges.max) * 360;
 
-  // Get color and status
   const color = getColor(value, ranges);
   const status = getStatus(value, ranges);
 
-  // Update gauge fill
   fillElement.style.background = `conic-gradient(${color} 0deg ${rotation}deg, transparent ${rotation}deg 360deg)`;
   fillElement.style.color = color;
 
-  // Update value (keep the unit span)
   const unit = valueElement.querySelector(".gauge-unit")?.textContent || "";
   valueElement.innerHTML = `${value} <span class="gauge-unit">${unit}</span>`;
 
-  // Update status
   statusElement.textContent = status.text;
   statusElement.className = `status ${status.class}`;
 
-  // Add pulse animation for warning and danger statuses
   if (status.class !== "status-normal") {
     statusElement.classList.add("pulse");
   } else {
@@ -496,9 +453,7 @@ function updateGauge(elementId, value, ranges) {
   }
 }
 
-//update all gauge data
 function updateAllData(a, b, c, d, e, f) {
-  // Input Voltage (0-300V)
   const inputVoltage = a;
   updateGauge("input-voltage", inputVoltage, {
     green: [191, 245],
@@ -507,14 +462,12 @@ function updateAllData(a, b, c, d, e, f) {
     max: 300,
   });
 
-  // Alert for inputVoltage
   if (inputVoltage >= 0 && inputVoltage <= 190) {
     gaugeAlert("Input Voltage", "low");
   } else if (inputVoltage >= 246 && inputVoltage <= 300) {
     gaugeAlert("Input Voltage", "high");
   }
 
-  // UPS1 Output Voltage (0-300V)
   const ups1Voltage = b;
   updateGauge("ups1-voltage", ups1Voltage, {
     green: [211, 230],
@@ -523,14 +476,12 @@ function updateAllData(a, b, c, d, e, f) {
     max: 300,
   });
 
-  // Alert for Ups1
   if (ups1Voltage >= 0 && ups1Voltage <= 210) {
     gaugeAlert("UPS1 Voltage", "low");
   } else if (ups1Voltage >= 231 && ups1Voltage <= 300) {
     gaugeAlert("UPS1 Voltage", "high");
   }
 
-  // UPS2 Output Voltage (0-300V)
   const ups2Voltage = c;
   updateGauge("ups2-voltage", ups2Voltage, {
     green: [211, 230],
@@ -539,14 +490,12 @@ function updateAllData(a, b, c, d, e, f) {
     max: 300,
   });
 
-  // Alert for Ups2
   if (ups2Voltage >= 0 && ups2Voltage <= 210) {
     gaugeAlert("UPS2 Voltage", "low");
   } else if (ups2Voltage >= 231 && ups2Voltage <= 300) {
     gaugeAlert("UPS2 Voltage", "high");
   }
 
-  // Battery Voltage (0-60V)
   const batteryVoltage = d;
   updateGauge("battery-voltage", batteryVoltage, {
     green: [241, 280],
@@ -555,14 +504,12 @@ function updateAllData(a, b, c, d, e, f) {
     max: 280,
   });
 
-  // Alert for Battery Voltage
   if (batteryVoltage >= 221 && batteryVoltage <= 240) {
     gaugeAlert("Battery Voltage", "low");
   } else if (batteryVoltage >= 0 && batteryVoltage <= 220) {
     gaugeAlert("Battery Voltage", "very Low");
   }
 
-  // Temperature (0-55°C)
   const temperature = e;
   updateGauge("temperature", temperature, {
     green: [0, 25],
@@ -571,14 +518,12 @@ function updateAllData(a, b, c, d, e, f) {
     max: 55,
   });
 
-  // Alert for Temperature
   if (temperature >= 26 && temperature <= 31) {
     gaugeAlert("Temperature", "high");
   } else if (temperature >= 32 && temperature <= 55) {
     gaugeAlert("Temperature", "very high");
   }
 
-  // Humidity (0-100%)
   const humidity = f;
   updateGauge("humidity", humidity, {
     green: [41, 80],
@@ -587,22 +532,16 @@ function updateAllData(a, b, c, d, e, f) {
     max: 100,
   });
 
-  // Alert for Humidity
   if (humidity >= 0 && humidity <= 40) {
     gaugeAlert("Humidity", "low");
   } else if (humidity >= 81 && humidity <= 100) {
     gaugeAlert("Humidity", "high");
   }
 }
-// updateAllData();
-// gauge data end
 
-// Chart data start
 let color = "white";
 
-// Initialize charts on page load
 function initializeCharts() {
-  // Environment Chart (Line Chart)
   const environmentCtx = document
     .getElementById("environment-chart")
     .getContext("2d");
@@ -693,7 +632,6 @@ function initializeCharts() {
     },
   });
 
-  // Voltage Chart (Bar Chart)
   const voltageCtx = document.getElementById("voltage-chart").getContext("2d");
   barChart = new Chart(voltageCtx, {
     type: "bar",
@@ -749,20 +687,15 @@ function initializeCharts() {
   });
 }
 
-// Initialize charts when the page loads
 window.addEventListener("load", initializeCharts);
 
-// update Line chart
 function updateLineChart(x, y) {
-  //getting time
   let z = new Date().toLocaleTimeString();
   let date = new Date().toLocaleDateString();
 
-  //last Update/synced 
   document.getElementById("lastUpdateTime").textContent = z;
   document.getElementById("lastUpdateDate").textContent = date;
 
-  // Data shifting
   for (let i = 0; i < 7; i++) {
     temp[i] = temp[i + 1];
     hum[i] = hum[i + 1];
@@ -773,7 +706,6 @@ function updateLineChart(x, y) {
   hum[7] = y;
   tim[7] = z;
 
-  // Update Line chart
   if (lineChart) {
     lineChart.data.labels = [...tim];
     lineChart.data.datasets[0].data = [...temp];
@@ -782,35 +714,9 @@ function updateLineChart(x, y) {
   }
 }
 
-// update Bar chart
 function updateBarChart() {
-  // Update chart
   if (barChart) {
     barChart.data.datasets[0].data = ipduSum_arr;
     barChart.update("none");
   }
 }
-// Chart data end
-
-// Sidebar Dropdown
-// const allDropdown = document.querySelectorAll('#sidebar .side-dropdown');
-// const sidebar = document.getElementById('sidebar');
-
-// allDropdown.forEach(item => {
-// 	const a = item.parentElement.querySelector('a:first-child');
-// 	a.addEventListener('click', function (e) {
-// 		e.preventDefault();
-
-// 		if (!this.classList.contains('active')) {
-// 			allDropdown.forEach(i => {
-// 				const aLink = i.parentElement.querySelector('a:first-child');
-
-// 				aLink.classList.remove('active');
-// 				i.classList.remove('show');
-// 			})
-// 		}
-
-// 		this.classList.toggle('active');
-// 		item.classList.toggle('show');
-// 	})
-// })

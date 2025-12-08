@@ -7,15 +7,12 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
-    <!-- Chart js  -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <!-- css -->
     <link rel="stylesheet" href="style.css" />
     <title>Client Site</title>
   </head>
 
   <body>
-    <!-- Side Bar -->
     <section id="sidebar">
       <div class="brand">
         <img class="brand-img" src="./images/link3.jpg" alt="" />
@@ -37,15 +34,12 @@
           >Switch To Factory</a
         >
       </div>
-      <!-- Alert Unit -->
       <div class="alert">
         <a href="#" class="alert-btn-upgrade">Alert Box</a>
         <div class="wrapper">
           <ul id="alert-list" class="alert-list"></ul>
         </div>
       </div>
-
-      <!-- Device Information -->
       <div class="device">
         <a href="#" class="device-btn-upgrade">Customer Service</a>
         <div class="device-wrapper">
@@ -53,37 +47,34 @@
             <h5 class="device-label">Contact</h5>
             <h5 class="device-value">: 01787686086</h5>
           </div>
-
           <div class="device-wrapper-card">
             <h5 class="device-label">Billing Status</h5>
             <h5 class="device-value">: Pending</h5>
           </div>
-
           <div class="device-wrapper-card">
             <h5 class="device-label">License Status</h5>
             <h5 class="device-value">: Active</h5>
           </div>
-
           <div class="device-wrapper-card">
             <h5 class="device-label">License Validity</h5>
             <h5 class="device-value">: 30/9/2025</h5>
           </div>
-
           <div class="device-wrapper-card">
             <h5 class="device-label">Link3 Products</h5>
             <h5 class="device-value">
               <a href="https://link3.net/">: Buy More..</a>
             </h5>
           </div>
-
           <ul id="alert-list" class="alert-list"></ul>
         </div>
       </div>
     </section>
 
-    <!-- Nav -->
     <section id="content">
       <nav>
+        <div class="menu-toggle" id="menuToggle">
+          <i class="fas fa-bars"></i>
+        </div>
         <div class="breadcumb">
           <h1 class="title">Dashboard: Hams HQ</h1>
         </div>
@@ -98,9 +89,7 @@
         </div>
       </nav>
 
-      <!-- Main -->
       <main>
-        <!-- Gauge card start -->
         <div class="gauges-container">
           <div class="gauge-card">
             <h3 class="gauge-title">
@@ -124,7 +113,6 @@
               Normal
             </div>
           </div>
-
           <div class="gauge-card">
             <h3 class="gauge-title"><i class="fas fa-plug"></i> UPS1 Output</h3>
             <div class="gauge">
@@ -145,7 +133,6 @@
               Normal
             </div>
           </div>
-
           <div class="gauge-card">
             <h3 class="gauge-title"><i class="fas fa-plug"></i> UPS2 Output</h3>
             <div class="gauge">
@@ -166,7 +153,6 @@
               Normal
             </div>
           </div>
-
           <div class="gauge-card">
             <h3 class="gauge-title">
               <i class="fas fa-battery-full"></i> Battery Voltage
@@ -189,7 +175,6 @@
               Normal
             </div>
           </div>
-
           <div class="gauge-card">
             <h3 class="gauge-title">
               <i class="fas fa-temperature-high"></i> Temperature
@@ -212,7 +197,6 @@
               Normal
             </div>
           </div>
-
           <div class="gauge-card">
             <h3 class="gauge-title"><i class="fas fa-tint"></i> Humidity</h3>
             <div class="gauge">
@@ -232,9 +216,6 @@
             <div class="status status-normal" id="humidity-status">Normal</div>
           </div>
         </div>
-        <!-- Gauge card end -->
-
-        <!-- Chart start -->
         <div class="dashboard">
           <div class="chart-card">
             <div class="chart-title">Temperature & Humidity</div>
@@ -242,7 +223,6 @@
               <canvas id="environment-chart"></canvas>
             </div>
           </div>
-
           <div class="chart-card">
             <div class="chart-title">Ipdu1, Ipdu2 and Ipdu3 Load</div>
             <div class="chart-container">
@@ -250,9 +230,6 @@
             </div>
           </div>
         </div>
-        <!-- Chart end -->
-
-        <!-- psu update -->
         <section class="psu">
           <h1 class="title">Power Supply Monitoring Units</h1>
           <br />
@@ -475,7 +452,6 @@
             </div>
           </div>
         </section>
-        <!-- Others Alarm unit -->
         <section class="other-alarm-unit">
           <h1 class="title">Advance Alarms</h1>
           <br />
@@ -524,11 +500,9 @@
         </section>
       </main>
     </section>
-    <!-- Footer -->
     <footer>
       <p>&copy; 2025 Link3 Technologies LTD. All rights reserved.</p>
     </footer>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script> -->
     <script src="client.js"></script>
   </body>
 </html>
