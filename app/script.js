@@ -1,3 +1,25 @@
+// authentication start
+(function () {
+  if (!localStorage.getItem("isAuthenticated") || !localStorage.getItem("userType") || localStorage.getItem("userType") !== "admin") {
+    localStorage.clear();
+    window.location.href = "../registration.html";
+    return;
+  }
+
+  window.addEventListener('beforeunload', function () {
+    localStorage.clear();
+  });
+
+  const logoutBtn = document.getElementById("log-out");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", function () {
+      localStorage.clear();
+      window.location.href = "../registration.html";
+    });
+  }
+})();
+// authentication end
+
 const menuToggle = document.getElementById('menuToggle');
 const sidebar = document.getElementById('sidebar');
 const content = document.getElementById('content');
@@ -19,26 +41,6 @@ menuToggle.addEventListener('click', function () {
 
   overlay.classList.toggle('active');
 });
-
-//Handle Logout Button Start
-const role = sessionStorage.getItem("userRole");
-const path = window.location.pathname;
-
-if (path.endsWith("/app/index.html") && role !== "admin") {
-  window.location.href = "../registration.html";
-}
-
-if (path.endsWith("/app/client.html") && role !== "rakesh") {
-  window.location.href = "../registration.html";
-}
-
-const logoutBtn = document.getElementById("log-out");
-if (logoutBtn) {
-  logoutBtn.addEventListener("click", function () {
-    sessionStorage.removeItem("userRole");
-    window.location.href = "../registration.html";
-  });
-}
 
 let ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
