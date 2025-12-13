@@ -11,11 +11,17 @@
   });
 
   const logoutBtn = document.getElementById("log-out");
+
   if (logoutBtn) {
-    logoutBtn.addEventListener("click", function () {
-      localStorage.clear();
-      window.location.href = "../registration.html";
-    });
+    function logoutAction(e) {
+      if (e.type === "click" || e.key === "Enter") {
+        localStorage.clear();
+        window.location.href = "../registration.html";
+      }
+    }
+
+    logoutBtn.addEventListener("click", logoutAction);
+    logoutBtn.addEventListener("keydown", logoutAction);
   }
 })();
 // authentication end
