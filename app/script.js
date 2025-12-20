@@ -296,22 +296,28 @@ function alarmData(x, input_voltage) {
   ];
 
   for (i = 0; i <= 4; i++) {
-    if (i == 2 && input_voltage > 50) {
-      document.getElementById(alarmId[i]).innerText = "Stand by";
-      document.getElementById(alarmId[i]).classList.add("stand-btn");
-    }
-    else if (i == 2) {
+    // if (i == 2 && input_voltage > 50) {
+    //   document.getElementById(alarmId[i]).innerText = "Stand by";
+    //   document.getElementById(alarmId[i]).classList.add("stand-btn");
+    // }
+    if (i == 2) {
       if (x[i] == 0) {
         document.getElementById(alarmId[i]).innerText = alarmData[i][1];
-        document.getElementById(alarmId[i]).classList.add("on-btn");
+        document.getElementById(alarmId[i]).classList.add("generator-on-btn");
       } else {
-        document.getElementById(alarmId[i]).innerText = alarmData[i][0];
-        document.getElementById(alarmId[i]).classList.add("off-btn");
-        let ul = document.getElementById("alert-list");
-        let li = document.createElement("li");
-        li.classList.add("alert-list-card");
-        li.textContent = `${alarmCardId[i]} is ${alarmData[i][0]}`;
-        ul.appendChild(li);
+        if (x[i] == 1 && input_voltage > 50) {
+          document.getElementById(alarmId[i]).innerText = "Stand by";
+          document.getElementById(alarmId[i]).classList.add("stand-btn");
+        }
+        else {
+          document.getElementById(alarmId[i]).innerText = alarmData[i][0];
+          document.getElementById(alarmId[i]).classList.add("off-btn");
+          let ul = document.getElementById("alert-list");
+          let li = document.createElement("li");
+          li.classList.add("alert-list-card");
+          li.textContent = `${alarmCardId[i]} is ${alarmData[i][0]}`;
+          ul.appendChild(li);
+        }
       }
     }
     else {

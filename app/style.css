@@ -586,6 +586,12 @@ main h1 {
   padding: 2px 5px;
   border-radius: 7px;
 }
+.generator-on-btn {
+  background: var(--yellow);
+  color: black;
+  padding: 2px 5px;
+  border-radius: 7px;
+}
 
 .off-btn {
   background: var(--red);
