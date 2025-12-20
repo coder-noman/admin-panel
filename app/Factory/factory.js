@@ -1,3 +1,17 @@
+// logout start
+// const logoutBtn = document.getElementById("log-out");
+// if (logoutBtn) {
+//   function logoutAction(e) {
+//     if (e.type === "click" || e.key === "Enter") {
+//       localStorage.clear();
+//       window.location.href = "../../registration.html";
+//     }
+//   }
+
+//   logoutBtn.addEventListener("click", logoutAction);
+//   logoutBtn.addEventListener("keydown", logoutAction);
+// }
+// logout end
 const menuToggle = document.getElementById('menuToggle');
 const sidebar = document.getElementById('sidebar');
 const content = document.getElementById('content');

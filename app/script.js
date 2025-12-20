@@ -1,14 +1,12 @@
 // authentication start
 (function () {
-  if (!localStorage.getItem("isAuthenticated") || !localStorage.getItem("userType") || localStorage.getItem("userType") !== "admin") {
-    localStorage.clear();
+  const isAuth = localStorage.getItem("isAuthenticated") === "true";
+  const userType = localStorage.getItem("userType");
+
+  if (!isAuth || (userType !== "admin" && userType !== "client")) {
     window.location.href = "../registration.html";
     return;
   }
-
-  window.addEventListener('beforeunload', function () {
-    localStorage.clear();
-  });
 
   const logoutBtn = document.getElementById("log-out");
 
@@ -106,15 +104,18 @@ socket.onmessage = function (event) {
 
   updateLineChart(splited_data[5], splited_data[6]);
 
-  deviceInformation(
-    splited_data[12],
-    splited_data[13],
-    splited_data[14],
-    splited_data[15],
-    splited_data[16],
-    splited_data[17],
-    splited_data[18]
-  );
+  const ho_main = document.getElementById("main_ho");
+  if (ho_main) {
+    deviceInformation(
+      splited_data[12],
+      splited_data[13],
+      splited_data[14],
+      splited_data[15],
+      splited_data[16],
+      splited_data[17],
+      splited_data[18]
+    );
+  }
 
   psuDataInsert(data[1], data[2], data[3]);
 
