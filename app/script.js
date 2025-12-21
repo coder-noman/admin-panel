@@ -576,13 +576,13 @@ function updateAllData(a, b, c, d, e, f) {
 
   const temperature = e;
   updateGauge("temperature", temperature, {
-    green: [0, 25],
-    orange: [26, 31],
+    green: [0, 25.9],
+    orange: [26, 31.9],
     red: [32, 55],
     max: 55,
   });
 
-  if (temperature >= 26 && temperature <= 31) {
+  if (temperature >= 26 && temperature <= 31.9) {
     gaugeAlert("Temperature", "high");
   } else if (temperature >= 32 && temperature <= 55) {
     gaugeAlert("Temperature", "very high");
@@ -590,13 +590,13 @@ function updateAllData(a, b, c, d, e, f) {
 
   const humidity = f;
   updateGauge("humidity", humidity, {
-    green: [41, 80],
+    green: [41, 80.9],
     orange: [81, 100],
-    red: [0, 40],
+    red: [0, 40.9],
     max: 100,
   });
 
-  if (humidity >= 0 && humidity <= 40) {
+  if (humidity >= 0 && humidity <= 40.9) {
     gaugeAlert("Humidity", "low");
   } else if (humidity >= 81 && humidity <= 100) {
     gaugeAlert("Humidity", "high");
