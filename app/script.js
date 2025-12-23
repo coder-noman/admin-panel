@@ -1,9 +1,9 @@
-// authentication start
+// Authentication start
 (function () {
-  const isAuth = localStorage.getItem("isAuthenticated") === "true";
+  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
   const userType = localStorage.getItem("userType");
 
-  if (!isAuth || (userType !== "admin" && userType !== "client")) {
+  if (!isAuthenticated || (userType !== "admin" && userType !== "client")) {
     window.location.href = "../registration.html";
     return;
   }
@@ -11,19 +11,35 @@
   const logoutBtn = document.getElementById("log-out");
 
   if (logoutBtn) {
+    logoutBtn.setAttribute('tabindex', '0');
+    logoutBtn.setAttribute('role', 'button');
+
     function logoutAction(e) {
-      if (e.type === "click" || e.key === "Enter") {
-        localStorage.clear();
+      if (e.type === 'click' || e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+
+        localStorage.removeItem("isAuthenticated");
+        localStorage.removeItem("userType");
+        localStorage.removeItem("username");
+
         window.location.href = "../registration.html";
       }
     }
 
-    logoutBtn.addEventListener("click", logoutAction);
-    logoutBtn.addEventListener("keydown", logoutAction);
+    logoutBtn.addEventListener('click', logoutAction);
+    logoutBtn.addEventListener('keydown', logoutAction);
   }
-})();
-// authentication end
 
+  window.addEventListener('beforeunload', function () {
+    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("userType");
+    localStorage.removeItem("username");
+  });
+
+})();
+// Authentication End
+
+// menubar start
 const menuToggle = document.getElementById('menuToggle');
 const sidebar = document.getElementById('sidebar');
 const content = document.getElementById('content');
@@ -45,6 +61,7 @@ menuToggle.addEventListener('click', function () {
 
   overlay.classList.toggle('active');
 });
+// menubar end
 
 let ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
@@ -54,16 +71,7 @@ let alarm_arr = [0, 0, 0, 0, 0];
 
 let temp = [0, 0, 0, 0, 0, 0, 0, 0];
 let hum = [0, 0, 0, 0, 0, 0, 0, 0];
-const tim = [
-  "11:00",
-  "11:05",
-  "11:10",
-  "11:15",
-  "11:20",
-  "11:25",
-  "11:30",
-  "11:35",
-];
+const tim = ["11:00", "11:05", "11:10", "11:15", "11:20", "11:25", "11:30", "11:35"];
 let barChart;
 let lineChart;
 
@@ -152,85 +160,34 @@ function psuDataInsert(x, y, z) {
   ipduSum_arr[2] = ipdu3_arr.reduce((x, y) => x + y, 0);
   updateBarChart();
 }
+
 function psuDataShow() {
   const psuId = [
-    "bgp-psu1",
-    "bgp-psu2",
-    "fortinet-psu1",
-    "fortinet-psu2",
-    "check-point-psu1",
-    "check-point-psu2",
-    "cisco-psu",
-    "lan-psu",
-    "cisco-distribution-psu",
-    "ho-dr-psu1",
-    "ho-dr-psu2",
-    "ho-service-psu1",
-    "ho-service-psu2",
-    "nvr-psu",
-    "r730-1-psu1",
-    "r730-1-psu2",
-    "r730-2-psu1",
-    "r730-2-psu2",
-    "san-sw1-psu1",
-    "san-sw1-psu2",
-    "san-sw-psu1",
-    "san-sw-psu2",
-    "san-sorage-psu1",
-    "san-sorage-psu2",
+    "bgp-psu1", "bgp-psu2", "fortinet-psu1", "fortinet-psu2",
+    "check-point-psu1", "check-point-psu2", "cisco-psu", "lan-psu",
+    "cisco-distribution-psu", "ho-dr-psu1", "ho-dr-psu2",
+    "ho-service-psu1", "ho-service-psu2", "nvr-psu",
+    "r730-1-psu1", "r730-1-psu2", "r730-2-psu1", "r730-2-psu2",
+    "san-sw1-psu1", "san-sw1-psu2", "san-sw-psu1", "san-sw-psu2",
+    "san-sorage-psu1", "san-sorage-psu2"
   ];
 
   const psuDisplayId = [
-    "bgp-d-psu1",
-    "bgp-d-psu2",
-    "fortinet-d-psu1",
-    "fortinet-d-psu2",
-    "check-point-d-psu1",
-    "check-point-d-psu2",
-    "cisco-d-psu",
-    "lan-d-psu",
-    "cisco-distribution-d-psu",
-    "ho-dr-d-psu1",
-    "ho-dr-d-psu2",
-    "ho-service-d-psu1",
-    "ho-service-d-psu2",
-    "nvr-d-psu",
-    "r730-1-d-psu1",
-    "r730-1-d-psu2",
-    "r730-2-d-psu1",
-    "r730-2-d-psu2",
-    "san-sw1-d-psu1",
-    "san-sw1-d-psu2",
-    "san-sw-d-psu1",
-    "san-sw-d-psu2",
-    "san-sorage-d-psu1",
-    "san-sorage-d-psu2",
+    "bgp-d-psu1", "bgp-d-psu2", "fortinet-d-psu1", "fortinet-d-psu2",
+    "check-point-d-psu1", "check-point-d-psu2", "cisco-d-psu", "lan-d-psu",
+    "cisco-distribution-d-psu", "ho-dr-d-psu1", "ho-dr-d-psu2",
+    "ho-service-d-psu1", "ho-service-d-psu2", "nvr-d-psu",
+    "r730-1-d-psu1", "r730-1-d-psu2", "r730-2-d-psu1", "r730-2-d-psu2",
+    "san-sw1-d-psu1", "san-sw1-d-psu2", "san-sw-d-psu1", "san-sw-d-psu2",
+    "san-sorage-d-psu1", "san-sorage-d-psu2"
   ];
   const psuCardData = [
-    "BGP PSU1",
-    "BGP PSU2",
-    "Fortinet PSU1",
-    "Fortinet PSU2",
-    "Check P. PSU1",
-    "Check P. PSU2",
-    "Core Router PSU",
-    "LAN Router",
-    "CISCO Dist PSU",
-    "HO DR PSU1",
-    "HO DR PSU2",
-    "HO S PSU1",
-    "HO S PSU2",
-    "NVR PSU",
-    "R 730 1 PSU1",
-    "R 730 1 PSU2",
-    "R 730 2 PSU1",
-    "R 730 2 PSU2",
-    "SAN SW 1 PSU1",
-    "SAN SW 1 PSU2",
-    "SAN SW PSU1",
-    "SAN SW PSU2",
-    "SAN SORAGE PSU1",
-    "SAN SORAGE PSU2",
+    "BGP PSU1", "BGP PSU2", "Fortinet PSU1", "Fortinet PSU2",
+    "Check P. PSU1", "Check P. PSU2", "Core Router PSU", "LAN Router",
+    "CISCO Dist PSU", "HO DR PSU1", "HO DR PSU2", "HO S PSU1",
+    "HO S PSU2", "NVR PSU", "R 730 1 PSU1", "R 730 1 PSU2",
+    "R 730 2 PSU1", "R 730 2 PSU2", "SAN SW 1 PSU1", "SAN SW 1 PSU2",
+    "SAN SW PSU1", "SAN SW PSU2", "SAN SORAGE PSU1", "SAN SORAGE PSU2"
   ];
   for (i = 0, j = 0; i <= 7; i++, j++) {
     if (ipdu1_arr[i] >= 1) {
@@ -263,6 +220,7 @@ function psuOnShowData(psu_Id, psu_d_id, psu_value) {
   document.getElementById(psu_d_id).innerText = `${psu_value} VA`;
   document.getElementById(psu_d_id).classList.add("show-btn");
 }
+
 function psuOffShowData(psu_Id, psuCardData) {
   document.getElementById(psu_Id).innerText = "OFF";
   document.getElementById(psu_Id).classList.add("off-btn");
@@ -275,32 +233,22 @@ function psuOffShowData(psu_Id, psuCardData) {
 
 function alarmData(x, input_voltage) {
   const alarmId = [
-    "water-leakage",
-    "fire-Alarm",
-    "generator-status",
-    "ups1-cb-status",
-    "ups2-cb-status",
+    "water-leakage", "fire-Alarm", "generator-status",
+    "ups1-cb-status", "ups2-cb-status"
   ];
   const alarmCardId = [
-    "Water Leakage",
-    "Fire-Alarm",
-    "Generator Status",
-    "Ups1 cb Status",
-    "Ups2 cb Status",
+    "Water Leakage", "Fire-Alarm", "Generator Status",
+    "Ups1 cb Status", "Ups2 cb Status"
   ];
   const alarmData = [
     ["Detected", "No Alarm"],
     ["Detected", "No Alarm"],
     ["Failed", "Running"],
     ["Tripped", "ok"],
-    ["Tripped", "ok"],
+    ["Tripped", "ok"]
   ];
 
   for (i = 0; i <= 4; i++) {
-    // if (i == 2 && input_voltage > 50) {
-    //   document.getElementById(alarmId[i]).innerText = "Stand by";
-    //   document.getElementById(alarmId[i]).classList.add("stand-btn");
-    // }
     if (i == 2) {
       if (x[i] == 0) {
         document.getElementById(alarmId[i]).innerText = alarmData[i][1];
@@ -388,57 +336,23 @@ function clearAllData() {
   document.getElementById("alert-list").innerHTML = "";
 
   const psuId = [
-    "bgp-psu1",
-    "bgp-psu2",
-    "fortinet-psu1",
-    "fortinet-psu2",
-    "check-point-psu1",
-    "check-point-psu2",
-    "cisco-psu",
-    "lan-psu",
-    "cisco-distribution-psu",
-    "ho-dr-psu1",
-    "ho-dr-psu2",
-    "ho-service-psu1",
-    "ho-service-psu2",
-    "nvr-psu",
-    "r730-1-psu1",
-    "r730-1-psu2",
-    "r730-2-psu1",
-    "r730-2-psu2",
-    "san-sw1-psu1",
-    "san-sw1-psu2",
-    "san-sw-psu1",
-    "san-sw-psu2",
-    "san-sorage-psu1",
-    "san-sorage-psu2",
+    "bgp-psu1", "bgp-psu2", "fortinet-psu1", "fortinet-psu2",
+    "check-point-psu1", "check-point-psu2", "cisco-psu", "lan-psu",
+    "cisco-distribution-psu", "ho-dr-psu1", "ho-dr-psu2",
+    "ho-service-psu1", "ho-service-psu2", "nvr-psu",
+    "r730-1-psu1", "r730-1-psu2", "r730-2-psu1", "r730-2-psu2",
+    "san-sw1-psu1", "san-sw1-psu2", "san-sw-psu1", "san-sw-psu2",
+    "san-sorage-psu1", "san-sorage-psu2"
   ];
 
   const psuDisplayId = [
-    "bgp-d-psu1",
-    "bgp-d-psu2",
-    "fortinet-d-psu1",
-    "fortinet-d-psu2",
-    "check-point-d-psu1",
-    "check-point-d-psu2",
-    "cisco-d-psu",
-    "lan-d-psu",
-    "cisco-distribution-d-psu",
-    "ho-dr-d-psu1",
-    "ho-dr-d-psu2",
-    "ho-service-d-psu1",
-    "ho-service-d-psu2",
-    "nvr-d-psu",
-    "r730-1-d-psu1",
-    "r730-1-d-psu2",
-    "r730-2-d-psu1",
-    "r730-2-d-psu2",
-    "san-sw1-d-psu1",
-    "san-sw1-d-psu2",
-    "san-sw-d-psu1",
-    "san-sw-d-psu2",
-    "san-sorage-d-psu1",
-    "san-sorage-d-psu2",
+    "bgp-d-psu1", "bgp-d-psu2", "fortinet-d-psu1", "fortinet-d-psu2",
+    "check-point-d-psu1", "check-point-d-psu2", "cisco-d-psu", "lan-d-psu",
+    "cisco-distribution-d-psu", "ho-dr-d-psu1", "ho-dr-d-psu2",
+    "ho-service-d-psu1", "ho-service-d-psu2", "nvr-d-psu",
+    "r730-1-d-psu1", "r730-1-d-psu2", "r730-2-d-psu1", "r730-2-d-psu2",
+    "san-sw1-d-psu1", "san-sw1-d-psu2", "san-sw-d-psu1", "san-sw-d-psu2",
+    "san-sorage-d-psu1", "san-sorage-d-psu2"
   ];
 
   for (let j = 0; j < psuId.length; j++) {
@@ -456,11 +370,8 @@ function clearAllData() {
   }
 
   const alarmId = [
-    "water-leakage",
-    "fire-Alarm",
-    "generator-status",
-    "ups1-cb-status",
-    "ups2-cb-status",
+    "water-leakage", "fire-Alarm", "generator-status",
+    "ups1-cb-status", "ups2-cb-status"
   ];
   for (let j = 0; j < alarmId.length; j++) {
     const alarmElem = document.getElementById(alarmId[j]);
@@ -606,9 +517,7 @@ function updateAllData(a, b, c, d, e, f) {
 let color = "white";
 
 function initializeCharts() {
-  const environmentCtx = document
-    .getElementById("environment-chart")
-    .getContext("2d");
+  const environmentCtx = document.getElementById("environment-chart").getContext("2d");
   lineChart = new Chart(environmentCtx, {
     type: "line",
     data: {
