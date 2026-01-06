@@ -615,9 +615,9 @@ function initializeCharts() {
           label: "Load (VA)",
           data: ipduSum_arr,
           backgroundColor: [
-            "rgba(78, 205, 196, 0.7)",
-            "#fc5c6491",
-            "#3a67d1af",
+            "#84994F",
+            "#FACE68",
+            "#5A9CB5",
           ],
           borderRadius: 10,
         },

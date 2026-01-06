@@ -15,12 +15,12 @@
   --light: #fff;
   --dark: #000;
   --light-green: #e3ffcb;
-  --blue: #3867d6;
   --light-blue: #d0e4ff;
   --dark-blue: #0c5fcd;
-  --red: #fc5c65;
   --yellow: #fe9b13;
   --green: #4ecdc4;
+  --blue: #3867d6;
+  --red: #fc5c65;
   --orange: #ff9800;
 }
 
@@ -557,8 +557,17 @@ main h1 {
   padding: 10px 10px;
   border-radius: 10px;
   display: inline-block;
-  background: var(--grey2);
+  background: var(--gray);
   box-shadow: 4px 4px 16px rgba(0, 0, 0, 0.3);
+}
+.pdu1{
+    border: 3px solid #84994F;
+}
+.pdu2{
+    border: 3px solid #FACE68;
+}
+.pdu3{
+    border: 3px solid #5A9CB5;
 }
 
 .psu-display {
