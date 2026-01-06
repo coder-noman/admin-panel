@@ -226,44 +226,40 @@ function psuOffShowData(psu_Id, psuCardData) {
 
 function alarmData(x, input_voltage) {
   const alarmId = [
-    "water-leakage",
-    "fire-Alarm",
-    "generator-status",
-    "ups1-cb-status",
-    "ups2-cb-status",
+    "water-leakage", "fire-Alarm", "generator-status",
+    "ups1-cb-status", "ups2-cb-status"
   ];
   const alarmCardId = [
-    "Water Leakage",
-    "Fire-Alarm",
-    "Generator Status",
-    "Ups1 cb Status",
-    "Ups2 cb Status",
+    "Water Leakage", "Fire-Alarm", "Generator Status",
+    "Ups1 cb Status", "Ups2 cb Status"
   ];
   const alarmData = [
     ["Detected", "No Alarm"],
     ["Detected", "No Alarm"],
     ["Failed", "Running"],
     ["Tripped", "ok"],
-    ["Tripped", "ok"],
+    ["Tripped", "ok"]
   ];
 
   for (i = 0; i <= 4; i++) {
-    if (i == 2 && input_voltage > 50) {
-      document.getElementById(alarmId[i]).innerText = "Stand by";
-      document.getElementById(alarmId[i]).classList.add("stand-btn");
-    }
-    else if (i == 2) {
+    if (i == 2) {
       if (x[i] == 0) {
         document.getElementById(alarmId[i]).innerText = alarmData[i][1];
-        document.getElementById(alarmId[i]).classList.add("on-btn");
+        document.getElementById(alarmId[i]).classList.add("generator-on-btn");
       } else {
-        document.getElementById(alarmId[i]).innerText = alarmData[i][0];
-        document.getElementById(alarmId[i]).classList.add("off-btn");
-        let ul = document.getElementById("alert-list");
-        let li = document.createElement("li");
-        li.classList.add("alert-list-card");
-        li.textContent = `${alarmCardId[i]} is ${alarmData[i][0]}`;
-        ul.appendChild(li);
+        if (x[i] == 1 && input_voltage > 50) {
+          document.getElementById(alarmId[i]).innerText = "Stand by";
+          document.getElementById(alarmId[i]).classList.add("stand-btn");
+        }
+        else {
+          document.getElementById(alarmId[i]).innerText = alarmData[i][0];
+          document.getElementById(alarmId[i]).classList.add("off-btn");
+          let ul = document.getElementById("alert-list");
+          let li = document.createElement("li");
+          li.classList.add("alert-list-card");
+          li.textContent = `${alarmCardId[i]} is ${alarmData[i][0]}`;
+          ul.appendChild(li);
+        }
       }
     }
     else {
@@ -282,6 +278,7 @@ function alarmData(x, input_voltage) {
     }
   }
 }
+
 
 function gaugeAlert(data, status) {
   let ul = document.getElementById("alert-list");
