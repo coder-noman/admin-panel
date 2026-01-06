@@ -1,17 +1,3 @@
-// logout start
-// const logoutBtn = document.getElementById("log-out");
-// if (logoutBtn) {
-//   function logoutAction(e) {
-//     if (e.type === "click" || e.key === "Enter") {
-//       localStorage.clear();
-//       window.location.href = "../../registration.html";
-//     }
-//   }
-
-//   logoutBtn.addEventListener("click", logoutAction);
-//   logoutBtn.addEventListener("keydown", logoutAction);
-// }
-// logout end
 const menuToggle = document.getElementById('menuToggle');
 const sidebar = document.getElementById('sidebar');
 const content = document.getElementById('content');
@@ -648,9 +634,9 @@ function initializeCharts() {
           label: "Load (VA)",
           data: ipduSum_arr,
           backgroundColor: [
-            "rgba(78, 205, 196, 0.7)",
-            "#fc5c6491",
-            "#3a67d1af",
+            "#84994F",
+            "#FACE68",
+            "#5A9CB5",
           ],
           borderRadius: 10,
           barThickness: 70,
@@ -664,6 +650,13 @@ function initializeCharts() {
         legend: {
           display: false,
         },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return context.parsed.y + " VA";
+            },
+          },
+        },
       },
       scales: {
         y: {
@@ -675,6 +668,9 @@ function initializeCharts() {
             color: `${color}`,
             font: {
               size: 12,
+            },
+            callback: function (value) {
+              return value + " VA";
             },
           },
         },

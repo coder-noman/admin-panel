@@ -30,11 +30,11 @@
     logoutBtn.addEventListener('keydown', logoutAction);
   }
 
-  window.addEventListener('beforeunload', function () {
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("userType");
-    localStorage.removeItem("username");
-  });
+  // window.addEventListener('beforeunload', function () {
+  //   localStorage.removeItem("isAuthenticated");
+  //   localStorage.removeItem("userType");
+  //   localStorage.removeItem("username");
+  // });
 
 })();
 // Authentication End
@@ -630,6 +630,13 @@ function initializeCharts() {
         legend: {
           display: false,
         },
+        tooltip: {
+          callbacks: {
+            label: function (context) {
+              return context.parsed.y + " VA";
+            },
+          },
+        },
       },
       scales: {
         y: {
@@ -641,6 +648,9 @@ function initializeCharts() {
             color: `${color}`,
             font: {
               size: 12,
+            },
+            callback: function (value) {
+              return value + " VA";
             },
           },
         },
@@ -658,6 +668,7 @@ function initializeCharts() {
       },
     },
   });
+
 }
 
 window.addEventListener("load", initializeCharts);
