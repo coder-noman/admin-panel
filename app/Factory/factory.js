@@ -58,6 +58,12 @@ socket.onmessage = function (event) {
   if (data_catagory !== "Hams_FAC1") {
     return;
   }
+  // clear ipdu start
+  ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
+  ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
+  ipdu3_arr = [0, 0, 0, 0, 0, 0, 0, 0];
+  ipduSum_arr = [0, 0, 0];
+  // clear ipdu end
 
   clearAllData();
 
