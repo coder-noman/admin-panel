@@ -24,7 +24,6 @@ if (menuToggle) {
 
 let ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
-let ipdu3_arr = [0, 0, 0, 0, 0, 0, 0, 0];
 let ipduSum_arr = [0, 0];
 let alarm_arr = [0, 0, 0, 0, 0];
 
@@ -58,16 +57,16 @@ socket.onmessage = function (event) {
   if (data_catagory !== "Hams_FAC1") {
     return;
   }
+
   // clear ipdu start
   ipdu1_arr = [0, 0, 0, 0, 0, 0, 0, 0];
   ipdu2_arr = [0, 0, 0, 0, 0, 0, 0, 0];
-  ipdu3_arr = [0, 0, 0, 0, 0, 0, 0, 0];
   ipduSum_arr = [0, 0, 0];
   // clear ipdu end
 
   clearAllData();
 
-  var splited_data = data[4].split(",");
+  var splited_data = data[3].split(",");
 
   updateAllData(
     splited_data[1],
@@ -93,7 +92,7 @@ socket.onmessage = function (event) {
     );
   }
 
-  psuDataInsert(data[1], data[2], data[3]);
+  psuDataInsert(data[1], data[2]);
 
   for (i = 7, j = 0; i <= 11; i++, j++) {
     alarm_arr[j] = parseInt(splited_data[i]);
@@ -101,7 +100,7 @@ socket.onmessage = function (event) {
   alarmData(alarm_arr, splited_data[1]);
 };
 
-function psuDataInsert(x, y, z) {
+function psuDataInsert(x, y) {
   if (x != "") {
     var ipdu1_data = x.split(",");
     for (i = 2, k = 0; i <= 9; i++, k++) {
@@ -112,12 +111,6 @@ function psuDataInsert(x, y, z) {
     var ipdu2_data = y.split(",");
     for (i = 2, k = 0; i <= 9; i++, k++) {
       ipdu2_arr[k] = parseInt(ipdu2_data[i]);
-    }
-  }
-  if (z != "") {
-    var ipdu3_data = z.split(",");
-    for (i = 2, k = 0; i <= 9; i++, k++) {
-      ipdu3_arr[k] = parseInt(ipdu3_data[i]);
     }
   }
 
