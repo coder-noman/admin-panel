@@ -7,7 +7,7 @@ document.getElementById("login-form").addEventListener("submit", function (event
 
   // Check credentials
   if (username === "admin" && password === "1745#") {
-    // Store simple authentication data
+    // Store authentication data
     localStorage.setItem("isAuthenticated", "true");
     localStorage.setItem("userType", "admin");
     localStorage.setItem("username", username);
@@ -16,7 +16,7 @@ document.getElementById("login-form").addEventListener("submit", function (event
     window.location.href = "./app/index.html";
   }
   else if (username === "rakesh" && password === "rakesh007#") {
-    // Store simple authentication data
+    // Store authentication data
     localStorage.setItem("isAuthenticated", "true");
     localStorage.setItem("userType", "client");
     localStorage.setItem("username", username);

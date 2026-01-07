@@ -1,3 +1,19 @@
+// Authentication start
+(function () {
+  const isAuthenticated = localStorage.getItem("isAuthenticated") === "true";
+  const userType = localStorage.getItem("userType");
+
+  if (!isAuthenticated || (userType !== "admin" && userType !== "client")) {
+    // Redirect based on current page
+    if (window.location.pathname.includes('factory_client.html')) {
+      window.location.href = "../client.html";
+    } else {
+      window.location.href = "../index.html";
+    }
+    return;
+  }
+})();
+
 const menuToggle = document.getElementById('menuToggle');
 const sidebar = document.getElementById('sidebar');
 const content = document.getElementById('content');

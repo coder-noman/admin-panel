@@ -30,12 +30,6 @@
     logoutBtn.addEventListener('keydown', logoutAction);
   }
 
-  // window.addEventListener('beforeunload', function () {
-  //   localStorage.removeItem("isAuthenticated");
-  //   localStorage.removeItem("userType");
-  //   localStorage.removeItem("username");
-  // });
-
 })();
 // Authentication End
 
@@ -621,9 +615,9 @@ function initializeCharts() {
           label: "Load (VA)",
           data: ipduSum_arr,
           backgroundColor: [
-            "#84994F",
-            "#FACE68",
-            "#5A9CB5",
+            "#61dbd3ff",
+            "#fc5c65",
+            "#3867d6",
           ],
           borderRadius: 10,
         },
