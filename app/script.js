@@ -630,6 +630,29 @@ function initializeCharts() {
         legend: {
           display: false,
         },
+        datalabels: {
+          anchor: "end",
+          align: "top",
+          offset: 0,
+          minWidth: 90,
+          backgroundColor: "#ffffff",
+          borderRadius: 6,
+          padding: {
+            top: 6,
+            bottom: 6,
+            left: 9,
+            right: 9,
+          },
+          color: "#1e293b",
+          font: {
+            size: 13,
+            weight: "700",
+          },
+          formatter: function (value, ctx) {
+            const percent = Math.round((value * 100) / 2500);
+            return percent + "%";
+          },
+        },
         tooltip: {
           callbacks: {
             label: function (context) {
@@ -667,8 +690,8 @@ function initializeCharts() {
         },
       },
     },
+    plugins: [ChartDataLabels],
   });
-
 }
 
 window.addEventListener("load", initializeCharts);
