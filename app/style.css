@@ -563,14 +563,17 @@ main h1 {
 
 .pdu1 {
   border: 3px solid #4ecdc57c;
+  background-color: #4ecdc527;
 }
 
 .pdu2 {
   border: 3px solid #fc5c647c;
+  background-color: #fc5c642d;
 }
 
 .pdu3 {
   border: 3px solid #3867d675;
+  background-color: #3867d61f;
 }
 
 .psu-display {

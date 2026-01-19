@@ -635,7 +635,7 @@ function initializeCharts() {
           align: "top",
           offset: 0,
           minWidth: 90,
-          backgroundColor: "#ffffff",
+          backgroundColor: "#0f1c2d",
           borderRadius: 6,
           padding: {
             top: 6,
@@ -643,7 +643,7 @@ function initializeCharts() {
             left: 9,
             right: 9,
           },
-          color: "#1e293b",
+          color: "#ffffff",
           font: {
             size: 13,
             weight: "700",
