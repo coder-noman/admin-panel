@@ -163,32 +163,87 @@ function psuDataInsert(x, y, z) {
 
 function psuDataShow() {
   const psuId = [
-    "bgp-psu1", "bgp-psu2", "fortinet-psu1", "fortinet-psu2",
-    "check-point-psu1", "check-point-psu2", "cisco-psu", "lan-psu",
-    "cisco-distribution-psu", "ho-dr-psu1", "ho-dr-psu2",
-    "ho-service-psu1", "ho-service-psu2", "nvr-psu",
-    "r730-1-psu1", "r730-1-psu2", "r730-2-psu1", "r730-2-psu2",
-    "san-sw1-psu1", "san-sw1-psu2", "san-sw-psu1", "san-sw-psu2",
-    "san-sorage-psu1", "san-sorage-psu2"
+    "r750-ps-1",
+    "nas-ps-2",
+    "r720-ps-2",
+    "r730-1-ps-1",
+    "r730-2-ps-2",
+    "r730-3-ps-2",
+    "san-sw-1-ps-2",
+    "san-ps-2",
+    "cisco-distribution-psu",
+    "ho-dr-psu1",
+    "ho-dr-psu2",
+    "ho-service-psu1",
+    "ho-service-psu2",
+    "nvr-psu",
+    "r730-1-psu1",
+    "r730-1-psu2",
+    "r750-ps-2",
+    "nas-ps-1",
+    "r720-ps-1",
+    "r730-1-ps-2",
+    "r730-2-ps-1",
+    "r730-3-ps-1",
+    "san-sw-2-ps-1",
+    "san-ps-1"
   ];
 
+
   const psuDisplayId = [
-    "bgp-d-psu1", "bgp-d-psu2", "fortinet-d-psu1", "fortinet-d-psu2",
-    "check-point-d-psu1", "check-point-d-psu2", "cisco-d-psu", "lan-d-psu",
-    "cisco-distribution-d-psu", "ho-dr-d-psu1", "ho-dr-d-psu2",
-    "ho-service-d-psu1", "ho-service-d-psu2", "nvr-d-psu",
-    "r730-1-d-psu1", "r730-1-d-psu2", "r730-2-d-psu1", "r730-2-d-psu2",
-    "san-sw1-d-psu1", "san-sw1-d-psu2", "san-sw-d-psu1", "san-sw-d-psu2",
-    "san-sorage-d-psu1", "san-sorage-d-psu2"
+    "r750-d-ps-1",
+    "nas-d-ps-2",
+    "r720-d-ps-2",
+    "r730-1-d-ps-1",
+    "r730-2-d-ps-2",
+    "r730-3-d-ps-2",
+    "san-sw-1-d-ps-2",
+    "san-d-ps-2",
+    "cisco-distribution-d-psu",
+    "ho-dr-d-psu1",
+    "ho-dr-d-psu2",
+    "ho-service-d-psu1",
+    "ho-service-d-psu2",
+    "nvr-d-psu",
+    "r730-1-d-psu1",
+    "r730-1-d-psu2",
+    "r750-d-ps-2",
+    "nas-d-ps-1",
+    "r720-d-ps-1",
+    "r730-1-d-ps-2",
+    "r730-2-d-ps-1",
+    "r730-3-d-ps-1",
+    "san-sw-2-d-ps-1",
+    "san-d-ps-1"
   ];
+
   const psuCardData = [
-    "BGP PSU1", "BGP PSU2", "Fortinet PSU1", "Fortinet PSU2",
-    "Check P. PSU1", "Check P. PSU2", "Core Router PSU", "LAN Router",
-    "CISCO Dist PSU", "HO DR PSU1", "HO DR PSU2", "HO S PSU1",
-    "HO S PSU2", "NVR PSU", "R 730 1 PSU1", "R 730 1 PSU2",
-    "R 730 2 PSU1", "R 730 2 PSU2", "SAN SW 1 PSU1", "SAN SW 1 PSU2",
-    "SAN SW PSU1", "SAN SW PSU2", "SAN SORAGE PSU1", "SAN SORAGE PSU2"
+    "R750 PS-1",
+    "NAS PS-2",
+    "R720 PS-2",
+    "R730-1 PS-1",
+    "R730-2 PS-2",
+    "R730-3 PS-2",
+    "SAN SW-1 PS-2",
+    "SAN PS-2",
+    "CISCO Dist PSU",
+    "HO DR PSU1",
+    "HO DR PSU2",
+    "HO S PSU1",
+    "HO S PSU2",
+    "NVR PSU",
+    "R730-1 PSU1",
+    "R730-1 PSU2",
+    "R750 PS-2",
+    "NAS PS-1",
+    "R720 PS-1",
+    "R730-1 PS-2",
+    "R730-2 PS-1",
+    "R730-3 PS-1",
+    "SAN SW-2 PS-1",
+    "SAN PS-1"
   ];
+
   for (i = 0, j = 0; i <= 7; i++, j++) {
     if (ipdu1_arr[i] >= 1) {
       psuOnShowData(psuId[j], psuDisplayId[j], ipdu1_arr[i]);
@@ -336,23 +391,58 @@ function clearAllData() {
   document.getElementById("alert-list").innerHTML = "";
 
   const psuId = [
-    "bgp-psu1", "bgp-psu2", "fortinet-psu1", "fortinet-psu2",
-    "check-point-psu1", "check-point-psu2", "cisco-psu", "lan-psu",
-    "cisco-distribution-psu", "ho-dr-psu1", "ho-dr-psu2",
-    "ho-service-psu1", "ho-service-psu2", "nvr-psu",
-    "r730-1-psu1", "r730-1-psu2", "r730-2-psu1", "r730-2-psu2",
-    "san-sw1-psu1", "san-sw1-psu2", "san-sw-psu1", "san-sw-psu2",
-    "san-sorage-psu1", "san-sorage-psu2"
+    "r750-ps-1",
+    "nas-ps-2",
+    "r720-ps-2",
+    "r730-1-ps-1",
+    "r730-2-ps-2",
+    "r730-3-ps-2",
+    "san-sw-1-ps-2",
+    "san-ps-2",
+    "cisco-distribution-psu",
+    "ho-dr-psu1",
+    "ho-dr-psu2",
+    "ho-service-psu1",
+    "ho-service-psu2",
+    "nvr-psu",
+    "r730-1-psu1",
+    "r730-1-psu2",
+    "r750-ps-2",
+    "nas-ps-1",
+    "r720-ps-1",
+    "r730-1-ps-2",
+    "r730-2-ps-1",
+    "r730-3-ps-1",
+    "san-sw-2-ps-1",
+    "san-ps-1"
   ];
 
+
   const psuDisplayId = [
-    "bgp-d-psu1", "bgp-d-psu2", "fortinet-d-psu1", "fortinet-d-psu2",
-    "check-point-d-psu1", "check-point-d-psu2", "cisco-d-psu", "lan-d-psu",
-    "cisco-distribution-d-psu", "ho-dr-d-psu1", "ho-dr-d-psu2",
-    "ho-service-d-psu1", "ho-service-d-psu2", "nvr-d-psu",
-    "r730-1-d-psu1", "r730-1-d-psu2", "r730-2-d-psu1", "r730-2-d-psu2",
-    "san-sw1-d-psu1", "san-sw1-d-psu2", "san-sw-d-psu1", "san-sw-d-psu2",
-    "san-sorage-d-psu1", "san-sorage-d-psu2"
+    "r750-d-ps-1",
+    "nas-d-ps-2",
+    "r720-d-ps-2",
+    "r730-1-d-ps-1",
+    "r730-2-d-ps-2",
+    "r730-3-d-ps-2",
+    "san-sw-1-d-ps-2",
+    "san-d-ps-2",
+    "cisco-distribution-d-psu",
+    "ho-dr-d-psu1",
+    "ho-dr-d-psu2",
+    "ho-service-d-psu1",
+    "ho-service-d-psu2",
+    "nvr-d-psu",
+    "r730-1-d-psu1",
+    "r730-1-d-psu2",
+    "r750-d-ps-2",
+    "nas-d-ps-1",
+    "r720-d-ps-1",
+    "r730-1-d-ps-2",
+    "r730-2-d-ps-1",
+    "r730-3-d-ps-1",
+    "san-sw-2-d-ps-1",
+    "san-d-ps-1"
   ];
 
   for (let j = 0; j < psuId.length; j++) {
