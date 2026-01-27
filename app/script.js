@@ -218,14 +218,14 @@ function psuDataShow() {
   ];
 
   const psuCardData = [
-    "R750 PS-1",
-    "NAS PS-2",
-    "R720 PS-2",
-    "R730-1 PS-1",
-    "R730-2 PS-2",
-    "R730-3 PS-2",
-    "SAN SW-1 PS-2",
-    "SAN PS-2",
+    "1. R750 PS-1",
+    "2. NAS PS-2",
+    "3. R720 PS-2",
+    "4. R730-1 PS-1",
+    "5. R730-2 PS-2",
+    "6. R730-3 PS-2",
+    "7. SAN SW-1 PS-2",
+    "8. SAN PS-2",
     "CISCO Dist PSU",
     "HO DR PSU1",
     "HO DR PSU2",
@@ -234,14 +234,14 @@ function psuDataShow() {
     "NVR PSU",
     "R730-1 PSU1",
     "R730-1 PSU2",
-    "R750 PS-2",
-    "NAS PS-1",
-    "R720 PS-1",
-    "R730-1 PS-2",
-    "R730-2 PS-1",
-    "R730-3 PS-1",
-    "SAN SW-2 PS-1",
-    "SAN PS-1"
+    "1. R750 PS-2",
+    "2. NAS PS-1",
+    "3. R720 PS-1",
+    "4. R730-1 PS-2",
+    "5. R730-2 PS-1",
+    "6. R730-3 PS-1",
+    "7. SAN SW-2 PS-1",
+    "8. SAN PS-1"
   ];
 
   for (i = 0, j = 0; i <= 7; i++, j++) {
